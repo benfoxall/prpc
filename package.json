@@ -1,0 +1,26 @@
+{
+  "name": "rpc-rtc",
+  "version": "1.0.0",
+  "description": "gRPC over webRTC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benfoxall/rpc-rtc.git"
+  },
+  "keywords": [
+    "rpc",
+    "grpc",
+    "proto",
+    "webrtc",
+    "p2p"
+  ],
+  "author": "Ben Foxall",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benfoxall/rpc-rtc/issues"
+  },
+  "homepage": "https://github.com/benfoxall/rpc-rtc#readme"
+}
