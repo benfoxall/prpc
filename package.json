@@ -1,6 +1,6 @@
 {
   "name": "pprpc",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "gRPC over webRTC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
