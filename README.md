@@ -38,3 +38,6 @@ echoClient.echo(request)
 echoClient.echo(request => request.setText('hello'))
 
 ```
+
+bin/pprpc-codegen
+bin/pprpc-signaller

@@ -2,9 +2,11 @@
   "name": "pprpc",
   "version": "1.0.0",
   "description": "gRPC over webRTC",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "tsc"
   },
   "repository": {
     "type": "git",
@@ -22,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/benfoxall/pprpc/issues"
   },
-  "homepage": "https://github.com/benfoxall/pprpc#readme"
+  "homepage": "https://github.com/benfoxall/pprpc#readme",
+  "devDependencies": {
+    "typescript": "^3.6.2"
+  }
 }
