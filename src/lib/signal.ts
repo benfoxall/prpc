@@ -25,7 +25,7 @@ export class SignalClient {
                 }
 
                 if (data.type === 'twillio' && data.token) {
-                    sessionStorage.setItem(TWILLIO_KEY, data.token)
+                    sessionStorage.setItem(TWILLIO_KEY, JSON.stringify(data.token))
                 }
 
                 if (data.type === 'send') {
@@ -49,10 +49,22 @@ export class SignalClient {
                 token
             }))
 
+
+            // todo - or created at is hours old
             if (!twillio) {
                 this.ws.send(JSON.stringify({
                     type: 'twillio',
                 }))
+            }
+
+            const ping = () => {
+                if (this.ws.readyState === WebSocket.OPEN) {
+                    this.ws.send(JSON.stringify({
+                        type: 'ping',
+                    }))
+
+                    setTimeout(ping, 20 * 1000)
+                }
             }
         })
 
@@ -75,6 +87,7 @@ export class SignalClient {
                 body: message
             }))
         }
+
     }
 
     disconnect() {
