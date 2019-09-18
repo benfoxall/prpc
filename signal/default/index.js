@@ -6,13 +6,6 @@ const WSAPI = new AWS.ApiGatewayManagementApi({
     endpoint: process.env.WS_ENDPOINT
 })
 
-
-// Download the helper library from https://www.twilio.com/docs/node/install
-const client = require('twilio')(process.env.TWILLIO_SID, process.env.TWILLIO_AUTH);
-const twillioToken = () => client.tokens.create();
-
-// client.tokens.create().then(token => console.log(token.username));
-
 /*
     Initialise a connection
 
@@ -62,9 +55,7 @@ const handleSetup = async (message, ConnectionId) => {
     try {
         await DDB.putItem(params).promise()
 
-        const twilio = await twillioToken();
-
-        const resp = { uuid, token, twilio }
+        const resp = { uuid, token }
 
         await WSAPI.postToConnection({ ConnectionId, Data: "COOL: " + JSON.stringify(resp) }).promise()
 
