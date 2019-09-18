@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Host } from './Host'
+import { Start } from './Start'
 import { SignalClient } from "./lib/signal";
 
 // work out if we're hosting or joinging
@@ -24,12 +25,7 @@ if (host) {
 
 const App = () =>
     <>
-        <h1>Web Browser Server</h1>
-        <form>
-            <input name="host" />
-            <button>Start</button>
-        </form>
-
+        {!host && !join && <Start />}
         {host && <Host name={host} />}
     </>
 

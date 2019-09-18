@@ -86,6 +86,8 @@ export class SignalClient {
                 to: target,
                 body: message
             }))
+        } else {
+            throw new Error("WebSocket Closed")
         }
 
     }

@@ -1,0 +1,46 @@
+body {
+    font-family: 'Roboto Mono', monospace;
+    background: #eee;
+    margin: 0;
+}
+
+::placeholder {
+    opacity: 0.3;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+form.start {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 90vw;
+    left: 5vw;
+
+    input {
+        font-family: 'Roboto Mono', monospace;
+        display: block;
+        font-size: 2em;
+        margin: 0.5em 0;
+        border: none;
+        background: transparent;
+        border-bottom: 2px solid aquamarine;
+        max-width: 100%;
+
+
+        &:focus {
+            outline: none;
+            background: #fff
+        }
+
+    }
+    button {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 1em;
+        background: none;
+        border-width: 1px;
+        padding: .35em;
+    }
+}
