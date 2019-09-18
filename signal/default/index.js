@@ -64,30 +64,26 @@ const handleSetup = async (message, ConnectionId) => {
     try {
         await DDB.putItem(params).promise()
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify({
-                type: "setup",
-                uuid,
-                token
-            })
-        }
+        return response({
+            type: "setup",
+            uuid,
+            token
+        })
+
 
     } catch (e) {
 
         const error =
             e.code == 'ConditionalCheckFailedException' ?
                 (returning ? "token_invalid" : "already_exists") :
-                'unknown_error'
+                'unknown_error';
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify({
-                type: "setup",
-                uuid,
-                error
-            })
-        }
+        return response({
+            type: "setup",
+            uuid,
+            error
+        })
+
     }
 
 }
@@ -152,13 +148,15 @@ exports.handler = async (event) => {
             return handleSend(body, connectionId)
         }
 
+        if (body.type === 'ping') {
+            return response({ type: "pong" })
+        }
+
     } catch (e) {
 
-        return {
-            statusCode: 500,
-            body: JSON.stringify({
-                error: e.stack
-            })
-        }
+        return response({
+            error: e.stack
+        })
+
     }
 };
