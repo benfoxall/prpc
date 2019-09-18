@@ -15,6 +15,13 @@ const WSAPI = new AWS.ApiGatewayManagementApi({
 
         2. returning client - (check token) update
             {"type": "setup", "uuid": "foobar", "token": "abc"}
+
+
+    responses:
+        {"type": "setup", "uuid": "uuid", "token": "token"}
+
+        {"type": "setup", "uuid": "uuid", "error": "already_exists"}
+        {"type": "setup", "uuid": "uuid", "error": "invalid_token"}
 */
 const handleSetup = async (message, ConnectionId) => {
 
@@ -49,21 +56,26 @@ const handleSetup = async (message, ConnectionId) => {
         }
     }
 
-
-    console.log("Q: ", JSON.stringify(params))
-
     try {
         await DDB.putItem(params).promise()
 
-        const resp = { uuid, token }
+        const Data = JSON.stringify({ uuid, token })
 
-        await WSAPI.postToConnection({ ConnectionId, Data: "COOL: " + JSON.stringify(resp) }).promise()
+        await WSAPI.postToConnection({ ConnectionId, Data }).promise()
 
     } catch (e) {
         if (e.code == 'ConditionalCheckFailedException') {
-            // TODO - check response based on returning
 
-            await WSAPI.postToConnection({ ConnectionId, Data: "NOPE: " + JSON.stringify(e) }).promise()
+            const Data = JSON.stringify({
+                type: "setup",
+                uuid: uuid,
+                error: returning ? "token_invalid" : "already_exists"
+            })
+
+            await WSAPI.postToConnection({
+                ConnectionId,
+                Data
+            }).promise()
         } else {
             throw e
         }
