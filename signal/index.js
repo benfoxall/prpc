@@ -7,15 +7,21 @@ const WSAPI = new AWS.ApiGatewayManagementApi({
 })
 
 
+// Download the helper library from https://www.twilio.com/docs/node/install
+const client = require('twilio')(process.env.TWILLIO_SID, process.env.TWILLIO_AUTH);
+const twillioToken = () => client.tokens.create();
+
+// client.tokens.create().then(token => console.log(token.username));
+
 /*
     Initialise a connection
 
     cases: 
         1. new client - create client if uuid not exists
-            {type: "setup", uuid: 'foobar'}
+            {"type": "setup", "uuid": "foobar"}
 
         2. returning client - (check token) update
-            {type: "setup", uuid: 'foobar', token: 'helo'}
+            {"type": "setup", "uuid": "foobar", "token": "abc"}
 */
 const handleSetup = async (message, ConnectionId) => {
 
@@ -34,6 +40,7 @@ const handleSetup = async (message, ConnectionId) => {
     }
 
     if (returning) {
+        // check token matches
         params = {
             ...params,
             ConditionExpression: '#t = :t',
@@ -41,6 +48,7 @@ const handleSetup = async (message, ConnectionId) => {
             ExpressionAttributeValues: { ':t': { S: token } }
         }
     } else {
+        // check if it's not already taken
         params = {
             ...params,
             ConditionExpression: 'attribute_not_exists(#u)',
@@ -54,7 +62,9 @@ const handleSetup = async (message, ConnectionId) => {
     try {
         await DDB.putItem(params).promise()
 
-        const resp = { uuid, token }
+        const twilio = await twillioToken();
+
+        const resp = { uuid, token, twilio }
 
         await WSAPI.postToConnection({ ConnectionId, Data: "COOL: " + JSON.stringify(resp) }).promise()
 

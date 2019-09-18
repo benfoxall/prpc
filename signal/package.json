@@ -1,0 +1,6 @@
+{
+    "namne": "signal-lambda",
+    "dependencies": {
+        "twilio": "~3.34.0"
+    }
+}
