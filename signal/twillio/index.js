@@ -1,7 +1,8 @@
 
-const client = require('twilio')(process.env.TWILLIO_SID, process.env.TWILLIO_AUTH);
+const twillio = require('twilio');
+const client = twillio(process.env.TWILLIO_SID, process.env.TWILLIO_AUTH);
 
-exports.handler = () => ({
+exports.handler = async () => ({
     body: JSON.stringify({
         type: 'twillio',
         token: await client.tokens.create()
