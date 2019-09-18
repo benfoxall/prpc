@@ -6,6 +6,11 @@ const WSAPI = new AWS.ApiGatewayManagementApi({
     endpoint: process.env.WS_ENDPOINT
 })
 
+
+const response = (object) => ({
+    body: JSON.stringify(object)
+})
+
 /*
     Initialise a connection
 
@@ -59,32 +64,32 @@ const handleSetup = async (message, ConnectionId) => {
     try {
         await DDB.putItem(params).promise()
 
-        const Data = JSON.stringify({ uuid, token })
-
-        await WSAPI.postToConnection({ ConnectionId, Data }).promise()
+        return {
+            statusCode: 200,
+            body: JSON.stringify({
+                type: "setup",
+                uuid,
+                token
+            })
+        }
 
     } catch (e) {
-        if (e.code == 'ConditionalCheckFailedException') {
 
-            const Data = JSON.stringify({
+        const error =
+            e.code == 'ConditionalCheckFailedException' ?
+                (returning ? "token_invalid" : "already_exists") :
+                'unknown_error'
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify({
                 type: "setup",
-                uuid: uuid,
-                error: returning ? "token_invalid" : "already_exists"
+                uuid,
+                error
             })
-
-            await WSAPI.postToConnection({
-                ConnectionId,
-                Data
-            }).promise()
-        } else {
-            throw e
         }
     }
 
-    return {
-        statusCode: 200,
-        body: "ok"
-    }
 }
 
 
@@ -93,34 +98,42 @@ const handleSetup = async (message, ConnectionId) => {
         {type: "send", from: 'foobar', to: 'asdfas', body: 'helo'}
 */
 const handleSend = async (message, ConnectionId) => {
-    const { from, to, body } = message;
 
     // TODO - check that the client is who they say they are
     // ignore self-checking for now
     // THIS IS WHY JWT WOULD BE GOOD
 
-    const response = await DDB.getItem({
-        Key: {
-            "Uuid": {
-                S: to
+    const { from, to, body } = message;
+
+    if (!body) return response({ error: 'Missing "body"' })
+
+    try {
+        const target = await DDB.getItem({
+            Key: {
+                "Uuid": { S: to },
             },
-        },
-        TableName: process.env.TABLE_NAME
-    }).promise();
+            TableName: process.env.TABLE_NAME
+        }).promise();
 
-    console.log("RES", JSON.stringify(response));
+        if (!target.Item) {
+            return response({ type: "send", error: `Couldn't find peer: ${to}` })
+        }
 
+        await WSAPI
+            .postToConnection({
+                ConnectionId: target.Item.ConnectionId.S,
+                Data: JSON.stringify({
+                    type: "send",
+                    from, to, body
+                })
+            }).promise()
 
-    await WSAPI.postToConnection({
-        ConnectionId: response.Item.ConnectionId.S,
-        Data: body
-    }).promise()
+        return response({ type: "send", ok: true })
 
-
-    return {
-        statusCode: 200,
-        body: "ok"
+    } catch (err) {
+        return response({ type: "send", error: err.code || err.stack || 'ERROR' })
     }
+
 }
 
 
@@ -141,15 +154,11 @@ exports.handler = async (event) => {
 
     } catch (e) {
 
-        // tmp
-        await WSAPI.postToConnection({
-            ConnectionId: event.requestContext.connectionId, Data: "ERROR: " + JSON.stringify(e)
-        }).promise()
-
-
         return {
             statusCode: 500,
-            body: e.stack
+            body: JSON.stringify({
+                error: e.stack
+            })
         }
     }
 };
