@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "start": "parcel index.html",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "tsc"
   },
@@ -26,6 +27,12 @@
   },
   "homepage": "https://github.com/benfoxall/pprpc#readme",
   "devDependencies": {
+    "@types/react": "~16.9.2",
+    "@types/react-dom": "~16.9.0",
+    "parcel-bundler": "~1.12.3",
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0",
     "typescript": "^3.6.2"
-  }
+  },
+  "dependencies": {}
 }

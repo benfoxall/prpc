@@ -1,13 +1,19 @@
 {
-  "compilerOptions": {
-      "module": "esnext",
-      "outDir": "./dist",
-      "declaration": true
-  },
-  "include": [
-      "src/**/*"
-  ],
-  "exclude": [
-      "node_modules"
-  ]
+    "compilerOptions": {
+        "module": "commonjs",
+        "outDir": "./dist",
+        "declaration": true,
+        "jsx": "react",
+        "esModuleInterop": true,
+        "lib": [
+            "dom",
+            "es2015"
+        ]
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

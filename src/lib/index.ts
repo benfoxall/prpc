@@ -3,7 +3,7 @@ export class Server {
   constructor() {
     throw new Error("Not implemented")
   }
-  
+
 }
 
 export class Client {
@@ -11,5 +11,5 @@ export class Client {
   constructor() {
     throw new Error("Not implemented")
   }
-  
+
 }
