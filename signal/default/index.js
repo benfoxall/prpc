@@ -88,6 +88,15 @@ const handleSetup = async (message, ConnectionId) => {
 
 }
 
+const getConnectionId = (uuid) =>
+    DDB
+        .getItem({
+            Key: { "Uuid": { S: uuid } },
+            TableName: process.env.TABLE_NAME
+        })
+        .promise()
+        .then(res => res.Item && res.Item.ConnectionId.S)
+
 
 /*
     Send a message
@@ -101,23 +110,25 @@ const handleSend = async (message, ConnectionId) => {
 
     const { from, to, body } = message;
 
-    if (!body) return response({ error: 'Missing "body"' })
+    if (!body) { return response({ error: 'Missing "body"' }) }
+    if (!from) { return response({ error: 'Missing "from"' }) }
 
     try {
-        const target = await DDB.getItem({
-            Key: {
-                "Uuid": { S: to },
-            },
-            TableName: process.env.TABLE_NAME
-        }).promise();
 
-        if (!target.Item) {
+        const source = getConnectionId(from);
+        const target = getConnectionId(to);
+
+        if ((await source) !== ConnectionId) {
+            return response({ error: `source connection doesn't match uuid` })
+        }
+
+        if (!(await target)) {
             return response({ type: "send", error: `Couldn't find peer: ${to}` })
         }
 
         await WSAPI
             .postToConnection({
-                ConnectionId: target.Item.ConnectionId.S,
+                ConnectionId: await target,
                 Data: JSON.stringify({
                     type: "send",
                     from, to, body
