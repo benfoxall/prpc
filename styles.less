@@ -2,7 +2,7 @@ body {
     font-family: 'Roboto Mono', monospace;
     background: #eee;
     margin: 0;
-    background: linear-gradient(20deg, rgba(2,0,36,0.1), rgba(0,212,255,1));
+    background: linear-gradient(40deg, rgba(2,0,36,0.1), rgba(0,212,255,0.3));
 
 }
 
@@ -13,6 +13,7 @@ body {
 
 h1, h2, h3 {
     margin: 0;
+    font-weight: 100;
 }
 
 form.start {
@@ -25,19 +26,19 @@ form.start {
     input {
         font-family: 'Roboto Mono', monospace;
         display: block;
-        font-size: 2em;
+        font-size: 1.5em;
         margin: 0.5em 0;
         border: none;
         background: transparent;
-        border-bottom: 2px solid aquamarine;
+        border-bottom: 1px solid aquamarine;
         max-width: 100%;
 
+        transition: .4s;
 
         &:focus {
             outline: none;
-            border-color: #f08
+            border-color: #000;
         }
-
     }
     button {
         font-family: 'Roboto Mono', monospace;

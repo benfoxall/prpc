@@ -15,8 +15,21 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
 
     return (<>
-        <h2>Hosting: {name}</h2>
-        ...
+        <h2>Web Browser Server <small>({name})</small></h2>
+
+        <ul>
+            <li>
+                Debug
+            </li>
+
+            <li>
+                Chat
+            </li>
+
+            <li>
+                Trails
+            </li>
+        </ul>
 
     </>)
 }

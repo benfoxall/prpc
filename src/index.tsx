@@ -1,8 +1,14 @@
 import React from "react";
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
 import ReactDOM from "react-dom";
 import { Host } from './Host'
 import { Start } from './Start'
 import { SignalClient } from "./lib/signal";
+import reducer from './reducers'
+import { devToolsEnhancer } from 'redux-devtools-extension';
+
+const store = createStore(reducer, devToolsEnhancer({}))
 
 // work out if we're hosting or joinging
 const search = document.location.search;
@@ -24,10 +30,10 @@ if (host) {
 }
 
 const App = () =>
-    <>
+    <Provider store={store}>
         {!host && !join && <Start />}
         {host && <Host name={host} />}
-    </>
+    </Provider>
 
 
 ReactDOM.render(<App />, document.getElementById("root"));
