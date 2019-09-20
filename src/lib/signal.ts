@@ -1,3 +1,5 @@
+import WebSocket from './reconnecting-ws'
+
 const BACKEND = 'wss://i0eiyzqlwl.execute-api.eu-west-1.amazonaws.com/dev'
 const TOKEN_KEY_PREFIX = '{{tok=>'
 const TWILLIO_KEY = '{{twillio}}'
@@ -42,7 +44,14 @@ export class SignalClient {
         const token = sessionStorage.getItem(TOKEN_KEY_PREFIX + uuid)
         const twillio = sessionStorage.getItem(TWILLIO_KEY)
 
+        this.ws.addEventListener("close", () => {
+            console.log("CLOSE")
+
+        })
+
         this.ws.addEventListener("open", () => {
+            console.log("OPEN!!")
+            
             this.ws.send(JSON.stringify({
                 type: 'setup',
                 uuid: uuid,
