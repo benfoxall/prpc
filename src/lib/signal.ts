@@ -7,7 +7,6 @@ const TWILLIO_KEY = '{{twillio}}'
 type dataBack = (body: any, from: string) => void;
 
 export class SignalClient {
-
     private ws: WebSocket;
     private listeners = new Set<dataBack>();
 
@@ -21,6 +20,8 @@ export class SignalClient {
                 console.log(">>>>", data);
 
                 if (data.type === 'setup' && data.token) {
+                    // this.handleSetup(data);
+
                     sessionStorage.setItem(TOKEN_KEY_PREFIX + uuid, data.token)
 
                     console.log("SET TOKEN")
@@ -67,14 +68,16 @@ export class SignalClient {
             }
 
             const ping = () => {
-                if (this.ws.readyState === WebSocket.OPEN) {
-                    this.ws.send(JSON.stringify({
-                        type: 'ping',
-                    }))
-
-                    setTimeout(ping, 20 * 1000)
-                }
+                setTimeout(() => {
+                    if (this.ws.readyState === WebSocket.OPEN) {
+                        this.ws.send(JSON.stringify({
+                            type: 'ping',
+                        }))
+                        ping()
+                    }
+                }, 5 * 60 * 1000)
             }
+            ping();
         })
 
 
@@ -105,9 +108,6 @@ export class SignalClient {
         throw new Error("Not Implemented")
     }
 
-
-    private handle(message: any) {
-
-    }
+    
 
 }
