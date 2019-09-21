@@ -39,12 +39,31 @@ type Methods<S> = {
 
 type NamedService = { serviceName: string };
 
-export class PeerServiceServer<S extends NamedService> extends PeerRPCServer {
-  constructor(room: string, service: S, impl: Implementation<S>, dispatch?: Dispatch) {
+export class PeerServiceServer extends PeerRPCServer {
+
+  private services = new Map<string, NamedService>();
+  private implementations = new WeakMap<NamedService, Implementation<any>>();
+
+  public addService<T extends NamedService>(service: T, impl: Implementation<T>) {
+    this.services.set(service.serviceName, service)
+    this.implementations.set(service, impl)
+  }
+
+  public removeService(service: NamedService) {
+    this.services.delete(service.serviceName)
+    this.implementations.delete(service)
+  }
+
+  constructor(room: string, dispatch?: Dispatch) {
     super(room, (meta, payload) => {
 
-      if (meta.serviceName !== service.serviceName) {
-        console.error("mismatching service - we're probably screwed");
+      const service = this.services.get(meta.serviceName);
+      const impl = this.implementations.get(service);
+
+      if (!(service && impl)) {
+        console.error("Service not found");
+
+        return new Uint8Array([]);
       }
 
       const name = meta.fnName;
@@ -52,8 +71,6 @@ export class PeerServiceServer<S extends NamedService> extends PeerRPCServer {
       const handle = impl[name];
 
       if (handle) {
-        // console.log("handline", meta)
-        // handle
         const Request = service[name].requestType
         const Response = service[name].responseType
 
@@ -74,33 +91,28 @@ export class PeerServiceServer<S extends NamedService> extends PeerRPCServer {
 }
 
 
-export class PeerServiceClient<S extends NamedService> extends PeerRPCClient {
+export class PeerServiceClient extends PeerRPCClient {
 
-  constructor(room: string, private readonly service: S, dispatch?: Dispatch) {
+  constructor(room: string, dispatch?: Dispatch) {
     super(room, dispatch);
   }
 
-  async issue<T extends keyof Methods<S>>(name: T, setter: (p: Methods<S>[T]['request']) => void | Promise<void>): Promise<Methods<S>[T]['response']> {
-
-    // const m = new MoveEvent()
-    // m.serializeBinary()
-
-    // MoveEvent.deserializeBinary
+  async issue<S extends NamedService, T extends keyof Methods<S>>(srvc: S, name: T, setter: (p: Methods<S>[T]['request']) => void | Promise<void>): Promise<Methods<S>[T]['response']> {
 
     // @ts-ignore
-    const Request = this.service[name].requestType
+    const Request = srvc[name].requestType
 
     const request = new Request();
 
     await setter(request);
 
-    const service = this.service.serviceName;
+    const service = srvc.serviceName;
     const method = name + ''
 
     const responseData = await super.call(service, method, request.serializeBinary());
 
     // @ts-ignore
-    return new this.service[name].responseType.deserializeBinary(responseData);
+    return new srvc[name].responseType.deserializeBinary(responseData);
   }
 
 }

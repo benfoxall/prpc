@@ -36,17 +36,17 @@ export const useSignal = (uuid: string) => {
 export const usePeerServer = (uuid: string) => {
 
 
-    const [server, setServer] = useState<PeerServiceServer<typeof Dev>>();
+    const [server, setServer] = useState<PeerServiceServer>();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const server = new PeerServiceServer(uuid, Dev, {
-            Background: (req, res) => {
-                console.log("BACKGORUND: ", req.getValue())
+        const server = new PeerServiceServer(uuid, dispatch);
 
-                document.body.style.background = req.getValue()
+        server.addService(Dev, {
+            Background: (e) => {
+                document.body.style.background = e.getValue();
             }
-        }, dispatch);
+        })
 
         setServer(server)
 
@@ -60,13 +60,14 @@ export const usePeerServer = (uuid: string) => {
 
 export const usePeerClient = (uuid: string) => {
 
-    const [client, setClient] = useState<PeerServiceClient<typeof Dev>>();
+    const [client, setClient] = useState<PeerServiceClient>();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const client = new PeerServiceClient(uuid, Dev, dispatch);
+        const client = new PeerServiceClient(uuid, dispatch);
 
-        client.issue("Background", (e) => e.setValue(Math.random().toString(16)))
+        // client.issue(Dev, "Background", (e) => e.setValue(Math.random().toString(16)))
+
 
         setClient(client)
 
