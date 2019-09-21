@@ -12,6 +12,19 @@ const log = (...message: any[]) => {
     console.log.apply(console, ['%c[ws]', 'color:#08f'].concat(message))
 }
 
+export enum Events {
+    START = 'WS:START',
+    WS_OPEN = 'WS:WS_OPEN',
+    WS_CLOSE = 'WS:WS_CLOSE',
+    WS_MESSAGE = 'WS:WS_MESSAGE',
+    AUTH_OK = 'WS:AUTH_OK', // payload=uuid
+    AUTH_FAIL = 'WS:AUTH_FAIL', // payload=error
+    TWILLIO_OK = 'WS:TWILLIO_OK',
+    DISCONNECT = 'WS:DISCONNECT',
+}
+
+type Dispatch = (event: Events, payload?: any) => void;
+
 export class SignalClient {
 
     public error: string = null;
@@ -21,7 +34,12 @@ export class SignalClient {
     private ws: WebSocket;
     private dataListeners = new Set<CallbackMap['data']>();
 
-    constructor(public readonly uuid: string) {
+    constructor(
+        public readonly uuid: string,
+        private dispatch: Dispatch = (event: Events, payload?: any) => log(event, payload)
+    ) {
+        dispatch(Events.START)
+
         this.ws = new WebSocket(BACKEND)
 
         const ping = () => {
@@ -45,12 +63,15 @@ export class SignalClient {
         if (twillio) {
             try {
                 twRes(JSON.parse(twillio))
+
+                dispatch(Events.TWILLIO_OK)
             } catch (e) { }
 
         }
 
         const open = () => {
-            log('open')
+            dispatch(Events.WS_OPEN)
+
             this.ws.send(JSON.stringify({
                 type: 'setup',
                 uuid: uuid,
@@ -67,7 +88,7 @@ export class SignalClient {
         }
 
         const message = (m: MessageEvent) => {
-            log("message", m.data)
+            dispatch(Events.WS_MESSAGE, m.data)
             try {
                 const data = JSON.parse(m.data);
 
@@ -77,11 +98,14 @@ export class SignalClient {
                         log("Token updated")
                         sessionStorage.setItem(TOKEN_KEY_PREFIX + uuid, data.token)
 
+                        dispatch(Events.AUTH_OK, uuid)
                         authRes(uuid)
                     }
 
                     if (data.error) {
                         this.error = data.error;
+
+                        dispatch(Events.AUTH_FAIL, data.error)
 
                         authRej(new Error(data.error))
                     }
@@ -105,6 +129,7 @@ export class SignalClient {
         }
 
         const close = () => {
+            dispatch(Events.WS_CLOSE)
             log("CLOSE")
         }
 
@@ -131,6 +156,7 @@ export class SignalClient {
 
     disconnect() {
         log("disconnect")
+        this.dispatch(Events.DISCONNECT);
         this.ws.close()
     }
 

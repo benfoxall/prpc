@@ -10,25 +10,31 @@ export const useSignal = (uuid: string) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const client = new SignalClient(uuid);
+        const client = new SignalClient(
+            uuid,
+            (type, payload) => {
+                console.log("_", type, payload)
+                dispatch({ type, payload })
+            }
+        );
 
-        dispatch({
-            type: IS_ACTIVE
-        })
+        // dispatch({
+        //     type: IS_ACTIVE
+        // })
 
-        client.auth
-            .then(s => {
-                dispatch({
-                    type: SET_UUID,
-                    payload: s
-                })
-            })
-            .catch(s => {
-                dispatch({
-                    type: SET_ERROR,
-                    payload: s
-                })
-            })
+        // client.auth
+        //     .then(s => {
+        //         dispatch({
+        //             type: SET_UUID,
+        //             payload: s
+        //         })
+        //     })
+        //     .catch(s => {
+        //         dispatch({
+        //             type: SET_ERROR,
+        //             payload: s
+        //         })
+        //     })
 
 
         setConnection(client);
