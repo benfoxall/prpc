@@ -16,6 +16,7 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
             const devService = client.getService(Dev)
             devService("Background", res => res.setValue(color))
+
         }
 
     }, [color, client])

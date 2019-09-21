@@ -22,22 +22,24 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
     }, [peerServer])
 
 
-    return (<>
-        <h2>Web Browser Server <small>({name})</small></h2>
+    return (
+        <main className="Host">
+            <h2>Web Browser Server <small>({name})</small></h2>
 
-        <ul>
-            <li>
-                Debug
-            </li>
+            <ul>
+                <li>
+                    <a href="/Debug">Debug</a>
+                </li>
 
-            <li>
-                Chat
-            </li>
+                <li>
+                    Chat
+                </li>
 
-            <li>
-                Trails
-            </li>
-        </ul>
+                <li>
+                    Trails
+                </li>
+            </ul>
 
-    </>)
+        </main>
+    )
 }

@@ -14,9 +14,7 @@ const logger = store => next => action => {
     return next(action)
 }
 
-
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(logger)))
-
 
 
 // work out if we're hosting or joinging
@@ -51,11 +49,11 @@ const Connection = () => {
     if (connection.connectionType === 'server') {
         return (
             <footer className="Connection">
-                <h2>
-                    [ws {connection.wsState ? '⚡️' : '👋'}]
-                    [dc ⚡️&times;{connections}]
-                    <span> {uuid}</span>
-                </h2>
+                <h1>
+                    <a href={document.location.origin} target="_blank">{document.location.host}</a> | {uuid}</h1>
+                <h3>
+                    [ws {connection.wsState ? '⚡️' : '👋'}] [{connections} Peer Client{connections !== 1 ? 's' : ''}]
+                </h3>
             </footer>
         )
     }
@@ -63,11 +61,12 @@ const Connection = () => {
     return (
         <footer className="Connection">
             <h2>
+                client: {uuid || '_'}
+            </h2>
+            <h3>
                 [ws {connection.wsState ? '⚡️' : '👋'}]
                 [dc {connection.dcState ? '⚡️' : '👋'}]
-
-                <span> {uuid}</span>
-            </h2>
+            </h3>
         </footer>
     )
 }
