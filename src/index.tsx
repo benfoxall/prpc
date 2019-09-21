@@ -48,14 +48,25 @@ const Connection = () => {
         )
     }
 
+    if (connection.connectionType === 'server') {
+        return (
+            <footer className="Connection">
+                <h2>
+                    [ws {connection.wsState ? '⚡️' : '👋'}]
+                    [dc ⚡️&times;{connections}]
+                    <span> {uuid}</span>
+                </h2>
+            </footer>
+        )
+    }
+
     return (
         <footer className="Connection">
             <h2>
                 [ws {connection.wsState ? '⚡️' : '👋'}]
                 [dc {connection.dcState ? '⚡️' : '👋'}]
 
-                <span>{uuid}</span>
-                <span>{connections}</span>
+                <span> {uuid}</span>
             </h2>
         </footer>
     )

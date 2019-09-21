@@ -60,22 +60,30 @@ const reducer: Reducer<State> = (state = initState, action) => {
                 wsState: false
             }
 
+        case PeerBaseEvents.PEER_CLIENT_START:
+            return {
+                ...state,
+                connectionType: 'client',
+            }
+
+
+        case PeerBaseEvents.PEER_SERVER_START:
+            return {
+                ...state,
+                connectionType: 'server',
+            }
 
 
         case PeerBaseEvents.PEER_CLIENT_CONNECT:
             return {
                 ...state,
-                connectionType: 'client',
-                dcState: true,
-                connections: 1
+                dcState: true
             }
 
 
         case PeerBaseEvents.PEER_SERVER_CONNECT:
             return {
                 ...state,
-                connectionType: 'server',
-                dcState: true,
                 connections: state.connections + 1
             }
     }

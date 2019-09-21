@@ -6,10 +6,12 @@ import { Dispatch } from 'redux';
 type Listener = (id: string, payload: Uint8Array) => void;
 
 export enum Events {
+  PEER_SERVER_START = '[peer-base] PEER_SERVER_START',
   PEER_SERVER_CONNECT = '[peer-base] PEER_SERVER_CONNECT',
   PEER_SERVER_CLOSE = '[peer-base] PEER_SERVER_CLOSE',
   // PEER_SERVER_DATA = '[peer-base] PEER_SERVER_DATA',
 
+  PEER_CLIENT_START = '[peer-base] PEER_CLIENT_START',
   PEER_CLIENT_CONNECT = '[peer-base] PEER_CLIENT_CONNECT',
   PEER_CLIENT_CLOSE = '[peer-base] PEER_CLIENT_CLOSE',
   // PEER_CLIENT_DATA = '[peer-base] PEER_CLIENT_DATA',
@@ -23,6 +25,8 @@ export class PeerServer {
   constructor(room: string, private dispatch?: Dispatch) {
     this.listeners = new Set
     this.peers = new Map
+
+    this.notify(Events.PEER_SERVER_START)
 
     const client = new SignalClient(room, dispatch);
 
@@ -92,6 +96,8 @@ export class PeerClient {
   private peer: any;
 
   constructor(room: string, private dispatch?: Dispatch) {
+
+    this.notify(Events.PEER_CLIENT_START)
 
     const connect = async (room: string) => {
 
