@@ -26,7 +26,7 @@ export class SignalClient {
 
         const ping = () => {
             setTimeout(() => {
-                this._send({type: 'ping'}, 0)
+                this._send({ type: 'ping' }, 0)
 
                 ping()
             }, 5 * 60 * 1000)
@@ -37,16 +37,16 @@ export class SignalClient {
         this.twillio = new Promise(res => twRes = res);
 
         let authRes, authRej;
-        this.auth = new Promise((res, rej) => {authRes = res; authRej = rej});
+        this.auth = new Promise((res, rej) => { authRes = res; authRej = rej });
 
         const token = sessionStorage.getItem(TOKEN_KEY_PREFIX + uuid)
         const twillio = sessionStorage.getItem(TWILLIO_KEY)
 
-        if(twillio) {
+        if (twillio) {
             try {
                 twRes(JSON.parse(twillio))
-            } catch (e) {}
-            
+            } catch (e) { }
+
         }
 
         const open = () => {
@@ -73,14 +73,14 @@ export class SignalClient {
 
                 if (data.type === 'setup') {
 
-                    if(data.token) {
+                    if (data.token) {
                         log("Token updated")
                         sessionStorage.setItem(TOKEN_KEY_PREFIX + uuid, data.token)
 
                         authRes(uuid)
                     }
-                    
-                    if(data.error) {
+
+                    if (data.error) {
                         this.error = data.error;
 
                         authRej(new Error(data.error))
@@ -114,10 +114,10 @@ export class SignalClient {
     }
 
     // this could be better
-    on<T extends keyof CallbackMap>(data: T , callback: CallbackMap[T]) {
+    on<T extends keyof CallbackMap>(data: T, callback: CallbackMap[T]) {
         if (data === 'data') {
             this.dataListeners.add(callback)
-        } 
+        }
     }
 
     send(target: string, message: any) {
@@ -130,7 +130,8 @@ export class SignalClient {
     }
 
     disconnect() {
-        throw new Error("Not Implemented")
+        log("disconnect")
+        this.ws.close()
     }
 
     /** Try and send to the underlying connection */
@@ -139,16 +140,16 @@ export class SignalClient {
             this.ws.send(JSON.stringify(message))
             return true
 
-        } else if(retries > 0) {
+        } else if (retries > 0) {
             log("Retrying")
-            
+
             setTimeout(
                 this._send.bind(this),
                 1500,
                 message,
                 retries - 1
             )
-        
+
         }
     }
 }
