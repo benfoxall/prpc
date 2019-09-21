@@ -24,6 +24,14 @@ if (host) {
         console.log(message, from)
     })
 
+    client.twillio
+        .then(s => {console.log("📞", s)})
+
+    client.auth
+        .then(s => {console.log("AUTH", s)})
+        .catch(s => {console.log("NO", s)})
+
+
     //@ts-ignore
     window.client = client;
 

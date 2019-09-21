@@ -4,7 +4,9 @@ const BACKEND = 'wss://i0eiyzqlwl.execute-api.eu-west-1.amazonaws.com/dev'
 const TOKEN_KEY_PREFIX = '{{tok=>'
 const TWILLIO_KEY = '{{twillio}}'
 
-type dataBack = (body: any, from: string) => void;
+interface CallbackMap {
+    data: (body: any, from: string) => void;
+}
 
 const log = (...message: any[]) => {
     console.log.apply(console, ['%c[ws]', 'color:#08f'].concat(message))
@@ -12,8 +14,12 @@ const log = (...message: any[]) => {
 
 export class SignalClient {
 
+    public error: string = null;
+    public twillio: Promise<any>;
+    public auth: Promise<string>;
+
     private ws: WebSocket;
-    private listeners = new Set<dataBack>();
+    private dataListeners = new Set<CallbackMap['data']>();
 
     constructor(public readonly uuid: string) {
         this.ws = new WebSocket(BACKEND)
@@ -27,9 +33,21 @@ export class SignalClient {
         }
         ping();
 
+        let twRes;
+        this.twillio = new Promise(res => twRes = res);
+
+        let authRes, authRej;
+        this.auth = new Promise((res, rej) => {authRes = res; authRej = rej});
 
         const token = sessionStorage.getItem(TOKEN_KEY_PREFIX + uuid)
         const twillio = sessionStorage.getItem(TWILLIO_KEY)
+
+        if(twillio) {
+            try {
+                twRes(JSON.parse(twillio))
+            } catch (e) {}
+            
+        }
 
         const open = () => {
             log('open')
@@ -53,9 +71,21 @@ export class SignalClient {
             try {
                 const data = JSON.parse(m.data);
 
-                if (data.type === 'setup' && data.token) {
-                    log("Token updated")
-                    sessionStorage.setItem(TOKEN_KEY_PREFIX + uuid, data.token)
+                if (data.type === 'setup') {
+
+                    if(data.token) {
+                        log("Token updated")
+                        sessionStorage.setItem(TOKEN_KEY_PREFIX + uuid, data.token)
+
+                        authRes(uuid)
+                    }
+                    
+                    if(data.error) {
+                        this.error = data.error;
+
+                        authRej(new Error(data.error))
+                    }
+
                 }
 
                 if (data.type === 'twillio' && data.token) {
@@ -63,7 +93,7 @@ export class SignalClient {
                 }
 
                 if (data.type === 'send') {
-                    this.listeners.forEach(cb => {
+                    this.dataListeners.forEach(cb => {
                         cb(data.body, data.from)
                     })
                 }
@@ -83,10 +113,11 @@ export class SignalClient {
         this.ws.addEventListener('close', close);
     }
 
-    on(data: "data", callback: dataBack) {
+    // this could be better
+    on<T extends keyof CallbackMap>(data: T , callback: CallbackMap[T]) {
         if (data === 'data') {
-            this.listeners.add(callback)
-        }
+            this.dataListeners.add(callback)
+        } 
     }
 
     send(target: string, message: any) {
