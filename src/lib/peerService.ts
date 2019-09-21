@@ -1,5 +1,6 @@
 
 import { PeerRPCServer, PeerRPCClient, Meta } from './peerRPC';
+import { Dispatch } from 'redux';
 
 type FilterFlags<Base, Condition> = {
   [Key in keyof Base]:
@@ -39,7 +40,7 @@ type Methods<S> = {
 type NamedService = { serviceName: string };
 
 export class PeerServiceServer<S extends NamedService> extends PeerRPCServer {
-  constructor(room: string, service: S, impl: Implementation<S>) {
+  constructor(room: string, service: S, impl: Implementation<S>, dispatch?: Dispatch) {
     super(room, (meta, payload) => {
 
       if (meta.serviceName !== service.serviceName) {
@@ -68,15 +69,15 @@ export class PeerServiceServer<S extends NamedService> extends PeerRPCServer {
 
 
       return new Uint8Array([]);
-    })
+    }, dispatch)
   }
 }
 
 
 export class PeerServiceClient<S extends NamedService> extends PeerRPCClient {
 
-  constructor(room: string, private readonly service: S) {
-    super(room);
+  constructor(room: string, private readonly service: S, dispatch?: Dispatch) {
+    super(room, dispatch);
   }
 
   async issue<T extends keyof Methods<S>>(name: T, setter: (p: Methods<S>[T]['request']) => void | Promise<void>): Promise<Methods<S>[T]['response']> {

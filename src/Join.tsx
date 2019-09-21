@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useMemo } from 'react';
+import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { SignalClient } from './lib/signal';
 import { useSignal, usePeerClient } from './lib/hooks';
 
@@ -6,6 +6,7 @@ let LOCAL = sessionStorage.getItem('LOCAL_ID') || Math.random().toString(36).sli
 sessionStorage.setItem('LOCAL_ID', LOCAL)
 
 export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
+    const [color, setColor] = useState<string>('#000')
 
     const client = usePeerClient(name);
 
@@ -20,7 +21,7 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
             setTimeout(() => {
                 // client.send(name, "stuff here")
-                client.send(new Uint8Array([1, 2, 34]))
+                // client.send(new Uint8Array([1, 2, 34]))
             }, 500)
 
 
@@ -30,9 +31,18 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
     }, [client])
 
+    useEffect(() => {
+        if (color && client) {
+            client.issue('Background', res => res.setValue(color))
+        }
+
+    }, [color, client])
+
     return (<>
         <h2>
             JOINING <small>({name})</small>
+
+            <input type="color" value={color} onChange={e => setColor(e.target.value)} />
         </h2>
     </>)
 }

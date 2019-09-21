@@ -1,5 +1,6 @@
 import { PeerServer, PeerClient } from './peerBase'
 import { RPCWrapper } from './protos/generated/peer-rpc_pb'
+import { Dispatch } from 'redux';
 
 
 export type Meta = { serviceName: string; fnName: string; peerId: string }
@@ -7,8 +8,8 @@ export type Handler = (meta: Meta, payload: Uint8Array) => Uint8Array | Promise<
 
 export class PeerRPCServer extends PeerServer {
 
-  constructor(room: string, handler: Handler) {
-    super(room);
+  constructor(room: string, handler: Handler, dispatch?: Dispatch) {
+    super(room, dispatch);
 
     super.on("data", (id, payload) => {
 
@@ -43,8 +44,8 @@ export class PeerRPCClient extends PeerClient {
   private wrapper = new RPCWrapper;
   private pending = new Map<number, Function>()
 
-  constructor(room: string) {
-    super(room);
+  constructor(room: string, dispatch?: Dispatch) {
+    super(room, dispatch);
 
     this.on('data', (data) => {
       const response = RPCWrapper.deserializeBinary(data);

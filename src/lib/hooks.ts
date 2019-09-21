@@ -3,6 +3,10 @@ import { useState, useEffect } from 'react';
 import { SignalClient } from './signal';
 import { useDispatch } from 'react-redux';
 import { PeerServer, PeerClient } from './peerBase';
+import { PeerRPCServer, PeerRPCClient } from './peerRPC';
+import { PeerServiceServer, PeerServiceClient } from './peerService';
+import { Dev } from './protos/generated/dev_pb_service'
+
 
 export const useSignal = (uuid: string) => {
 
@@ -12,7 +16,7 @@ export const useSignal = (uuid: string) => {
     useEffect(() => {
         const client = new SignalClient(
             uuid,
-            (type, payload) => dispatch({ type, payload })
+            dispatch
         );
 
         setConnection(client);
@@ -31,17 +35,24 @@ export const useSignal = (uuid: string) => {
 
 export const usePeerServer = (uuid: string) => {
 
-    const [connection, setConnection] = useState<PeerServer>();
+
+    const [server, setServer] = useState<PeerServiceServer<typeof Dev>>();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const server = new PeerServer(uuid, dispatch);
+        const server = new PeerServiceServer(uuid, Dev, {
+            Background: (req, res) => {
+                console.log("BACKGORUND: ", req.getValue())
 
-        setConnection(server)
+                document.body.style.background = req.getValue()
+            }
+        }, dispatch);
+
+        setServer(server)
 
     }, [uuid]);
 
-    return connection;
+    return server;
 
 }
 
@@ -49,16 +60,18 @@ export const usePeerServer = (uuid: string) => {
 
 export const usePeerClient = (uuid: string) => {
 
-    const [connection, setConnection] = useState<PeerClient>();
+    const [client, setClient] = useState<PeerServiceClient<typeof Dev>>();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const server = new PeerClient(uuid, dispatch);
+        const client = new PeerServiceClient(uuid, Dev, dispatch);
 
-        setConnection(server)
+        client.issue("Background", (e) => e.setValue(Math.random().toString(16)))
+
+        setClient(client)
 
     }, [uuid]);
 
-    return connection;
+    return client;
 
 }
