@@ -10,6 +10,9 @@
     "prepare": "tsc",
     "build": "parcel build index.html"
   },
+  "browserslist": [
+    "last 1 Chrome versions"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/benfoxall/pprpc.git"
@@ -30,6 +33,7 @@
   "devDependencies": {
     "@types/react": "~16.9.2",
     "@types/react-dom": "~16.9.0",
+    "@types/simple-peer": "~6.1.6",
     "less": "~3.10.3",
     "parcel-bundler": "~1.12.3",
     "react": "^16.9.0",
@@ -37,6 +41,7 @@
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
+    "simple-peer": "~9.6.0",
     "typescript": "^3.6.2"
   },
   "dependencies": {

@@ -116,7 +116,8 @@ export class SignalClient {
                     sessionStorage.setItem(TWILLIO_KEY, JSON.stringify(data.token))
                 }
 
-                if (data.type === 'send') {
+                if (data.type === 'send' && data.to === this.uuid) {
+                    console.log("SEND====", data.to)
                     this.dataListeners.forEach(cb => {
                         cb(data.body, data.from)
                     })

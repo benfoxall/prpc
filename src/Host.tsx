@@ -1,10 +1,20 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import { SignalClient } from './lib/signal';
-import { useSignal } from './lib/hooks';
+import { useSignal, usePeerServer } from './lib/hooks';
 
 export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
-    const signal = useSignal(name);
+    // const signal = useSignal(name);
+
+    const peerServer = usePeerServer(name);
+
+    useEffect(() => {
+        if (peerServer) {
+            peerServer.on('data', (client, data) => {
+                console.log("YAYYYY, NO SERVER", client, data)
+            })
+        }
+    }, [peerServer])
 
 
     return (<>

@@ -1,5 +1,5 @@
 import React from "react";
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import ReactDOM from "react-dom";
 import { Host } from './Host'
@@ -8,7 +8,16 @@ import { Start } from './Start'
 import reducer, { useSelector } from './reducers'
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-const store = createStore(reducer, composeWithDevTools())
+const logger = store => next => action => {
+    console.log('%c' + action.type, 'color: #f08', action.payload || '')
+
+    return next(action)
+}
+
+
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(logger)))
+
+
 
 // work out if we're hosting or joinging
 const search = document.location.search;
