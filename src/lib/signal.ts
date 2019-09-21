@@ -13,14 +13,15 @@ const log = (...message: any[]) => {
 }
 
 export enum Events {
-    START = 'WS:START',
-    WS_OPEN = 'WS:WS_OPEN',
-    WS_CLOSE = 'WS:WS_CLOSE',
-    WS_MESSAGE = 'WS:WS_MESSAGE',
-    AUTH_OK = 'WS:AUTH_OK', // payload=uuid
-    AUTH_FAIL = 'WS:AUTH_FAIL', // payload=error
-    TWILLIO_OK = 'WS:TWILLIO_OK',
-    DISCONNECT = 'WS:DISCONNECT',
+    START = '[ws] START',
+    WS_OPEN = '[ws] WS_OPEN',
+    WS_CLOSE = '[ws] WS_CLOSE',
+    WS_MESSAGE = '[ws] WS_MESSAGE', // payload=message
+    WS_SEND = '[ws] WS_SEND',
+    AUTH_OK = '[ws] AUTH_OK', // payload=uuid
+    AUTH_FAIL = '[ws] AUTH_FAIL', // payload=error
+    TWILLIO_OK = '[ws] TWILLIO_OK',
+    DISCONNECT = '[ws] DISCONNECT',
 }
 
 type Dispatch = (event: Events, payload?: any) => void;
@@ -88,6 +89,8 @@ export class SignalClient {
         }
 
         const message = (m: MessageEvent) => {
+
+
             dispatch(Events.WS_MESSAGE, m.data)
             try {
                 const data = JSON.parse(m.data);
@@ -117,7 +120,6 @@ export class SignalClient {
                 }
 
                 if (data.type === 'send' && data.to === this.uuid) {
-                    console.log("SEND====", data.to)
                     this.dataListeners.forEach(cb => {
                         cb(data.body, data.from)
                     })
@@ -147,12 +149,15 @@ export class SignalClient {
     }
 
     send(target: string, message: any) {
-        this._send({
-            type: 'send',
-            from: this.uuid,
-            to: target,
-            body: message
-        }, 0)
+        // need to be authed before we can send messages to others 
+        this.auth.then(() => {
+            this._send({
+                type: 'send',
+                from: this.uuid,
+                to: target,
+                body: message
+            }, 0)
+        })
     }
 
     disconnect() {
@@ -163,6 +168,8 @@ export class SignalClient {
 
     /** Try and send to the underlying connection */
     private _send(message: any, retries = 3) {
+        this.dispatch(Events.WS_SEND, message)
+
         if (this.ws.readyState === WebSocket.OPEN) {
             this.ws.send(JSON.stringify(message))
             return true

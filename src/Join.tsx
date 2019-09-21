@@ -9,20 +9,24 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
     const client = usePeerClient(name);
 
-    // const signal = useSignal(name + LOCAL);
-
     useEffect(() => {
-
         console.log("CLIENT", client)
+
         if (client) {
+
+            client.on('data', (data) => {
+                console.log("YAYYYY, NO SERVER", data)
+            })
+
             setTimeout(() => {
                 // client.send(name, "stuff here")
                 client.send(new Uint8Array([1, 2, 34]))
             }, 500)
 
+
+            window.client = client;
+
         }
-
-
 
     }, [client])
 

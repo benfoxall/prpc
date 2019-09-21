@@ -2,17 +2,7 @@
 import Peer from 'simple-peer'
 import { SignalClient } from './signal';
 
-// // signalhub config
-// const url = "https://signalhub-jccqtwhdwc.now.sh"
-// const app = 'webrtcrpc-eroids'
-
 type Listener = (id: string, payload: Uint8Array) => void;
-
-// Messages in the main hub room
-type HubMessage =
-  { ping: string } &
-  { pong: string } &
-  { id: string, data: any }
 
 export class PeerServer {
 
@@ -23,10 +13,11 @@ export class PeerServer {
     this.listeners = new Set
     this.peers = new Map
 
-
     const client = new SignalClient(room);
 
     client.on('data', (message, remoteId) => {
+
+      // debugger;
 
       // if we haven't see this connection before
       if (!this.peers.has(remoteId)) {
@@ -58,7 +49,6 @@ export class PeerServer {
 
       this.peers.get(remoteId).signal(JSON.stringify(message));
 
-
     })
 
 
@@ -86,30 +76,17 @@ export class PeerClient {
 
   constructor(room: string) {
 
-    const connect = async (room) => {
+    const connect = async (room: string) => {
 
       let LOCAL = sessionStorage.getItem('LOCAL_ID') || Math.random().toString(36).slice(1)
       sessionStorage.setItem('LOCAL_ID', LOCAL)
 
-      const client = new SignalClient(room + LOCAL)
-
       // delay for live-reload
       if (['127.0.0.1', 'localhost'].includes(document.location.hostname)) {
-        await new Promise(r => setTimeout(r, 500))
+        await new Promise(r => setTimeout(r, 750))
       }
 
-
-
-      // // the ID of this peer
-      // const id = Math.random().toString(32)
-
-      // const hub = signalhub(app, url)
-
-      // const subscription = hub.subscribe(id)
-
-      // Somehow this doesn't matter (and takes a long time)
-      // maybe it's waiting for a first message?
-      // await new Promise(resolve => subscription.on('open', resolve));
+      const client = new SignalClient(room + LOCAL)
 
       const peer = new Peer({ initiator: true })
 
@@ -118,6 +95,8 @@ export class PeerClient {
       peer.on('signal', data => client.send(room, data))
 
       client.on('data', (payload, clientId) => {
+
+        // console.log("SURE?")
 
         if (clientId == room) {
           peer.signal(payload)
@@ -128,13 +107,14 @@ export class PeerClient {
 
       await new Promise(resolve => peer.on("connect", resolve))
 
-      // hub.close();
-
       console.log("TODO: DISCONNECTTTTT")
 
       peer.on('data', (data) => {
         this.listeners.forEach(fn => fn(data))
       })
+
+      // @ts-ignore
+      window.peer = peer;
 
       return peer;
     }

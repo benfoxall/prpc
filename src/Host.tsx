@@ -4,8 +4,6 @@ import { useSignal, usePeerServer } from './lib/hooks';
 
 export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
-    // const signal = useSignal(name);
-
     const peerServer = usePeerServer(name);
 
     useEffect(() => {
@@ -14,6 +12,8 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
                 console.log("YAYYYY, NO SERVER", client, data)
             })
         }
+
+        window.server = peerServer
     }, [peerServer])
 
 
