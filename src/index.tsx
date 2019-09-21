@@ -5,10 +5,11 @@ import ReactDOM from "react-dom";
 import { Host } from './Host'
 import { Start } from './Start'
 import { SignalClient } from "./lib/signal";
-import reducer from './reducers'
-import { devToolsEnhancer } from 'redux-devtools-extension';
+import reducer, { useSelector } from './reducers'
+import { devToolsEnhancer, composeWithDevTools } from 'redux-devtools-extension';
+import { SET_UUID, SET_ERROR } from "./reducers/connection";
 
-const store = createStore(reducer, devToolsEnhancer({}))
+const store = createStore(reducer, composeWithDevTools())
 
 // work out if we're hosting or joinging
 const search = document.location.search;
@@ -28,8 +29,18 @@ if (host) {
         .then(s => {console.log("📞", s)})
 
     client.auth
-        .then(s => {console.log("AUTH", s)})
-        .catch(s => {console.log("NO", s)})
+        .then(s => {
+            store.dispatch({
+                type: SET_UUID,
+                payload: s
+            })
+        })
+        .catch(s => {
+            store.dispatch({
+                type: SET_ERROR,
+                payload: s
+            })
+        })
 
 
     //@ts-ignore
@@ -37,11 +48,34 @@ if (host) {
 
 }
 
-const App = () =>
+const App = () => 
     <Provider store={store}>
         {!host && !join && <Start />}
         {host && <Host name={host} />}
+
+        <Connection />
     </Provider>
+
+const Connection = () => {
+    const {error, uuid} = useSelector(a => a.connection)
+
+    if(error) {
+        return (
+            <footer className="Connection error">
+                <h2>{String(error)}</h2>
+            </footer>
+        )
+    }
+
+    return (
+        <footer className="Connection">
+            <h2>
+                {uuid ? '⚡️' : '👋'} 
+                <span>{uuid}</span> 
+            </h2>
+        </footer>
+    )
+}
 
 
 ReactDOM.render(<App />, document.getElementById("root"));

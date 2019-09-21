@@ -1,17 +1,17 @@
 import { Reducer } from "redux";
 
 export interface State {
-    error: boolean;
+    error: false | string;
     wsState: number;
     dcState: number;
-    uuid: string;
+    uuid: false | string;
 }
 
 const initState: State = {
     error: false,
     wsState: 0,
     dcState: 0,
-    uuid: '23456'
+    uuid: false
 }
 
 
@@ -23,10 +23,12 @@ export const SET_UUID = 'CONNECTION/SET_DC_STATE'
 
 const reducer: Reducer<State> = (state = initState, action) => {
 
+    console.log(action)
+
     if (action.type === SET_ERROR) {
         return {
             ...state,
-            error: action.payload
+            error: String(action.payload)
         }
     }
 
@@ -34,6 +36,13 @@ const reducer: Reducer<State> = (state = initState, action) => {
         return {
             ...state,
             wsState: action.payload
+        }
+    }
+
+    if (action.type === SET_UUID) {
+        return {
+            ...state,
+            uuid: action.payload
         }
     }
 
