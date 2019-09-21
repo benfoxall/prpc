@@ -121,7 +121,7 @@ export class PeerServiceClient extends PeerRPCClient {
   }
 
 
-  /* Not sure if the new one is better yet */
+  /* Not sure if the new one is better yet (issueStream might be handy) */
   async issue<S extends NamedService, T extends keyof Methods<S>>(srvc: S, name: T, setter: (p: Methods<S>[T]['request']) => void | Promise<void>): Promise<Methods<S>[T]['response']> {
 
     // @ts-ignore
