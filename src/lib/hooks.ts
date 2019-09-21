@@ -42,12 +42,6 @@ export const usePeerServer = (uuid: string) => {
     useEffect(() => {
         const server = new PeerServiceServer(uuid, dispatch);
 
-        server.addService(Dev, {
-            Background: (e) => {
-                document.body.style.background = e.getValue();
-            }
-        })
-
         setServer(server)
 
     }, [uuid]);

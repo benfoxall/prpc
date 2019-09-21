@@ -97,6 +97,31 @@ export class PeerServiceClient extends PeerRPCClient {
     super(room, dispatch);
   }
 
+  getService<S extends NamedService>(srvc: S) {
+
+    const call = super.call.bind(this);
+
+    return async <T extends keyof Methods<S>>(name: T, setter: (p: Methods<S>[T]['request']) => void | Promise<void>): Promise<Methods<S>[T]['response']> => {
+      // @ts-ignore
+      const Request = srvc[name].requestType
+
+      const request = new Request();
+
+      await setter(request);
+
+      const service = srvc.serviceName;
+      const method = name + ''
+
+      const responseData = await call(service, method, request.serializeBinary());
+
+      // @ts-ignore
+      return new srvc[name].responseType.deserializeBinary(responseData);
+
+    }
+  }
+
+
+  /* Not sure if the new one is better yet */
   async issue<S extends NamedService, T extends keyof Methods<S>>(srvc: S, name: T, setter: (p: Methods<S>[T]['request']) => void | Promise<void>): Promise<Methods<S>[T]['response']> {
 
     // @ts-ignore

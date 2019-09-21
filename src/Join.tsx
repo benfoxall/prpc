@@ -1,6 +1,5 @@
-import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
-import { SignalClient } from './lib/signal';
-import { useSignal, usePeerClient } from './lib/hooks';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import { usePeerClient } from './lib/hooks';
 import { Dev } from './lib/protos/generated/dev_pb_service';
 
 let LOCAL = sessionStorage.getItem('LOCAL_ID') || Math.random().toString(36).slice(1)
@@ -13,7 +12,10 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
     useEffect(() => {
         if (color && client) {
-            client.issue(Dev, 'Background', res => res.setValue(color))
+            // client.issue(Dev, 'Background', res => res.setValue(color))
+
+            const devService = client.getService(Dev)
+            devService("Background", res => res.setValue(color))
         }
 
     }, [color, client])

@@ -1,19 +1,23 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
-import { SignalClient } from './lib/signal';
-import { useSignal, usePeerServer } from './lib/hooks';
-import { useDispatch } from 'react-redux';
+import { usePeerServer } from './lib/hooks';
+import { Dev } from './lib/protos/generated/dev_pb_service';
 
 export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
     const peerServer = usePeerServer(name);
 
     useEffect(() => {
-        if (peerServer) {
-            peerServer.on('data', (client, data) => {
-                console.log("YAYYYY, NO SERVER", client, data)
-            })
-        }
 
+        if (!peerServer) return;
+
+        peerServer.addService(Dev, {
+            Background: (e) => {
+                document.body.style.background = e.getValue();
+            }
+        })
+
+
+        // @ts-ignore
         window.server = peerServer
     }, [peerServer])
 
