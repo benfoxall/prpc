@@ -1,4 +1,5 @@
 import WebSocket from './reconnecting-ws'
+import { Action, AnyAction, Dispatch } from 'redux'
 
 const BACKEND = 'wss://i0eiyzqlwl.execute-api.eu-west-1.amazonaws.com/dev'
 const TOKEN_KEY_PREFIX = '{{tok=>'
@@ -24,7 +25,7 @@ export enum Events {
     DISCONNECT = '[ws] DISCONNECT',
 }
 
-type Dispatch = (event: Events, payload?: any) => void;
+// type Dispatch = (event: Events, payload?: any) => void;
 
 export class SignalClient {
 
@@ -35,11 +36,13 @@ export class SignalClient {
     private ws: WebSocket;
     private dataListeners = new Set<CallbackMap['data']>();
 
+
     constructor(
         public readonly uuid: string,
-        private dispatch: Dispatch = (event: Events, payload?: any) => log(event, payload)
+        private dispatch?: Dispatch
     ) {
-        dispatch(Events.START)
+
+        this.notify(Events.START)
 
         this.ws = new WebSocket(BACKEND)
 
@@ -65,13 +68,13 @@ export class SignalClient {
             try {
                 twRes(JSON.parse(twillio))
 
-                dispatch(Events.TWILLIO_OK)
+                this.notify(Events.TWILLIO_OK)
             } catch (e) { }
 
         }
 
         const open = () => {
-            dispatch(Events.WS_OPEN)
+            this.notify(Events.WS_OPEN)
 
             this.ws.send(JSON.stringify({
                 type: 'setup',
@@ -91,7 +94,7 @@ export class SignalClient {
         const message = (m: MessageEvent) => {
 
 
-            dispatch(Events.WS_MESSAGE, m.data)
+            this.notify(Events.WS_MESSAGE, m.data)
             try {
                 const data = JSON.parse(m.data);
 
@@ -101,14 +104,14 @@ export class SignalClient {
                         log("Token updated")
                         sessionStorage.setItem(TOKEN_KEY_PREFIX + uuid, data.token)
 
-                        dispatch(Events.AUTH_OK, uuid)
+                        this.notify(Events.AUTH_OK, uuid)
                         authRes(uuid)
                     }
 
                     if (data.error) {
                         this.error = data.error;
 
-                        dispatch(Events.AUTH_FAIL, data.error)
+                        this.notify(Events.AUTH_FAIL, data.error)
 
                         authRej(new Error(data.error))
                     }
@@ -132,7 +135,7 @@ export class SignalClient {
         }
 
         const close = () => {
-            dispatch(Events.WS_CLOSE)
+            this.notify(Events.WS_CLOSE)
             log("CLOSE")
         }
 
@@ -162,13 +165,13 @@ export class SignalClient {
 
     disconnect() {
         log("disconnect")
-        this.dispatch(Events.DISCONNECT);
+        this.notify(Events.DISCONNECT);
         this.ws.close()
     }
 
     /** Try and send to the underlying connection */
     private _send(message: any, retries = 3) {
-        this.dispatch(Events.WS_SEND, message)
+        this.notify(Events.WS_SEND, message)
 
         if (this.ws.readyState === WebSocket.OPEN) {
             this.ws.send(JSON.stringify(message))
@@ -185,5 +188,19 @@ export class SignalClient {
             )
 
         }
+    }
+
+
+    private notify(type: Events, payload?: any) {
+
+        if (this.dispatch) {
+            this.dispatch({
+                type,
+                payload
+            })
+        } else {
+            log(type, payload)
+        }
+
     }
 }

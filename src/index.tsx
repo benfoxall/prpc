@@ -34,7 +34,9 @@ const App = () =>
     </Provider>
 
 const Connection = () => {
-    const { error, uuid, active } = useSelector(a => a.connection)
+    const connection = useSelector(a => a.connection);
+
+    const { error, uuid, active, connections } = connection;
 
     if (!active) { return null }
 
@@ -49,8 +51,11 @@ const Connection = () => {
     return (
         <footer className="Connection">
             <h2>
-                {uuid ? '⚡️' : '👋'}
+                [ws {connection.wsState ? '⚡️' : '👋'}]
+                [dc {connection.dcState ? '⚡️' : '👋'}]
+
                 <span>{uuid}</span>
+                <span>{connections}</span>
             </h2>
         </footer>
     )

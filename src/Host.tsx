@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import { SignalClient } from './lib/signal';
 import { useSignal, usePeerServer } from './lib/hooks';
+import { useDispatch } from 'react-redux';
 
 export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 

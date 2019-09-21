@@ -35,7 +35,7 @@ export const usePeerServer = (uuid: string) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const server = new PeerServer(uuid);
+        const server = new PeerServer(uuid, dispatch);
 
         setConnection(server)
 
@@ -53,7 +53,7 @@ export const usePeerClient = (uuid: string) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const server = new PeerClient(uuid);
+        const server = new PeerClient(uuid, dispatch);
 
         setConnection(server)
 

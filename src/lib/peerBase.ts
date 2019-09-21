@@ -1,23 +1,32 @@
 // import signalhub from 'signalhub'
 import Peer from 'simple-peer'
 import { SignalClient } from './signal';
+import { Dispatch } from 'redux';
 
 type Listener = (id: string, payload: Uint8Array) => void;
+
+export enum Events {
+  PEER_SERVER_CONNECT = '[peer-base] PEER_SERVER_CONNECT',
+  PEER_SERVER_CLOSE = '[peer-base] PEER_SERVER_CLOSE',
+  // PEER_SERVER_DATA = '[peer-base] PEER_SERVER_DATA',
+
+  PEER_CLIENT_CONNECT = '[peer-base] PEER_CLIENT_CONNECT',
+  PEER_CLIENT_CLOSE = '[peer-base] PEER_CLIENT_CLOSE',
+  // PEER_CLIENT_DATA = '[peer-base] PEER_CLIENT_DATA',
+}
 
 export class PeerServer {
 
   private listeners: Set<Listener>;
   private peers: any;
 
-  constructor(room: string) {
+  constructor(room: string, private dispatch?: Dispatch) {
     this.listeners = new Set
     this.peers = new Map
 
-    const client = new SignalClient(room);
+    const client = new SignalClient(room, dispatch);
 
     client.on('data', (message, remoteId) => {
-
-      // debugger;
 
       // if we haven't see this connection before
       if (!this.peers.has(remoteId)) {
@@ -28,11 +37,11 @@ export class PeerServer {
         peer.on("signal", data => client.send(remoteId, data))
 
         peer.on("connect", () => {
-          console.log("CONNECTED!!")
+          this.notify(Events.PEER_SERVER_CONNECT, remoteId)
         })
 
         peer.on('close', () => {
-          console.log("CLOSED")
+          this.notify(Events.PEER_SERVER_CLOSE, remoteId)
           this.peers.delete(remoteId)
         })
 
@@ -43,8 +52,6 @@ export class PeerServer {
         })
 
         this.peers.set(remoteId, peer);
-
-        console.log("PEERLIST", this.peers)
       }
 
       this.peers.get(remoteId).signal(JSON.stringify(message));
@@ -66,15 +73,25 @@ export class PeerServer {
     }
   }
 
-}
 
+  private notify(type: Events, payload?: any) {
+    if (this.dispatch) {
+      this.dispatch({
+        type,
+        payload
+      })
+    } else {
+      console.log(type, payload)
+    }
+  }
+}
 
 export class PeerClient {
 
   private listeners = new Set<(d: Uint8Array) => void>();
   private peer: any;
 
-  constructor(room: string) {
+  constructor(room: string, private dispatch?: Dispatch) {
 
     const connect = async (room: string) => {
 
@@ -83,10 +100,10 @@ export class PeerClient {
 
       // delay for live-reload
       if (['127.0.0.1', 'localhost'].includes(document.location.hostname)) {
-        await new Promise(r => setTimeout(r, 750))
+        await new Promise(r => setTimeout(r, 100))
       }
 
-      const client = new SignalClient(room + LOCAL)
+      const client = new SignalClient(room + LOCAL, dispatch)
 
       const peer = new Peer({ initiator: true })
 
@@ -95,9 +112,6 @@ export class PeerClient {
       peer.on('signal', data => client.send(room, data))
 
       client.on('data', (payload, clientId) => {
-
-        // console.log("SURE?")
-
         if (clientId == room) {
           peer.signal(payload)
         } else {
@@ -105,7 +119,18 @@ export class PeerClient {
         }
       });
 
+      peer.on("connect", () => {
+        this.notify(Events.PEER_CLIENT_CONNECT, room)
+      })
+      peer.on("close", () => {
+        // never seems to fire
+        this.notify(Events.PEER_CLIENT_CLOSE, room)
+      })
+
+
       await new Promise(resolve => peer.on("connect", resolve))
+
+
 
       console.log("TODO: DISCONNECTTTTT")
 
@@ -137,4 +162,19 @@ export class PeerClient {
       this.listeners.add(fn)
     }
   }
+
+
+  private notify(type: Events, payload?: any) {
+
+    if (this.dispatch) {
+      this.dispatch({
+        type,
+        payload
+      })
+    } else {
+      console.log(type, payload)
+    }
+
+  }
+
 }
