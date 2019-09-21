@@ -1,0 +1,19 @@
+
+syntax = 'proto3';
+
+
+message Request {
+  int32 number1 = 1;
+  int32 number2 = 2;
+}
+
+message Response {
+  int32 answer = 1;
+}
+
+service Calculator {
+  rpc Add (Request) returns (Response);
+  rpc Multiply (Request) returns (Response);
+  rpc Divide (Request) returns (Response);
+}
+

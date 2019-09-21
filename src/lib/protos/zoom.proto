@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+message Noop {}
+
+message EchoMessage {
+    string text = 1;
+}
+
+message SystemInfo {
+    repeated float cpuLoads = 1;
+    float battery = 2;
+    bool charging = 3;
+}
+
+message ColorSchemeRequest {
+    enum Scheme {
+        DARK = 0;
+        LIGHT = 1;
+    }
+
+    Scheme scheme = 1;
+};
+
+message Image {
+    string type = 1;
+    bytes bytes = 2;
+}
+
+service Zoom {
+
+    rpc echo(EchoMessage) returns (EchoMessage);
+
+    rpc systemInfo (Noop) returns (stream SystemInfo);
+    
+    rpc screenShot (Noop) returns (Image);
+
+    rpc setColorScheme (ColorSchemeRequest) returns (Noop);
+
+}

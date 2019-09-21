@@ -1,0 +1,20 @@
+/*
+
+IGNORE THIS!
+
+(IT'S FOR THE PEER-RPC TRANSPORT LAYER)
+
+*/
+
+syntax = 'proto3';
+
+message RPCWrapper {
+  string peerId = 1;
+  string methodName = 2;
+  string serviceName = 3;
+
+  // for matching up responses
+  int32 requestId = 4;
+
+  bytes payload = 5;
+}

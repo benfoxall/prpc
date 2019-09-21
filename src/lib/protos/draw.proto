@@ -1,0 +1,22 @@
+syntax = 'proto3';
+
+message Noopp {}
+
+message LineRequest {
+  repeated float coords = 1;
+}
+
+message Throttle {
+  float timeout = 1;
+}
+
+message ColorRequest {
+  string value = 1;
+}
+
+service Draw {
+
+  rpc Line (LineRequest) returns (Throttle);
+  rpc Color (ColorRequest) returns (Noopp);
+
+}

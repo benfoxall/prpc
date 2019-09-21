@@ -1,0 +1,26 @@
+
+syntax = 'proto3';
+
+message MoveResponse {
+  int32 answer = 1;
+}
+
+message MoveEvent {
+  int32 left = 1;
+  int32 top = 2;
+}
+
+message Color {
+  string value = 1;
+}
+
+message ColorResponse {
+  string value = 1;
+}
+
+service Dev {
+  rpc MouseMove (MoveEvent) returns (MoveResponse);
+
+  rpc Background (Color) returns (ColorResponse);
+}
+
