@@ -5,6 +5,7 @@ import { LinkTo, Route } from './routing';
 import { PeerServiceServer } from './lib/peerService';
 import { Debug } from './services/Debug';
 import { SyncPath } from './services/SyncPath';
+import { Chat } from './services/Chat';
 
 export const ServerContext = createContext<PeerServiceServer>(null)
 
@@ -40,6 +41,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
                 <Route path="/Debug" >
                     <Debug.Server />
+                </Route>
+
+                <Route path="/Chat" >
+                    <Chat.Server />
                 </Route>
 
             </main>

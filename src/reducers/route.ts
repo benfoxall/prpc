@@ -5,7 +5,7 @@ export interface State {
 }
 
 const initState: State = {
-    path: '/Debug',
+    path: '/Chat',
 }
 
 export enum Actions {

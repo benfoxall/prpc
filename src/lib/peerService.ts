@@ -77,7 +77,6 @@ export class PeerServiceServer extends PeerRPCServer {
         const request = Request.deserializeBinary(payload)
         const response = new Response()
 
-
         return Promise.resolve(handle(request, response, meta))
           .then(() => response.serializeBinary())
 
@@ -101,7 +100,10 @@ export class PeerServiceClient extends PeerRPCClient {
 
     const call = super.call.bind(this);
 
-    return async <T extends keyof Methods<S>>(name: T, setter: (p: Methods<S>[T]['request']) => void | Promise<void>): Promise<Methods<S>[T]['response']> => {
+    return async <T extends keyof Methods<S>>(name: T, setter?: (p: Methods<S>[T]['request']) => void | Promise<void>): Promise<Methods<S>[T]['response']> => {
+
+      if (!setter) setter = () => { }
+
       // @ts-ignore
       const Request = srvc[name].requestType
 

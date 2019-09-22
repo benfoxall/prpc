@@ -5,6 +5,7 @@ import { useSelector } from './reducers';
 import { PeerServiceClient } from './lib/peerService';
 import { Debug } from './services/Debug';
 import { SyncPath } from './services/SyncPath';
+import { Chat } from './services/Chat';
 
 let LOCAL = sessionStorage.getItem('LOCAL_ID') || Math.random().toString(36).slice(1)
 sessionStorage.setItem('LOCAL_ID', LOCAL)
@@ -25,6 +26,11 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
             <Route path="/Debug">
                 <Debug.Client />
+            </Route>
+
+
+            <Route path="/Chat" >
+                <Chat.Client />
             </Route>
 
         </ClientContext.Provider>
