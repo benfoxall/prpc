@@ -3,7 +3,7 @@ import { ClientContext } from "../Join";
 import { ServerContext } from "../Host";
 import { Dev } from "../lib/protos/generated/dev_pb_service";
 import { ChatService } from "../lib/protos/generated/chat_pb_service";
-import { Message, MessageList } from "../lib/protos/generated/chat_pb";
+import { Message } from "../lib/protos/generated/chat_pb";
 
 
 const Client: FunctionComponent = () => {
@@ -12,47 +12,42 @@ const Client: FunctionComponent = () => {
 
     const client = useContext(ClientContext);
 
-    const submit: FormEventHandler = async (e) => {
+    const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
+        if (text.current.value.trim() === '') return
+
         const chat = client.getService(ChatService);
-        const resp = await chat("PostMessage", req => {
+
+        chat("PostMessage", req => {
             req.setBody(text.current.value)
             text.current.value = ''
         })
 
-        console.log("GOT BACK", resp.toObject())
-    }
-
-    const load = async () => {
-        const chat = client.getService(ChatService);
-        const list = await chat("getMessageList")
-        setMessages(list.getListList())
     }
 
 
     useEffect(() => {
         if (!client) return;
 
-        const chat = client.getService(ChatService);
-
+        let max = 500;
         let stop = false;
 
-        load()
-            .then(() => {
-                const poll = async () => {
-                    if (stop) return;
+        const run = async () => {
 
-                    const message = await chat("newMessages");
+            const chat = client.getService(ChatService);
 
-                    setMessages(prior => prior.concat(message.getListList()))
+            const list = await chat("getMessageList")
 
-                    poll()
-                }
+            setMessages(list.getListList())
 
-                poll();
-            })
+            while (!stop && max-- > 0) {
+                const message = await chat("newMessages");
+                setMessages(prior => prior.concat(message.getListList()))
+            }
 
+        }
+        run()
 
         return () => stop = true
 
@@ -60,7 +55,6 @@ const Client: FunctionComponent = () => {
 
     return <>
         <h3>Messages</h3>
-        <button onClick={load}>Load</button>
         <ul>
             {messages.map(m =>
                 <li key={m.getId()}>{m.getBody()} ({m.getAuthor()})</li>

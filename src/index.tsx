@@ -52,7 +52,7 @@ const Connection = () => {
                 <h1>
                     <a href={document.location.origin} target="_blank">{document.location.host}</a> | {uuid}</h1>
                 <h3>
-                    [ws {connection.wsState ? '⚡️' : '👋'}] [{connections} Peer Client{connections !== 1 ? 's' : ''}]
+                    [ws {connection.wsState ? '⚡️' : '❌'}] [{connections} Peer Client{connections !== 1 ? 's' : ''}]
                 </h3>
             </footer>
         )
@@ -64,8 +64,8 @@ const Connection = () => {
                 client: {uuid || '_'}
             </h2>
             <h3>
-                [ws {connection.wsState ? '⚡️' : '👋'}]
-                [dc {connection.dcState ? '⚡️' : '👋'}]
+                [ws {connection.wsState ? '⚡️' : '❎'}]
+                [dc {connection.dcState ? '⚡️' : '❌'}]
             </h3>
         </footer>
     )
