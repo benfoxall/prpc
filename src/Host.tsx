@@ -44,6 +44,18 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
                         <li>
                             <LinkTo href="/Cameras">Cameras</LinkTo>
                         </li>
+
+                        <li>
+                            TODO: BLE
+                        </li>
+
+                        <li>
+                            TODO: Audio
+                        </li>
+
+                        <li>
+                            TODO: Markers / RA
+                        </li>
                     </ul>
                 </Route>
 
