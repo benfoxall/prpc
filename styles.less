@@ -3,7 +3,8 @@ body {
     background: #bbb;
     margin: 0;
     // background: linear-gradient(40deg, rgba(2,0,36,0.1), rgba(0,212,255,0.6));
-    overscroll-behavior: none
+    overscroll-behavior: none;
+    margin-bottom: 5em;
 }
 
 a {
@@ -73,7 +74,7 @@ form.start {
 
 
 .Connection {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
@@ -180,12 +181,20 @@ form.start {
 
     .photos {
         list-style: none;
+        margin: 0;
+        padding: 0;
+
+        display: flex;
+        flex-wrap: wrap;
         
         li {
             display: inline;
+            margin: .5em;
         }
         img {
             height: 100px;
+            box-shadow: rgba(0,0,0,0.4) 0 2px 5px;
+            border-radius: 5px;
         }
     }
 

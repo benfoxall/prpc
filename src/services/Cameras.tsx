@@ -26,14 +26,11 @@ const Client: FunctionComponent = () => {
 
             if (stop || response.getCancel()) return;
 
-            //{ audio: true, video: { facingMode: "user" } }
-
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({
                     audio: false, video: { facingMode: response.getFacemode() }
                 });
 
-                // ar video = document.querySelector('video');
                 const { current: videoEl } = video;
 
                 videoEl.srcObject = stream;
@@ -43,8 +40,8 @@ const Client: FunctionComponent = () => {
 
                 setShowVideo(true);
 
-                await new Promise(res => setTimeout(res, 3 * 1000))
-
+                const delay = Math.max(response.getSeconds() * 1000, 500)
+                await new Promise(res => setTimeout(res, delay))
 
                 const targetHeight = 200;
 
@@ -70,8 +67,6 @@ const Client: FunctionComponent = () => {
                 await new Promise(resolve => fr.addEventListener("load", resolve))
 
                 const u8 = new Uint8Array(fr.result as ArrayBuffer);
-
-
 
 
                 await service("PostPhoto", req => {
@@ -115,8 +110,8 @@ const Server: FunctionComponent = () => {
 
     const pending = useMemo(() => new Set<(proceed: boolean) => void>(), [])
 
-    const [timer, setTimer] = useState(8);
-    const [selfie, setSelfie] = useState(false);
+    const [timer, setTimer] = useState(3);
+    const [selfie, setSelfie] = useState(true);
     const [images, setImages] = useState<string[]>([]);
 
     const selfieRef = useRef<boolean>();
@@ -133,7 +128,7 @@ const Server: FunctionComponent = () => {
                 const blob = new Blob([req.getData_asU8()], { type: req.getType() })
                 const url = URL.createObjectURL(blob);
 
-                setImages(before => before.concat(url))
+                setImages(before => [url].concat(before))
 
             },
             Wait: async (req, res) => {
@@ -187,9 +182,6 @@ const Server: FunctionComponent = () => {
                 </ul>
 
             </form>
-
-
-
 
         </div>
     )
