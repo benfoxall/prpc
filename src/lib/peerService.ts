@@ -61,7 +61,7 @@ export class PeerServiceServer extends PeerRPCServer {
       const impl = this.implementations.get(service);
 
       if (!(service && impl)) {
-        console.error("Service not found");
+        console.warn(`Service not found: ${meta.serviceName}`);
 
         return new Uint8Array([]);
       }
