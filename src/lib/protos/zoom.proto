@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-message Noop {}
+import "common.proto";
 
 message EchoMessage {
     string text = 1;

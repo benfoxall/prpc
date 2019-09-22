@@ -11,4 +11,4 @@ rm -rf $OUT/*.js $OUT/*.ts
 protoc -I=. $INPUT \
   --plugin=protoc-gen-ts=${TS_PROTOC} \
   --js_out=import_style=commonjs,binary:$OUT \
-  --ts_out=service=true:${OUT} \
+  --ts_out=service=grpc-web:${OUT} \

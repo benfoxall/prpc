@@ -2,6 +2,7 @@
 // file: zoom.proto
 
 import * as zoom_pb from "./zoom_pb";
+import * as common_pb from "./common_pb";
 import {grpc} from "@improbable-eng/grpc-web";
 
 type Zoomecho = {
@@ -18,7 +19,7 @@ type ZoomsystemInfo = {
   readonly service: typeof Zoom;
   readonly requestStream: false;
   readonly responseStream: true;
-  readonly requestType: typeof zoom_pb.Noop;
+  readonly requestType: typeof common_pb.Noop;
   readonly responseType: typeof zoom_pb.SystemInfo;
 };
 
@@ -27,7 +28,7 @@ type ZoomscreenShot = {
   readonly service: typeof Zoom;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof zoom_pb.Noop;
+  readonly requestType: typeof common_pb.Noop;
   readonly responseType: typeof zoom_pb.Image;
 };
 
@@ -37,7 +38,7 @@ type ZoomsetColorScheme = {
   readonly requestStream: false;
   readonly responseStream: false;
   readonly requestType: typeof zoom_pb.ColorSchemeRequest;
-  readonly responseType: typeof zoom_pb.Noop;
+  readonly responseType: typeof common_pb.Noop;
 };
 
 export class Zoom {
@@ -89,24 +90,24 @@ export class ZoomClient {
     requestMessage: zoom_pb.EchoMessage,
     callback: (error: ServiceError|null, responseMessage: zoom_pb.EchoMessage|null) => void
   ): UnaryResponse;
-  systemInfo(requestMessage: zoom_pb.Noop, metadata?: grpc.Metadata): ResponseStream<zoom_pb.SystemInfo>;
+  systemInfo(requestMessage: common_pb.Noop, metadata?: grpc.Metadata): ResponseStream<zoom_pb.SystemInfo>;
   screenShot(
-    requestMessage: zoom_pb.Noop,
+    requestMessage: common_pb.Noop,
     metadata: grpc.Metadata,
     callback: (error: ServiceError|null, responseMessage: zoom_pb.Image|null) => void
   ): UnaryResponse;
   screenShot(
-    requestMessage: zoom_pb.Noop,
+    requestMessage: common_pb.Noop,
     callback: (error: ServiceError|null, responseMessage: zoom_pb.Image|null) => void
   ): UnaryResponse;
   setColorScheme(
     requestMessage: zoom_pb.ColorSchemeRequest,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: zoom_pb.Noop|null) => void
+    callback: (error: ServiceError|null, responseMessage: common_pb.Noop|null) => void
   ): UnaryResponse;
   setColorScheme(
     requestMessage: zoom_pb.ColorSchemeRequest,
-    callback: (error: ServiceError|null, responseMessage: zoom_pb.Noop|null) => void
+    callback: (error: ServiceError|null, responseMessage: common_pb.Noop|null) => void
   ): UnaryResponse;
 }
 

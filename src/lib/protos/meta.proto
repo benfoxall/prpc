@@ -1,0 +1,20 @@
+// a meta service for guiding people through the app
+
+syntax = "proto3";
+
+import "common.proto";
+
+
+message Page {
+    string name = 1;
+}
+
+
+service Meta {
+
+    rpc getPage(Noop) returns (Page);
+
+    // a hack around streaming
+    rpc getPageChange(Page) returns (Page);
+
+}

@@ -2,6 +2,7 @@
 // file: zoom.proto
 
 var zoom_pb = require("./zoom_pb");
+var common_pb = require("./common_pb");
 var grpc = require("@improbable-eng/grpc-web").grpc;
 
 var Zoom = (function () {
@@ -24,7 +25,7 @@ Zoom.systemInfo = {
   service: Zoom,
   requestStream: false,
   responseStream: true,
-  requestType: zoom_pb.Noop,
+  requestType: common_pb.Noop,
   responseType: zoom_pb.SystemInfo
 };
 
@@ -33,7 +34,7 @@ Zoom.screenShot = {
   service: Zoom,
   requestStream: false,
   responseStream: false,
-  requestType: zoom_pb.Noop,
+  requestType: common_pb.Noop,
   responseType: zoom_pb.Image
 };
 
@@ -43,7 +44,7 @@ Zoom.setColorScheme = {
   requestStream: false,
   responseStream: false,
   requestType: zoom_pb.ColorSchemeRequest,
-  responseType: zoom_pb.Noop
+  responseType: common_pb.Noop
 };
 
 exports.Zoom = Zoom;
