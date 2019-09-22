@@ -45,9 +45,32 @@ export class PeerServer {
         })
 
         peer.on('close', () => {
-          this.notify(Events.PEER_SERVER_CLOSE, remoteId)
+          if (this.peers.has(remoteId)) {
+            this.notify(Events.PEER_SERVER_CLOSE, remoteId)
+          }
+
           this.peers.delete(remoteId)
         })
+
+
+        // HACK?
+        try {
+          const pc = (peer as any)._pc as RTCPeerConnection;
+
+          pc.addEventListener("connectionstatechange", () => {
+            if (pc.connectionState === 'disconnected') {
+              if (this.peers.has(remoteId)) {
+                this.notify(Events.PEER_SERVER_CLOSE, remoteId)
+              }
+
+              this.peers.delete(remoteId)
+            }
+          })
+
+        } catch (e) {
+          console.log("unable to listen for close")
+        }
+
 
         peer.on('data', data => {
           this.listeners.forEach(fn => {
@@ -133,16 +156,35 @@ export class PeerClient {
         this.notify(Events.PEER_CLIENT_CLOSE, room)
       })
 
-
       await new Promise(resolve => peer.on("connect", resolve))
 
 
+      setTimeout(() => {
+        client.disconnect()
+      }, 2000)
 
-      console.log("TODO: DISCONNECTTTTT")
+
 
       peer.on('data', (data) => {
         this.listeners.forEach(fn => fn(data))
       })
+
+
+      // HACK?
+      try {
+        const pc = (peer as any)._pc as RTCPeerConnection;
+
+        pc.addEventListener("connectionstatechange", () => {
+          if (pc.connectionState === 'disconnected') {
+            this.notify(Events.PEER_CLIENT_CLOSE, room)
+          }
+        })
+
+      } catch (e) {
+        console.log("unable to listen for close")
+      }
+
+
 
       // @ts-ignore
       window.peer = peer;

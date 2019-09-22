@@ -80,11 +80,23 @@ const reducer: Reducer<State> = (state = initState, action) => {
                 dcState: true
             }
 
+        case PeerBaseEvents.PEER_CLIENT_CLOSE:
+            return {
+                ...state,
+                dcState: false
+            }
+
 
         case PeerBaseEvents.PEER_SERVER_CONNECT:
             return {
                 ...state,
                 connections: state.connections + 1
+            }
+
+        case PeerBaseEvents.PEER_SERVER_CLOSE:
+            return {
+                ...state,
+                connections: state.connections - 1
             }
     }
 
