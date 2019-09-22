@@ -1,115 +1,39 @@
-# [fit] Any Questions?
 
-# (or, comments!)
-
----
-
-# Hi,
-# [fit] I'm Ben
-
-# (It's nice to be back)
-
-^ I helped start this Meetup,  which gives me a really unique perspecive giving a talk here.  And from that perspective, one thing that is very clear…
+# Hello,
+# [fit] I'm Ben Foxall
+## Thanks for having me
+# 🦉
 
 ---
 
-# [fit] Seren 
-# [fit] & Marcus
+# Selected projects
 
-# You're doing such a great job 🥰
-
-^ I got a message a couple of months ago asking if I was up for this date, and it almost brought a tear to my eye
-
----
-
-# 2016 Wrap Up
+* Fairy lights
+* NZ - stuffometer
+* WebGL Hacks
+* VR planning
 
 ---
 
-# An Update on the World Of Ben
+# Oxbotica
+
+## Universal Autonomony
 
 ---
 
-![](sketch/2017.png)
+[picture of cars]
 
-^ Freelance stuff - art gallery
-
-^ Nexmo
+^ we have cars that drive around the place
 
 ---
 
-![](sketch/2018.png)
+![fit](images/oxb-3.png)
 
 ---
 
-![left](images/ryan.jpg)
-
-# Burger with Ryan
-
----
-
-![](sketch/2018.png)
-
----
-
-# [fit] New Zealand
-
-![original](images/nz-0.jpg)
-
-[.header: #00ffcc]
-
----
-
-![](sketch/2018.png)
-
----
-
-# [fit] GPS Tracker
-
-![original](images/nz-1.jpg)
-
-[.header: #ff00cc]
-
----
-
-# [fit] stuffometer
-
-![left original](images/nz-2.jpg)
-![right original](images/nz-3.jpg)
-
-[.header: #00ff00]
-
-^ Subjective data
-
-^ scenery, wildlife, people, pain, 
-
----
-
-![original](images/nz-4.jpg)
-
----
-
-![](sketch/2018.png)
-
----
-
-![](sketch/2019.png)
-
----
-
-![fit](images/nz-6.jpg)
-
----
-
-![](images/nz-7.jpg)
-
----
-
-![](sketch/2019.png)
-
----
-
-# Back to Oxbotica 🎉
+# [fit] Super Secret 
+# [fit] Undercover
+# [fit] _Web Developer_
 
 ---
 
@@ -117,28 +41,102 @@
 
 ---
 
-# Find out more
-## → oxbotica.com
+# Today
+
+* Technical alternatives
+* Demos
+* Challenging UX
+
+^ I'm going to introduce a technical topic, that has non-technical ramifications
 
 ---
 
-![fit original](images/oxb-1.png)
+# How we get data into a webpage
 
-<!-- ---
+[browser + comment box]
 
-![fit original](images/oxb-2.png) -->
-
----
-
-![fit original](images/oxb-3.png)
+[ hangover owls]
 
 ---
 
-![fit original](images/oxb-4.png)
+![](sketch/owls.png)
 
 ---
 
-# ~~Hello~~
+![](sketch/owls2.png)
+
+
+---
+
+![](sketch/owls3.png)
+
+
+---
+
+![](sketch/owls4.png)
+
+^ INTERFACE
+^ SERIALISATION
+
+---
+
+
+# [fit] Interface
+
+agreemenent between parties
+
+# [fit] Serialisation
+
+conversion to (common) format
+
+---
+
+# Interface
+
+# [fit] REST
+
+---
+
+# [fit] /post/1b982/comments
+
+---
+
+#  REST
+
+* Resource Oriented
+* Been around forever
+* Great
+
+---
+
+# Serialisation
+
+# [fit] JSON
+
+---
+
+```json
+{"list”: [{"body": "I totally
+identify with this", "author_id": 
+"038bb12m", "created_at": "…
+```
+
+---
+
+# JSON
+
+* JavaScript Object Notation
+* Been around forever (every javascript version could handle it)
+* efficient
+* defacto [because JS was historically the only language]
+
+---
+
+# Other Terms
+
+- client / server
+- request / response
+- 
 
 ---
 
