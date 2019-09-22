@@ -14,7 +14,7 @@ message ColorRequest {
   string value = 1;
 }
 
-service Draw {
+service TrailsService {
 
   rpc Line (LineRequest) returns (Throttle);
   rpc Color (ColorRequest) returns (Noopp);

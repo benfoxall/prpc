@@ -1,31 +1,31 @@
 // package: 
-// file: draw.proto
+// file: trails.proto
 
-import * as draw_pb from "./draw_pb";
+import * as trails_pb from "./trails_pb";
 import {grpc} from "@improbable-eng/grpc-web";
 
-type DrawLine = {
+type TrailsServiceLine = {
   readonly methodName: string;
-  readonly service: typeof Draw;
+  readonly service: typeof TrailsService;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof draw_pb.LineRequest;
-  readonly responseType: typeof draw_pb.Throttle;
+  readonly requestType: typeof trails_pb.LineRequest;
+  readonly responseType: typeof trails_pb.Throttle;
 };
 
-type DrawColor = {
+type TrailsServiceColor = {
   readonly methodName: string;
-  readonly service: typeof Draw;
+  readonly service: typeof TrailsService;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof draw_pb.ColorRequest;
-  readonly responseType: typeof draw_pb.Noopp;
+  readonly requestType: typeof trails_pb.ColorRequest;
+  readonly responseType: typeof trails_pb.Noopp;
 };
 
-export class Draw {
+export class TrailsService {
   static readonly serviceName: string;
-  static readonly Line: DrawLine;
-  static readonly Color: DrawColor;
+  static readonly Line: TrailsServiceLine;
+  static readonly Color: TrailsServiceColor;
 }
 
 export type ServiceError = { message: string, code: number; metadata: grpc.Metadata }
@@ -56,27 +56,27 @@ interface BidirectionalStream<ReqT, ResT> {
   on(type: 'status', handler: (status: Status) => void): BidirectionalStream<ReqT, ResT>;
 }
 
-export class DrawClient {
+export class TrailsServiceClient {
   readonly serviceHost: string;
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
   line(
-    requestMessage: draw_pb.LineRequest,
+    requestMessage: trails_pb.LineRequest,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: draw_pb.Throttle|null) => void
+    callback: (error: ServiceError|null, responseMessage: trails_pb.Throttle|null) => void
   ): UnaryResponse;
   line(
-    requestMessage: draw_pb.LineRequest,
-    callback: (error: ServiceError|null, responseMessage: draw_pb.Throttle|null) => void
+    requestMessage: trails_pb.LineRequest,
+    callback: (error: ServiceError|null, responseMessage: trails_pb.Throttle|null) => void
   ): UnaryResponse;
   color(
-    requestMessage: draw_pb.ColorRequest,
+    requestMessage: trails_pb.ColorRequest,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: draw_pb.Noopp|null) => void
+    callback: (error: ServiceError|null, responseMessage: trails_pb.Noopp|null) => void
   ): UnaryResponse;
   color(
-    requestMessage: draw_pb.ColorRequest,
-    callback: (error: ServiceError|null, responseMessage: draw_pb.Noopp|null) => void
+    requestMessage: trails_pb.ColorRequest,
+    callback: (error: ServiceError|null, responseMessage: trails_pb.Noopp|null) => void
   ): UnaryResponse;
 }
 

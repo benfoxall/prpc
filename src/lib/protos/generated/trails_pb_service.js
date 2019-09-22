@@ -1,45 +1,45 @@
 // package: 
-// file: draw.proto
+// file: trails.proto
 
-var draw_pb = require("./draw_pb");
+var trails_pb = require("./trails_pb");
 var grpc = require("@improbable-eng/grpc-web").grpc;
 
-var Draw = (function () {
-  function Draw() {}
-  Draw.serviceName = "Draw";
-  return Draw;
+var TrailsService = (function () {
+  function TrailsService() {}
+  TrailsService.serviceName = "TrailsService";
+  return TrailsService;
 }());
 
-Draw.Line = {
+TrailsService.Line = {
   methodName: "Line",
-  service: Draw,
+  service: TrailsService,
   requestStream: false,
   responseStream: false,
-  requestType: draw_pb.LineRequest,
-  responseType: draw_pb.Throttle
+  requestType: trails_pb.LineRequest,
+  responseType: trails_pb.Throttle
 };
 
-Draw.Color = {
+TrailsService.Color = {
   methodName: "Color",
-  service: Draw,
+  service: TrailsService,
   requestStream: false,
   responseStream: false,
-  requestType: draw_pb.ColorRequest,
-  responseType: draw_pb.Noopp
+  requestType: trails_pb.ColorRequest,
+  responseType: trails_pb.Noopp
 };
 
-exports.Draw = Draw;
+exports.TrailsService = TrailsService;
 
-function DrawClient(serviceHost, options) {
+function TrailsServiceClient(serviceHost, options) {
   this.serviceHost = serviceHost;
   this.options = options || {};
 }
 
-DrawClient.prototype.line = function line(requestMessage, metadata, callback) {
+TrailsServiceClient.prototype.line = function line(requestMessage, metadata, callback) {
   if (arguments.length === 2) {
     callback = arguments[1];
   }
-  var client = grpc.unary(Draw.Line, {
+  var client = grpc.unary(TrailsService.Line, {
     request: requestMessage,
     host: this.serviceHost,
     metadata: metadata,
@@ -66,11 +66,11 @@ DrawClient.prototype.line = function line(requestMessage, metadata, callback) {
   };
 };
 
-DrawClient.prototype.color = function color(requestMessage, metadata, callback) {
+TrailsServiceClient.prototype.color = function color(requestMessage, metadata, callback) {
   if (arguments.length === 2) {
     callback = arguments[1];
   }
-  var client = grpc.unary(Draw.Color, {
+  var client = grpc.unary(TrailsService.Color, {
     request: requestMessage,
     host: this.serviceHost,
     metadata: metadata,
@@ -97,5 +97,5 @@ DrawClient.prototype.color = function color(requestMessage, metadata, callback) 
   };
 };
 
-exports.DrawClient = DrawClient;
+exports.TrailsServiceClient = TrailsServiceClient;
 

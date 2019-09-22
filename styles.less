@@ -98,3 +98,29 @@ form.start {
 .Host {
     padding: 1em;
 }
+
+
+.Trails {
+    canvas {
+        background: linear-gradient(45deg, #8e8787 0%, #dedede 100%);
+        border-radius: 5px;
+        box-shadow: rgba(0,0,0,0.1) 4px 2px 10px;
+        display: block;
+        width: 80vmin;
+        height: 80vmin;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%)
+    }
+
+    input[type=color] {
+        width: 4em;
+        height: 4em;
+        position: absolute;
+        left: 50%;
+        padding: 0;
+        margin: 0;
+        transform: translateX(-50%)
+    }
+}

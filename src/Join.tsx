@@ -6,6 +6,7 @@ import { PeerServiceClient } from './lib/peerService';
 import { Debug } from './services/Debug';
 import { SyncPath } from './services/SyncPath';
 import { Chat } from './services/Chat';
+import { Trails } from './services/Trails';
 
 let LOCAL = sessionStorage.getItem('LOCAL_ID') || Math.random().toString(36).slice(1)
 sessionStorage.setItem('LOCAL_ID', LOCAL)
@@ -28,9 +29,12 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
                 <Debug.Client />
             </Route>
 
-
             <Route path="/Chat" >
                 <Chat.Client />
+            </Route>
+
+            <Route path="/Trails" >
+                <Trails.Client />
             </Route>
 
         </ClientContext.Provider>

@@ -1,5 +1,5 @@
 // package: 
-// file: draw.proto
+// file: trails.proto
 
 import * as jspb from "google-protobuf";
 
