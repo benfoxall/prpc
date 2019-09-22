@@ -4,6 +4,7 @@ import { useSelector } from './reducers';
 import { Meta } from './lib/protos/generated/meta_pb_service';
 import { LinkTo, Route } from './routing';
 import { PeerServiceServer } from './lib/peerService';
+import { Debug } from './Debug';
 
 export const ServerContext = createContext<PeerServiceServer>(null)
 
@@ -20,7 +21,6 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
                 <h2>
                     <LinkTo href="/">⤶</LinkTo> {path}
                 </h2>
-
 
                 <Route path="/" >
                     <ul>
@@ -40,8 +40,9 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
                 <Route path="/Debug" >
                     <h1>This is the debug panel</h1>
-                </Route>
 
+                    <Debug.Host />
+                </Route>
 
             </main>
         </ServerContext.Provider>

@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Actions } from './reducers/route'
 import { useSelector } from './reducers';
 import { PeerServiceClient } from './lib/peerService';
+import { Debug } from './Debug';
 
 let LOCAL = sessionStorage.getItem('LOCAL_ID') || Math.random().toString(36).slice(1)
 sessionStorage.setItem('LOCAL_ID', LOCAL)
@@ -14,19 +15,19 @@ sessionStorage.setItem('LOCAL_ID', LOCAL)
 export const ClientContext = createContext<PeerServiceClient>(null)
 
 export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
-    const [color, setColor] = useState<string>('#ffffff')
+    // const [color, setColor] = useState<string>('#ffffff')
 
     const path = useSelector(app => app.route.path)
 
     const client = usePeerClient(name);
 
-    useEffect(() => {
-        if (color && client) {
-            const devService = client.getService(Dev)
-            devService("Background", res => res.setValue(color))
-        }
+    // useEffect(() => {
+    //     if (color && client) {
+    //         const devService = client.getService(Dev)
+    //         devService("Background", res => res.setValue(color))
+    //     }
 
-    }, [color, client])
+    // }, [color, client])
 
 
     return (
@@ -39,8 +40,11 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
             <Route path="/Debug">
                 <h2>Debug!</h2>
-                <input type="color" value={color} onChange={e => setColor(e.target.value)} />
+
+
+                <Debug.Join />
             </Route>
+
         </ClientContext.Provider>
     )
 }
