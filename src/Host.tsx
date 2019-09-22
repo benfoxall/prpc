@@ -1,27 +1,67 @@
-import React, { FunctionComponent, useEffect, useMemo, MouseEventHandler, useRef } from 'react';
+import React, { FunctionComponent, useEffect, useMemo, MouseEventHandler, useRef, createContext, useContext } from 'react';
 import { usePeerServer } from './lib/hooks';
-import { Dev } from './lib/protos/generated/dev_pb_service';
 import { useSelector } from './reducers';
-import { useDispatch } from 'react-redux';
-import { Actions } from './reducers/route';
 import { Meta } from './lib/protos/generated/meta_pb_service';
 import { LinkTo, Route } from './routing';
+import { PeerServiceServer } from './lib/peerService';
 
-// const pathCallbacks = new Set<(path: string) => void>();
+export const ServerContext = createContext<PeerServiceServer>(null)
 
 export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
+
+    const path = useSelector(app => app.route.path)
+
+    const peerServer = usePeerServer(name);
+
+    return (
+        <ServerContext.Provider value={peerServer}>
+            <SyncPath />
+            <main className="Host">
+                <h2>
+                    <LinkTo href="/">⤶</LinkTo> {path}
+                </h2>
+
+
+                <Route path="/" >
+                    <ul>
+                        <li>
+                            <LinkTo href="/Debug">Debug</LinkTo>
+                        </li>
+
+                        <li>
+                            <LinkTo href="/Chat">Chat</LinkTo>
+                        </li>
+
+                        <li>
+                            <LinkTo href="/Trails">Trails</LinkTo>
+                        </li>
+                    </ul>
+                </Route>
+
+                <Route path="/Debug" >
+                    <h1>This is the debug panel</h1>
+                </Route>
+
+
+            </main>
+        </ServerContext.Provider>
+    )
+}
+
+
+
+
+
+const SyncPath: FunctionComponent = () => {
+    const peerServer = useContext(ServerContext)
 
     const pathCallbacks = useMemo(() => new Set<(path: string) => void>(), [])
 
     const route = useSelector(app => app.route)
-
-    const peerServer = usePeerServer(name);
-
     const path = useRef(route.path)
     path.current = route.path;
 
     useEffect(() => {
-
         if (!peerServer) return;
 
         peerServer.addService(Meta, {
@@ -42,6 +82,9 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
             }
         })
 
+        return () => {
+            peerServer.removeService(Meta);
+        }
 
         // @ts-ignore
         window.server = peerServer
@@ -49,44 +92,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
 
     useEffect(() => {
-
         pathCallbacks.forEach(cb => cb(route.path))
-
     }, [pathCallbacks, route])
 
 
+    return null;
 
-    return (
-        <main className="Host">
-            <h2>
-                <LinkTo href="/">⤶</LinkTo> {route.path}
-            </h2>
-
-
-            <ul>
-                <li>
-                    <LinkTo href="/Debug">Debug</LinkTo>
-                </li>
-
-                <li>
-                    <LinkTo href="/Chat">Chat</LinkTo>
-                </li>
-
-                <li>
-                    <LinkTo href="/Trails">Trails</LinkTo>
-                </li>
-            </ul>
-
-            <h2>PATH {route.path}</h2>
-
-            <Route path="/Debug" >
-                <h1>This is the debug panel</h1>
-            </Route>
-
-
-        </main>
-    )
 }
-
-
-
