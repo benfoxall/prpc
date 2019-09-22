@@ -4,7 +4,7 @@ import { useSelector } from './reducers';
 import { Meta } from './lib/protos/generated/meta_pb_service';
 import { LinkTo, Route } from './routing';
 import { PeerServiceServer } from './lib/peerService';
-import { Debug } from './Debug';
+import { Debug } from './services/Debug';
 
 export const ServerContext = createContext<PeerServiceServer>(null)
 

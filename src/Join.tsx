@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Actions } from './reducers/route'
 import { useSelector } from './reducers';
 import { PeerServiceClient } from './lib/peerService';
-import { Debug } from './Debug';
+import { Debug } from './services/Debug';
 
 let LOCAL = sessionStorage.getItem('LOCAL_ID') || Math.random().toString(36).slice(1)
 sessionStorage.setItem('LOCAL_ID', LOCAL)
