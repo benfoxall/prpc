@@ -30,7 +30,7 @@ const Client: FunctionComponent = () => {
 
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({
-                    audio: false, video: { facingMode: response.getFacemode() }
+                    audio: false, video: { facingMode: { ideal: response.getFacemode() } }
                 });
 
                 // ar video = document.querySelector('video');
@@ -45,16 +45,22 @@ const Client: FunctionComponent = () => {
 
                 await new Promise(res => setTimeout(res, 3 * 1000))
 
-                setShowVideo(false);
+
+                const targetHeight = 200;
 
                 const canvas = document.createElement('canvas');
-                canvas.width = (256 / videoEl.videoHeight) * videoEl.videoWidth | 0;
-                canvas.height = 200;
+                canvas.width = (targetHeight / videoEl.videoHeight) * videoEl.videoWidth | 0;
+                canvas.height = targetHeight;
 
                 // debugger;
 
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
+
+                setShowVideo(false);
+
+                stream.getVideoTracks().forEach(track => track.stop())
+
 
                 const image: Blob | null = await new Promise(resolve => canvas.toBlob(resolve))
 
@@ -64,6 +70,8 @@ const Client: FunctionComponent = () => {
                 await new Promise(resolve => fr.addEventListener("load", resolve))
 
                 const u8 = new Uint8Array(fr.result as ArrayBuffer);
+
+
 
 
                 await service("PostPhoto", req => {
