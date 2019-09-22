@@ -57,8 +57,6 @@ const Client: FunctionComponent = () => {
 
 
 
-
-
         let stop = false;
         let dirty = false;
         let lastX = 0;

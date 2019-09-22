@@ -1,0 +1,20 @@
+
+syntax = 'proto3';
+
+import "common.proto";
+
+message Photo {
+    string type = 1;
+    bytes data = 2;
+    string id = 3; // (in case we want a high-res version?)
+}
+
+message When {
+    int32 seconds = 1;
+    string facemode = 2;
+}
+
+service CameraService {
+    rpc PostPhoto (Photo) returns (Noop);
+    rpc Wait (Noop) returns (Noop);
+}

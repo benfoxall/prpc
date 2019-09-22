@@ -5,7 +5,7 @@ export interface State {
 }
 
 const initState: State = {
-    path: '/Trails',
+    path: '/Cameras',
 }
 
 export enum Actions {

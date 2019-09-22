@@ -19,10 +19,7 @@ export const LinkTo: FunctionComponent<{ href: string }> = ({ href, children }) 
 }
 
 export const Route: FunctionComponent<{ path: string }> = ({ path, children }) => {
-
     const current = useSelector(app => app.route.path)
-
-    console.log(current)
 
     return current == path ? <>{children}</> : null;
 }

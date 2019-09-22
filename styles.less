@@ -95,8 +95,8 @@ form.start {
 }
 
 
-.Host {
-    padding: 1em;
+.Host, .Join {
+    padding: 2em;
 }
 
 
@@ -122,5 +122,48 @@ form.start {
         padding: 0;
         margin: 0;
         transform: translateX(-50%)
+    }
+}
+
+
+.Camera {
+    form {
+
+        text-align: center;
+
+        button {
+            display: block;
+            font-size: 5em;
+            background: rgba(0,0,0,0.2);
+            border: none;
+            margin: 0.25em auto;
+
+            transition: .2s;
+            cursor: pointer;
+
+            &:hover, &:focus {
+                background: #fc0
+            }
+        }
+
+        input {
+            border: none;
+            font-size: 1em;
+            background: rgba(255,255,255, 0.5)
+        }
+
+        label {
+            display: block;
+            margin: .5em;
+        }
+    }
+
+
+    .emoj {
+        font-size: 30vmax;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%)
     }
 }

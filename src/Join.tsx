@@ -7,6 +7,7 @@ import { Debug } from './services/Debug';
 import { SyncPath } from './services/SyncPath';
 import { Chat } from './services/Chat';
 import { Trails } from './services/Trails';
+import { Cameras } from './services/Cameras';
 
 let LOCAL = sessionStorage.getItem('LOCAL_ID') || Math.random().toString(36).slice(1)
 sessionStorage.setItem('LOCAL_ID', LOCAL)
@@ -21,21 +22,32 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
     return (
         <ClientContext.Provider value={client}>
             <SyncPath.Client />
-            <h2>
-                → {name} {path}
-            </h2>
+            <main className="Join">
+                <h2>
+                    [{name}] {path}
+                </h2>
 
-            <Route path="/Debug">
-                <Debug.Client />
-            </Route>
+                <Route path="/">
+                    <h1>Hello!</h1>
+                </Route>
 
-            <Route path="/Chat" >
-                <Chat.Client />
-            </Route>
+                <Route path="/Debug">
+                    <Debug.Client />
+                </Route>
 
-            <Route path="/Trails" >
-                <Trails.Client />
-            </Route>
+                <Route path="/Chat" >
+                    <Chat.Client />
+                </Route>
+
+                <Route path="/Trails" >
+                    <Trails.Client />
+                </Route>
+
+                <Route path="/Cameras" >
+                    <Cameras.Client />
+                </Route>
+
+            </main>
 
         </ClientContext.Provider>
     )

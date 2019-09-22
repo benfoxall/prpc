@@ -7,6 +7,7 @@ import { Debug } from './services/Debug';
 import { SyncPath } from './services/SyncPath';
 import { Chat } from './services/Chat';
 import { Trails } from './services/Trails';
+import { Cameras } from './services/Cameras';
 
 export const ServerContext = createContext<PeerServiceServer>(null)
 
@@ -24,10 +25,12 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
                     <LinkTo href="/">⤶</LinkTo> {path}
                 </h2>
 
+
                 <Route path="/" >
+                    (todo: number these)
                     <ul>
                         <li>
-                            <LinkTo href="/Debug">Debug</LinkTo>
+                            <LinkTo href="/Debug">Test</LinkTo>
                         </li>
 
                         <li>
@@ -36,6 +39,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
                         <li>
                             <LinkTo href="/Trails">Trails</LinkTo>
+                        </li>
+
+                        <li>
+                            <LinkTo href="/Cameras">Cameras</LinkTo>
                         </li>
                     </ul>
                 </Route>
@@ -50,6 +57,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
                 <Route path="/Trails" >
                     <Trails.Server />
+                </Route>
+
+                <Route path="/Cameras" >
+                    <Cameras.Server />
                 </Route>
 
             </main>
