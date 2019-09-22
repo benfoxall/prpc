@@ -71,6 +71,7 @@ const Client: FunctionComponent = () => {
 const Server: FunctionComponent = () => {
 
     const server = useContext(ServerContext);
+    const [count, setCount] = useState(0)
 
     useEffect(() => {
         if (!server) return
@@ -87,6 +88,8 @@ const Server: FunctionComponent = () => {
                 response.setPosttime(+ new Date)
 
                 messageList.push(response)
+
+                setCount(messageList.length)
 
                 updates.forEach(up => {
                     up(response)
@@ -120,7 +123,7 @@ const Server: FunctionComponent = () => {
 
     return <>
         <h1>Chat server</h1>
-        <h4>Messages: {12}</h4>
+        <h4>Messages: {count}</h4>
     </>
 }
 
