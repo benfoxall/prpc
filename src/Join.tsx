@@ -1,13 +1,10 @@
-import React, { FunctionComponent, useEffect, useState, createContext, useContext } from 'react';
+import React, { FunctionComponent, createContext } from 'react';
 import { usePeerClient } from './lib/hooks';
-import { Dev } from './lib/protos/generated/dev_pb_service';
-import { Meta } from './lib/protos/generated/meta_pb_service';
 import { Route } from './routing';
-import { useDispatch } from 'react-redux';
-import { Actions } from './reducers/route'
 import { useSelector } from './reducers';
 import { PeerServiceClient } from './lib/peerService';
 import { Debug } from './services/Debug';
+import { SyncPath } from './services/SyncPath';
 
 let LOCAL = sessionStorage.getItem('LOCAL_ID') || Math.random().toString(36).slice(1)
 sessionStorage.setItem('LOCAL_ID', LOCAL)
@@ -21,7 +18,7 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
     return (
         <ClientContext.Provider value={client}>
-            <SyncPath />
+            <SyncPath.Client />
             <h2>
                 → {name} {path}
             </h2>
@@ -32,43 +29,4 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
         </ClientContext.Provider>
     )
-}
-
-
-const SyncPath: FunctionComponent = () => {
-    const dispatch = useDispatch()
-
-    const client = useContext(ClientContext);
-
-    useEffect(() => {
-        if (client) {
-            const metaService = client.getService(Meta)
-
-            let stop = false
-
-            let current = '___'
-
-            // long-polling type requests
-            const listen = async () => {
-                if (stop) return;
-
-                const response = await metaService("getPageChange", (req) => req.setName(current));
-                current = response.getName();
-
-                dispatch({ type: Actions.SET_PATH, payload: response.getName() })
-
-                // throttle requests
-                await new Promise(resolve => setTimeout(resolve, 500))
-
-                listen()
-            }
-
-            listen();
-
-
-            return () => { stop = true }
-        }
-    }, [client])
-
-    return null;
 }
