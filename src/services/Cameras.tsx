@@ -30,7 +30,7 @@ const Client: FunctionComponent = () => {
 
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({
-                    audio: false, video: { facingMode: { ideal: response.getFacemode() } }
+                    audio: false, video: { facingMode: response.getFacemode() }
                 });
 
                 // ar video = document.querySelector('video');
@@ -180,7 +180,7 @@ const Server: FunctionComponent = () => {
                     <input type="checkbox" checked={selfie} onChange={e => setSelfie(e.target.checked)} /> selfie
                 </label>
 
-                <ul>
+                <ul className="photos">
                     {images.map(image => <li key={image}>
                         <img src={image} />
                     </li>)}
