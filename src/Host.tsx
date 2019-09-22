@@ -1,21 +1,44 @@
-import React, { FunctionComponent, useEffect, useMemo, MouseEventHandler } from 'react';
+import React, { FunctionComponent, useEffect, useMemo, MouseEventHandler, useRef } from 'react';
 import { usePeerServer } from './lib/hooks';
 import { Dev } from './lib/protos/generated/dev_pb_service';
 import { useSelector } from './reducers';
 import { useDispatch } from 'react-redux';
 import { Actions } from './reducers/route';
+import { Meta } from './lib/protos/generated/meta_pb_service';
+import { LinkTo, Route } from './routing';
+
+// const pathCallbacks = new Set<(path: string) => void>();
 
 export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
+    const pathCallbacks = useMemo(() => new Set<(path: string) => void>(), [])
+
+    const route = useSelector(app => app.route)
+
     const peerServer = usePeerServer(name);
+
+    const path = useRef(route.path)
+    path.current = route.path;
 
     useEffect(() => {
 
         if (!peerServer) return;
 
-        peerServer.addService(Dev, {
-            Background: (e) => {
-                document.body.style.background = e.getValue();
+        peerServer.addService(Meta, {
+            getPage: (req, res) => {
+                res.setName(path.current)
+            },
+            getPageChange: async (req, res) => {
+                if (req.getName() !== path.current) {
+                    res.setName(path.current)
+                } else {
+                    let resolve: (path: string) => void;
+                    const promise = new Promise<string>(r => resolve = r);
+
+                    pathCallbacks.add(resolve)
+
+                    res.setName(await promise);
+                }
             }
         })
 
@@ -25,14 +48,19 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
     }, [peerServer])
 
 
-    const route = useSelector(app => app.route)
+    useEffect(() => {
+
+        pathCallbacks.forEach(cb => cb(route.path))
+
+    }, [pathCallbacks, route])
+
+
 
     return (
         <main className="Host">
             <h2>
                 <LinkTo href="/">⤶</LinkTo> {route.path}
             </h2>
-
 
 
             <ul>
@@ -62,25 +90,3 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
 
 
-const LinkTo: FunctionComponent<{ href: string }> = ({ href, children }) => {
-
-    const dispatch = useDispatch();
-    const current = useSelector(app => app.route.path)
-
-    const handle: MouseEventHandler = (e) => {
-        e.preventDefault()
-        dispatch({ type: Actions.SET_PATH, payload: href });
-    }
-
-    return <a href={href} className={href === current ? 'active' : ''} onClick={handle}>{children}</a>
-
-}
-
-const Route: FunctionComponent<{ path: string }> = ({ path, children }) => {
-
-    const current = useSelector(app => app.route.path)
-
-    console.log(current)
-
-    return current == path ? <>{children}</> : null;
-}

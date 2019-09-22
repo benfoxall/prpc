@@ -106,7 +106,7 @@ export class PeerClient {
 
       // delay for live-reload
       if (['127.0.0.1', 'localhost'].includes(document.location.hostname)) {
-        await new Promise(r => setTimeout(r, 100))
+        await new Promise(r => setTimeout(r, 700))
       }
 
       const client = new SignalClient(room + LOCAL, dispatch)
