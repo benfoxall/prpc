@@ -26,7 +26,7 @@ CameraService.Wait = {
   requestStream: false,
   responseStream: false,
   requestType: common_pb.Noop,
-  responseType: common_pb.Noop
+  responseType: cameras_pb.When
 };
 
 exports.CameraService = CameraService;

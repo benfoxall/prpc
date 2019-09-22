@@ -291,7 +291,8 @@ proto.When.prototype.toObject = function(opt_includeInstance) {
 proto.When.toObject = function(includeInstance, msg) {
   var f, obj = {
     seconds: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    facemode: jspb.Message.getFieldWithDefault(msg, 2, "")
+    facemode: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    cancel: jspb.Message.getFieldWithDefault(msg, 3, false)
   };
 
   if (includeInstance) {
@@ -336,6 +337,10 @@ proto.When.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setFacemode(value);
       break;
+    case 3:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setCancel(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -379,6 +384,13 @@ proto.When.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getCancel();
+  if (f) {
+    writer.writeBool(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -409,6 +421,23 @@ proto.When.prototype.getFacemode = function() {
 /** @param {string} value */
 proto.When.prototype.setFacemode = function(value) {
   jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional bool cancel = 3;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.When.prototype.getCancel = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 3, false));
+};
+
+
+/** @param {boolean} value */
+proto.When.prototype.setCancel = function(value) {
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 

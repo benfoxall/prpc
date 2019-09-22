@@ -41,6 +41,9 @@ export class When extends jspb.Message {
   getFacemode(): string;
   setFacemode(value: string): void;
 
+  getCancel(): boolean;
+  setCancel(value: boolean): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): When.AsObject;
   static toObject(includeInstance: boolean, msg: When): When.AsObject;
@@ -55,6 +58,7 @@ export namespace When {
   export type AsObject = {
     seconds: number,
     facemode: string,
+    cancel: boolean,
   }
 }
 

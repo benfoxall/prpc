@@ -12,9 +12,10 @@ message Photo {
 message When {
     int32 seconds = 1;
     string facemode = 2;
+    bool cancel = 3;
 }
 
 service CameraService {
     rpc PostPhoto (Photo) returns (Noop);
-    rpc Wait (Noop) returns (Noop);
+    rpc Wait (Noop) returns (When);
 }

@@ -20,7 +20,7 @@ type CameraServiceWait = {
   readonly requestStream: false;
   readonly responseStream: false;
   readonly requestType: typeof common_pb.Noop;
-  readonly responseType: typeof common_pb.Noop;
+  readonly responseType: typeof cameras_pb.When;
 };
 
 export class CameraService {
@@ -73,11 +73,11 @@ export class CameraServiceClient {
   wait(
     requestMessage: common_pb.Noop,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: common_pb.Noop|null) => void
+    callback: (error: ServiceError|null, responseMessage: cameras_pb.When|null) => void
   ): UnaryResponse;
   wait(
     requestMessage: common_pb.Noop,
-    callback: (error: ServiceError|null, responseMessage: common_pb.Noop|null) => void
+    callback: (error: ServiceError|null, responseMessage: cameras_pb.When|null) => void
   ): UnaryResponse;
 }
 
