@@ -15,34 +15,19 @@ sessionStorage.setItem('LOCAL_ID', LOCAL)
 export const ClientContext = createContext<PeerServiceClient>(null)
 
 export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
-    // const [color, setColor] = useState<string>('#ffffff')
 
     const path = useSelector(app => app.route.path)
-
     const client = usePeerClient(name);
-
-    // useEffect(() => {
-    //     if (color && client) {
-    //         const devService = client.getService(Dev)
-    //         devService("Background", res => res.setValue(color))
-    //     }
-
-    // }, [color, client])
-
 
     return (
         <ClientContext.Provider value={client}>
             <SyncPath />
             <h2>
-                JOINING <small>({name})</small>
+                → {name} {path}
             </h2>
-            <h3>PATH: {path}</h3>
 
             <Route path="/Debug">
-                <h2>Debug!</h2>
-
-
-                <Debug.Join />
+                <Debug.Client />
             </Route>
 
         </ClientContext.Provider>

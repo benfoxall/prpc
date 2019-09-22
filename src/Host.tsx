@@ -39,9 +39,7 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
                 </Route>
 
                 <Route path="/Debug" >
-                    <h1>This is the debug panel</h1>
-
-                    <Debug.Host />
+                    <Debug.Server />
                 </Route>
 
             </main>
