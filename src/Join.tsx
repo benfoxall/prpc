@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState, createContext, useContext } from 'react';
 import { usePeerClient } from './lib/hooks';
 import { Dev } from './lib/protos/generated/dev_pb_service';
 import { Meta } from './lib/protos/generated/meta_pb_service';
@@ -6,16 +6,17 @@ import { Route } from './routing';
 import { useDispatch } from 'react-redux';
 import { Actions } from './reducers/route'
 import { useSelector } from './reducers';
+import { PeerServiceClient } from './lib/peerService';
 
 let LOCAL = sessionStorage.getItem('LOCAL_ID') || Math.random().toString(36).slice(1)
 sessionStorage.setItem('LOCAL_ID', LOCAL)
+
+export const ClientContext = createContext<PeerServiceClient>(null)
 
 export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
     const [color, setColor] = useState<string>('#ffffff')
 
     const path = useSelector(app => app.route.path)
-
-    const dispatch = useDispatch()
 
     const client = usePeerClient(name);
 
@@ -27,6 +28,28 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
     }, [color, client])
 
+
+    return (
+        <ClientContext.Provider value={client}>
+            <SyncPath />
+            <h2>
+                JOINING <small>({name})</small>
+            </h2>
+            <h3>PATH: {path}</h3>
+
+            <Route path="/Debug">
+                <h2>Debug!</h2>
+                <input type="color" value={color} onChange={e => setColor(e.target.value)} />
+            </Route>
+        </ClientContext.Provider>
+    )
+}
+
+
+const SyncPath: FunctionComponent = () => {
+    const dispatch = useDispatch()
+
+    const client = useContext(ClientContext);
 
     useEffect(() => {
         if (client) {
@@ -58,16 +81,5 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
         }
     }, [client])
 
-    return (<>
-        <h2>
-            JOINING <small>({name})</small>
-        </h2>
-        <h3>PATH: {path}</h3>
-
-        <Route path="/Debug">
-            <h2>Debug!</h2>
-            <input type="color" value={color} onChange={e => setColor(e.target.value)} />
-        </Route>
-
-    </>)
+    return null;
 }
