@@ -1,0 +1,25 @@
+
+syntax = 'proto3';
+
+import "common.proto";
+
+message Pose {
+    string markerId = 1;
+    repeated float mat3 = 2;
+}
+
+message Command {
+    enum Action {
+        WAIT = 0;
+        DETECT = 1;
+    }
+
+    Action action = 1;
+}
+
+service PositionService {
+    // hack until streaming
+    rpc Wait (Noop) returns (Command);
+    
+    rpc SendPose (Pose) returns (Noop);
+}

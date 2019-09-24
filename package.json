@@ -33,6 +33,7 @@
     "@types/react": "~16.9.2",
     "@types/react-dom": "~16.9.0",
     "@types/simple-peer": "~6.1.6",
+    "js-aruco": "git+https://github.com/benfoxall/js-aruco.git#6673c6cadc3199269920da315c422faa2c4d3bc0",
     "less": "~3.10.3",
     "parcel-bundler": "~1.12.3",
     "react": "^16.9.0",
