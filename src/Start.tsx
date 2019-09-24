@@ -10,10 +10,13 @@ export const Start = () => {
         )
 
     return (
-        <form className="start">
-            <h1>Web Browser Server</h1>
-            <input name="join" autoComplete="off" placeholder="code" value={code} onChange={change} />
-            <button>Connect</button>
-        </form>
+        <div className="Start">
+
+            <h2>Start a server</h2>
+            <code>{document.location.host}/host/<span>[code]</span></code>
+
+            <h2>Join a server</h2>
+            <code>{document.location.host}/<span>[code]</span></code>
+        </div>
     )
 }
