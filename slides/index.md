@@ -1,6 +1,6 @@
 
 # Hello,
-# [fit] I'm Ben Foxall
+# [fit] I'm Ben
 ## Thanks for having me
 # 🦉
 
@@ -15,9 +15,9 @@
 
 ---
 
-# Oxbotica
+# [fit] Oxbotica
 
-## Universal Autonomony
+## [fit] Universal Autonomy
 
 ---
 
@@ -31,9 +31,8 @@
 
 ---
 
-# [fit] Super Secret 
-# [fit] Undercover
-# [fit] _Web Developer_
+# [fit] Secret
+# [fit] Web Developer
 
 ---
 
@@ -43,9 +42,17 @@
 
 # Today
 
-* Technical alternatives
+How to make the best of breaking conventions
+
+---
+
+# Today
+
+* Technical deep-dive
 * Demos
 * Challenging UX
+
+[ mark where it sounds like it's going to be boring]
 
 ^ I'm going to introduce a technical topic, that has non-technical ramifications
 
@@ -196,10 +203,9 @@ identify with this", "author_id":
 ![](sketch/overview+target.png)
 
 ---
-
-# [fit] Protocol 
+# [fit] Going from JSON
+# [fit] to Protocol 
 # [fit] Buffers
-# and JSON
 
 [.background-color: #ffcc00]
 
@@ -340,26 +346,26 @@ protoc example.proto
 # Avoids translation
 
 ```sql
-SELECT * FROM todoList WHERE …
+SELECT * FROM comments WHERE …
 ```
 
-1. TodoItem model class
+1. Comment model class
 
 2. Rest API Layer
 
 3. fetch(…).then(r => r.json())
 
-4. TodoItem.fromJSON()
+4. Comment.fromJSON()
 
-5. <Item title={item.title}>
+5. <Comment title={item.title}>
 
 [.build-lists: true]
 
 ---
 
+# [fit] Going from REST to
 # [fit] gRPC
 
-# and REST
 
 [.background-color: #ffcc00]
 
@@ -693,5 +699,63 @@ service Controller {
 
 @benjaminbenben
 
-(Seren and Marcus – you're awesome)
 
+
+
+-------
+
+
+Demo Stream of thought.
+
+The srtuff I'm wanting to show here is how mazing it is that two browsersw aren't connected to the web, but can still do lots of things.
+
+
+The first demo!
+
+(we're thinkinhg in challenges here).
+
+We don't need to access the www to get content.
+
+The first demo challenges that servers don't have to be connected to the world wide web. Once you've visited this page, your browser disconnects from the web, but is still able to get content from this other web server.
+
+??? Maybe a content demo?  I write markdown and that content is mirrored in peoples devices ???
+
+>> potentially go on to talk about offline apps and bluetooth
+
+
+Challenge number 2!
+
+We don't need to post our data into the cloud.
+
+Here's a comment bot - like that example we had before.  As you type in messages here, they're sent to everyone else who's joined the server!  Where this gets interesting is when you think about where the data is stored.  These comments are just a local variable in this browser.  What does that mean for privacy laws?  Am I breaking any data retention laws?!
+
+To a point, we've been thinking about this kind of stuff with whatsapp end-to-end messages.  But what else does that mean.
+
+>> potentially go on to talk about ipfs & distributed content.
+
+
+Challenge number 3!
+
+A web server can be part of the interaction
+
+Here's another demo,  you can drag your finger or mouse across the panel, and you should be able to see it appear.
+
+Now, I want to do a few things.  I want you to be kind of ANGRY,  now try and thing flow-y thoughts and drift about.  
+
+Now I want you to try and make a circle.
+
+And a square
+
+And a triangle.
+
+So,  What I love about this is where our focus lies.  When we interact, we tend to do so looking at a single screen.  I find it really interesting when we manage to interact with the spaces between. 
+
+
+
+
+>>
+>> iPad handoff thing
+
+>> space team / Artemis
+>> Johann Sebastian Joust
+>> 
