@@ -9,6 +9,7 @@ import { Chat } from './services/Chat';
 import { Trails } from './services/Trails';
 import { Cameras } from './services/Cameras';
 import { Position } from './services/Position';
+import { Content } from './services/Content';
 
 export const ServerContext = createContext<PeerServiceServer>(null)
 
@@ -31,7 +32,11 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
                     (todo: number these)
                     <ul>
                         <li>
-                            <LinkTo href="/Debug">Test</LinkTo>
+                            <LinkTo href="/Debug">Debug</LinkTo>
+                        </li>
+
+                        <li>
+                            <LinkTo href="/Content">Content</LinkTo>
                         </li>
 
                         <li>
@@ -62,6 +67,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
                 <Route path="/Debug" >
                     <Debug.Server />
+                </Route>
+
+                <Route path="/Content" >
+                    <Content.Server />
                 </Route>
 
                 <Route path="/Chat" >

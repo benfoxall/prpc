@@ -1,0 +1,20 @@
+
+syntax = 'proto3';
+
+import "common.proto";
+
+message ContentWait {
+    int32 id = 1;
+}
+
+message Content {
+    int32 id = 1;
+    string body = 2;
+}
+
+service ContentService {
+    // hack until streaming
+    rpc Wait (ContentWait) returns (Content);
+    
+    rpc GetContent (Noop) returns (Content);
+}

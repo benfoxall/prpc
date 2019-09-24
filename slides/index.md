@@ -11,19 +11,23 @@
 * Fairy lights
 * NZ - stuffometer
 * WebGL Hacks
-* VR planning
+* Publishing rooms
 
 ---
 
-# [fit] Oxbotica
 
-## [fit] Universal Autonomy
+![fit](images/oxb-5.jpg)
+
 
 ---
 
-[picture of cars]
+![cover](images/oxb-6.png)
 
 ^ we have cars that drive around the place
+
+---
+
+![cover](images/oxb-7.jpg)
 
 ---
 
@@ -31,8 +35,10 @@
 
 ---
 
-# [fit] Secret
-# [fit] Web Developer
+# [fit] Taking the web on
+# [fit] an adventure
+
+^ Making the web useful down the stack
 
 ---
 
@@ -40,29 +46,39 @@
 
 ---
 
-# Today
-
-How to make the best of breaking conventions
+# 🦉 Today
 
 ---
 
-# Today
+# 🦉 Today
 
-* Technical deep-dive
-* Demos
-* Challenging UX
+## Challenging the state 
+## ...
 
-[ mark where it sounds like it's going to be boring]
+
+---
+
+# 🦉 Today
+
+## Challenging the state 
+## of how we load data
+
+---
+
+# 🦉 Today
+
+* Technical stuff
+* Demo stuff
+* Concept stuff
+
+[mark where it sounds like it's going to be boring]
 
 ^ I'm going to introduce a technical topic, that has non-technical ramifications
 
 ---
 
-# How we get data into a webpage
-
-[browser + comment box]
-
-[ hangover owls]
+# How do we get 
+# data into a web page?
 
 ---
 
@@ -104,15 +120,29 @@ conversion to (common) format
 
 ---
 
-# [fit] /post/1b982/comments
+# URL
+# /post/1b982/comments
+
+---
+
+# Methods
+# GET, POST, PUT, DELETE
+
+
 
 ---
 
 #  REST
 
+* Stateless
 * Resource Oriented
 * Been around forever
 * Great
+* HATEOAS
+
+---
+
+# [first ever web browser]
 
 ---
 
@@ -123,10 +153,38 @@ conversion to (common) format
 ---
 
 ```json
-{"list”: [{"body": "I totally
-identify with this", "author_id": 
-"038bb12m", "created_at": "…
+{
+  "list": [
+    {
+      "body": "I totally identify with this", 
+      "author_id": "038bb12m", 
+      "created_at": 12345,
+      "spam": false
+    }
+  ]
+}
 ```
+
+---
+
+
+```js
+const content = {
+  "list": [
+    {
+      "body": "I totally identify with this", 
+      "author_id": "038bb12m", 
+      "created_at": 12345,
+      "spam": false
+    }
+  ]
+}
+```
+
+
+---
+
+Netscape
 
 ---
 
@@ -139,15 +197,66 @@ identify with this", "author_id":
 
 ---
 
-# Other Terms
 
-- client / server
-- request / response
-- 
+```js
+const content = JSON.stringify(`{
+  "list": [
+    {
+      "body": "I totally identify with this", 
+      "author_id": "038bb12m", 
+      "created_at": 12345,
+      "spam": false
+    }
+  ]
+}`)
+```
 
 ---
 
-# Protocol Buffers & gRPC
+```js
+const content = {
+  "list": [
+    {
+      "body": "I totally identify with this", 
+      "author_id": "038bb12m", 
+      "created_at": 12345,
+      "spam": false
+    }
+  ]
+}
+```
+
+---
+
+# Browser <-> Server
+
+### Interface
+## REST
+
+### Object Serialisation
+## JSON
+
+
+---
+
+# TODO - HOW DO SERVERS TALK TO OTHER SERVERS
+
+---
+
+* networking is different (containers/microservices)
+* HTTP optional
+* JavaScript not dominiant
+
+---
+
+# [fit] Lots of ways
+# [fit] htttp / queues / sockets / etc
+
+---
+
+# today we'll look at
+# [fit] gRPC &
+# [fit] Protocol Buffers 
 
 ---
 
@@ -157,6 +266,26 @@ identify with this", "author_id":
 
 
 ![inline](images/popularity.png)
+
+---
+
+
+---
+
+# TODO - SERVER ======= SERVER
+
+---
+
+
+
+---
+
+
+# Other Terms
+
+- client / server
+- request / response
+- 
 
 ---
 
@@ -691,6 +820,13 @@ service Controller {
 
 ---
 
+# [PART 2]
+
+
+
+
+---
+
 # Chat
 
 ---
@@ -751,6 +887,13 @@ And a triangle.
 So,  What I love about this is where our focus lies.  When we interact, we tend to do so looking at a single screen.  I find it really interesting when we manage to interact with the spaces between. 
 
 
+Challenge number 4!
+
+A Web Server doesn't just have to serve the web.
+
+
+
+
 
 
 >>
@@ -758,4 +901,5 @@ So,  What I love about this is where our focus lies.  When we interact, we tend 
 
 >> space team / Artemis
 >> Johann Sebastian Joust
+>> 
 >> 
