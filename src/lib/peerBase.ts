@@ -30,11 +30,20 @@ export class PeerServer {
 
     const client = new SignalClient(room, dispatch);
 
+    let peerConfig;
+    client.twillio.then(c => peerConfig = c)
+
     client.on('data', (message, remoteId) => {
 
       // if we haven't see this connection before
       if (!this.peers.has(remoteId)) {
-        const peer = new Peer({ initiator: false })
+        if (!peerConfig) {
+          console.warn("No Peer Config (twillio) found")
+        } else {
+          console.log("USING PEER CONFIG", peerConfig)
+        }
+
+        const peer = new Peer({ initiator: false, config: peerConfig })
 
         peer.on('error', err => console.log('error', err))
 
@@ -127,14 +136,14 @@ export class PeerClient {
       let LOCAL = sessionStorage.getItem('LOCAL_ID') || Math.random().toString(36).slice(1)
       sessionStorage.setItem('LOCAL_ID', LOCAL)
 
+      const client = new SignalClient(room + LOCAL, dispatch)
+
       // delay for live-reload
       if (['127.0.0.1', 'localhost'].includes(document.location.hostname)) {
         await new Promise(r => setTimeout(r, 700))
       }
 
-      const client = new SignalClient(room + LOCAL, dispatch)
-
-      const peer = new Peer({ initiator: true })
+      const peer = new Peer({ initiator: true, config: await client.twillio })
 
       peer.on('error', err => console.log('error', err))
 
