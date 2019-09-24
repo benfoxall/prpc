@@ -7,7 +7,7 @@
   "scripts": {
     "start": "parcel index.html",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html && cp assets/* dist/"
   },
   "browserslist": [
     "last 1 Chrome versions"

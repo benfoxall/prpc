@@ -16,11 +16,13 @@ const logger = store => next => action => {
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(logger)))
 
-
 // work out if we're hosting or joinging
-const search = document.location.search;
-const host = new URLSearchParams(search).get('host');
-const join = new URLSearchParams(search).get('join');
+const path = document.location.pathname
+const hostR = path.match(/^\/host\/(\w+)/)
+const host = hostR && hostR[1];
+const joinR = path.match(/^\/(\w+)/)
+const join = host ? null : joinR && joinR[1];
+
 
 const App = () =>
     <Provider store={store}>
@@ -50,7 +52,7 @@ const Connection = () => {
         return (
             <footer className="Connection">
                 <h1>
-                    <a href={document.location.origin} target="_blank">{document.location.host}</a> | {uuid}</h1>
+                    <a href={document.location.origin + '/' + uuid} target="_blank">{document.location.host}/{uuid}</a></h1>
                 <h3>
                     [ws {connection.wsState ? '⚡️' : '❌'}] [{connections} Peer Client{connections !== 1 ? 's' : ''}]
                 </h3>
