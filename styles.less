@@ -1,11 +1,13 @@
 body {
     font-family: 'Roboto Mono', monospace;
-    background: #ccc;
+    background: #fff;
     margin: 0;
-    // background: linear-gradient(40deg, rgba(2,0,36,0.1), rgba(0,212,255,0.6));
     overscroll-behavior: none;
     margin-bottom: 5em;
+
+    transition: .4s;
 }
+
 
 a {
     color: #000;
@@ -18,6 +20,19 @@ a {
         color: #08f
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #333;
+        color:#fff
+    }
+
+    a {
+        color: #fff;
+    }
+}
+
+
 
 ::placeholder {
     color: #000;
@@ -39,7 +54,7 @@ h1, h2, h3 {
     code {
         font-size: 2em;
         color: #000;
-        background: #aaa;
+        background: rgba(127,127,127,0.3);
         padding: .2em;
         margin: .5em 1em;
         display:inline-block;
@@ -48,6 +63,11 @@ h1, h2, h3 {
 
 
 .Connection {
+    color: #000;
+    a {
+        color: #000;
+    }
+
     position: fixed;
     bottom: 0;
     left: 0;
