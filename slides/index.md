@@ -52,6 +52,562 @@
 
 # 🦉 Today
 
+# [fit] Challenging 
+# [fit] the way we 
+# [fit] build the web
+
+^ gonna talk about some technical stuff, as well as dipping into UX and design.
+
+---
+
+<!-- # [fit] Paradigms  -->
+
+# [fit] Wisdom
+
+<!-- # [fit] Convention -->
+
+<!-- # [fit] Assumptions -->
+
+---
+
+# [fit] 1.
+
+[.background-color: #f08]
+
+---
+
+# [fit] 1.
+
+# [fit] Use JSON 
+# [fit] for data
+
+[.background-color: #f08]
+
+---
+
+
+![](sketch/owls.png)
+
+---
+
+![](sketch/owls2.png)
+
+---
+
+![](sketch/owls3.png)
+
+---
+
+![](sketch/owls4.png)
+
+---
+
+# [fit] JSON
+
+^ JSON - March 2001
+
+---
+
+
+```json
+{
+  "list": [
+    {
+      "body": "I totally identify with this", 
+      "author_id": "038bb12m", 
+      "created_at": 12345,
+      "spam": false
+    }
+  ]
+}
+```
+
+---
+
+
+```js
+const content = {
+  "list": [
+    {
+      "body": "I totally identify with this", 
+      "author_id": "038bb12m", 
+      "created_at": 12345,
+      "spam": false
+    }
+  ]
+}
+```
+
+---
+
+![](images/netscape-navigator-2-0.png)
+
+
+<!-- [^1]:https://www.webdesignmuseum.org/web-design-history/netscape-navigator-2-0-1995. -->
+
+^ NN2 - Sept 1995
+^ JSON - March 2001 (6 years later)
+
+---
+
+# JSON is baked 
+# into the web platform
+
+---
+
+
+```js
+const res = await fetch('post/1234/comments')
+const comments = await res.json()
+```
+
+---
+
+# An alternative
+
+---
+
+# [fit] Protocol
+# [fit] Buffers
+
+[.background-color: #ccc]
+
+---
+
+# Define a message
+
+```
+# example.proto
+
+syntax = 'proto3';
+
+message Example {
+    string name = 1;
+    bool night = 2;
+    float size = 3;
+}
+```
+
+---
+
+# Generate stubs
+
+```bash
+protoc 
+  --js-out=./dist
+  example.proto
+```
+
+---
+
+# Use stubs
+
+
+```js
+const message = new Message()
+message.setName('frank')
+message.setNight(false)
+message.setSize(2)
+
+const output = message.serialiseBinary()
+// -> Buffer(...)
+```
+
+---
+
+# Generated data
+
+```
+0010010101010001010010010010101
+0101010100010120100100101010011
+1000101001001001010101000101...
+```
+
+---
+
+# ❤️ Efficiency
+
+---
+
+# ❤️ Efficiency
+
+No keys or padding
+
+```
+{1}0010010101010001010010010010101
+0101010{2}100010120100100101010011
+10001010010010010{3}10101000101...
+```
+
+
+```
+string name = {1};
+bool night = {2};
+float size = {3};
+```
+
+---
+
+# ❤️ Efficiency
+
+
+# [fit] 1234567890
+
+```
+# JSON
+000000  31 32 33 34 35 36 37 38 39 30                    1234567890
+
+# Var Int
+000000  d2 85 d8 cc 04                                   Ò.ØÌ.
+```
+
+
+[observablehq.com/@benfoxall/var-int-encoding](https://observablehq.com/@benfoxall/var-int-encoding)
+
+---
+
+# ❤️ Efficiency
+
+# [fit] true
+
+```
+# JSON encoded
+000000  74 72 75 65                                      true
+
+# Var Int (1)
+000000  01                                               .
+```
+
+---
+
+# ❤️❤️ 
+
+---
+
+# ❤️❤️ 
+# Type Safety
+# *across* languages
+
+
+```bash
+protoc 
+  --js-out=./dist
+  --python-out=./dist
+  --go-out=./dist
+  --rust-out=./dist
+  example.proto
+```
+
+---
+
+# [fit] Demo
+
+---
+
+# Recap
+
+---
+
+
+# [fit] 2.
+
+[.background-color: #f08]
+
+---
+
+# [fit] 2.
+
+# [fit] Use REST 
+# [fit] for interfaces
+
+[.background-color: #f08]
+
+---
+
+![](sketch/owls4.png)
+
+---
+
+# [fit] Representational state transfer
+
+
+<!-- [^rest]: https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm -->
+
+^ Year 2000
+
+---
+
+```
+GET /posts
+GET /post/53
+GET /post/53/comments
+PUT /post/53/comments/23/reactions
+POST /post/53/comments
+```
+
+---
+
+# Built on HTTP
+
+![](images/timbl.jpg)
+
+
+<!-- https://home.cern/science/computing/birth-web -->
+
+---
+
+# REST is baked 
+# into the web platform
+
+---
+
+
+# An alternative?
+<!-- 
+* loose
+* manual -->
+
+---
+
+# [fit] gRPC
+
+[.background-color: #ccc]
+
+---
+
+## Popular in server->server
+
+---
+
+
+```
+POST PostService/getList
+POST PostService/getPostContent
+POST CommentService/getComments
+POST CommentService/setReaction
+POST CommentService/addComment
+```
+
+---
+
+```bash
+# example.proto
+service ExampleService {
+  rpc Add (NumberList) returns (Number);
+}
+
+# use grpc plugin
+protoc
+  --plugin=protoc-gen-grpc=grpc-plugin \
+  --grpc_out=. \
+  example.proto
+```  
+
+---
+
+```js
+const service = new ExampleService({
+  Add: (req, res) => {
+    res.setAnswer(req.getA() + req.getB())
+  }
+})
+
+const server = new Server('localhost:5050')
+server.add(service)
+server.start()
+```
+
+---
+
+```js
+const client = new ExampleServiceClient('localhost:5050')
+
+const answer = await client.add(5, 5)
+
+// 10
+```
+
+---
+
+# TODO [ GRPC VERSION ]
+
+![](sketch/owls4.png)
+
+---
+
+# ❤️
+
+# Type Safety 
+
+# *between* languages
+
+---
+
+# [fit] Demo
+
+---
+
+# [fit] 3.
+
+[.background-color: #f08]
+
+---
+
+# [fit] 3.
+
+# [fit] Browsers connect
+# [fit] to web servers
+
+[.background-color: #f08]
+
+---
+
+[first web page]
+
+---
+
+# [A] <=> [S] <=> [B]
+
+---
+
+# HTTP
+# Websockets
+
+---
+
+# An alternative?
+<!-- 
+* loose
+* manual -->
+
+---
+
+# [fit] Peer-2-peer
+
+# [fit] with WebRTC
+
+[.background-color: #ccc]
+
+---
+
+# [A] <=> [S] <=> [B]
+
+# [A] <=> [B]
+
+---
+
+* Media streams
+* Data Channels
+
+---
+
+* Latency
+* Bandwidth
+
+---
+
+
+
+# [fit] Quick Summary
+
+[.background-color: #08f]
+
+---
+
+# [fit] 1. Protocol Buffers
+# [fit] 2. gRPC 
+# [fit] 3. webRTC
+
+[.background-color: #08f]
+
+---
+
+# [fit] 1. Serialisation
+# [fit] 2. Interface
+# [fit] 3. Transport
+
+[.background-color: #08f]
+
+---
+
+Mash them together
+
+---
+
+Strongly typed peer-to-peer communication
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+
+# [fit] 4.
+
+[.background-color: #f08]
+
+---
+
+# [fit] 4.
+
+# [fit] Web servers have all the content
+
+[.background-color: #f08]
+
+---
+
+
+
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+---
+
+---
+
+---
+
+# [fit] ↑ NEW
+# [fit] ↑ STUFF
+
+---
+
+# 🦉 Today
+
 ## Challenging the state 
 ## ...
 
@@ -92,7 +648,6 @@
 ---
 
 ![](sketch/owls3.png)
-
 
 ---
 
@@ -180,7 +735,6 @@ const content = {
   ]
 }
 ```
-
 
 ---
 
