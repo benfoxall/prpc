@@ -85,8 +85,8 @@ proto.NumberPair.prototype.toObject = function(opt_includeInstance) {
  */
 proto.NumberPair.toObject = function(includeInstance, msg) {
   var f, obj = {
-    value1: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    value2: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    value1: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
+    value2: +jspb.Message.getFieldWithDefault(msg, 2, 0.0)
   };
 
   if (includeInstance) {
@@ -124,11 +124,11 @@ proto.NumberPair.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt32());
+      var value = /** @type {number} */ (reader.readFloat());
       msg.setValue1(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt32());
+      var value = /** @type {number} */ (reader.readFloat());
       msg.setValue2(value);
       break;
     default:
@@ -161,15 +161,15 @@ proto.NumberPair.prototype.serializeBinary = function() {
 proto.NumberPair.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getValue1();
-  if (f !== 0) {
-    writer.writeInt32(
+  if (f !== 0.0) {
+    writer.writeFloat(
       1,
       f
     );
   }
   f = message.getValue2();
-  if (f !== 0) {
-    writer.writeInt32(
+  if (f !== 0.0) {
+    writer.writeFloat(
       2,
       f
     );
@@ -178,32 +178,32 @@ proto.NumberPair.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional int32 value1 = 1;
+ * optional float value1 = 1;
  * @return {number}
  */
 proto.NumberPair.prototype.getValue1 = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 1, 0.0));
 };
 
 
 /** @param {number} value */
 proto.NumberPair.prototype.setValue1 = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  jspb.Message.setProto3FloatField(this, 1, value);
 };
 
 
 /**
- * optional int32 value2 = 2;
+ * optional float value2 = 2;
  * @return {number}
  */
 proto.NumberPair.prototype.getValue2 = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 2, 0.0));
 };
 
 
 /** @param {number} value */
 proto.NumberPair.prototype.setValue2 = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  jspb.Message.setProto3FloatField(this, 2, value);
 };
 
 
@@ -237,7 +237,7 @@ proto.Result.prototype.toObject = function(opt_includeInstance) {
  */
 proto.Result.toObject = function(includeInstance, msg) {
   var f, obj = {
-    value: jspb.Message.getFieldWithDefault(msg, 1, 0)
+    value: +jspb.Message.getFieldWithDefault(msg, 1, 0.0)
   };
 
   if (includeInstance) {
@@ -275,7 +275,7 @@ proto.Result.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt32());
+      var value = /** @type {number} */ (reader.readFloat());
       msg.setValue(value);
       break;
     default:
@@ -308,8 +308,8 @@ proto.Result.prototype.serializeBinary = function() {
 proto.Result.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getValue();
-  if (f !== 0) {
-    writer.writeInt32(
+  if (f !== 0.0) {
+    writer.writeFloat(
       1,
       f
     );
@@ -318,17 +318,17 @@ proto.Result.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional int32 value = 1;
+ * optional float value = 1;
  * @return {number}
  */
 proto.Result.prototype.getValue = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 1, 0.0));
 };
 
 
 /** @param {number} value */
 proto.Result.prototype.setValue = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  jspb.Message.setProto3FloatField(this, 1, value);
 };
 
 

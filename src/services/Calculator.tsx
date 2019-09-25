@@ -29,7 +29,9 @@ const Client: FunctionComponent = () => {
     return (
         <div className="Calculator">
             <input type="number" value={a} onChange={e => setA(e.target.valueAsNumber)} />
+            ?
             <input type="number" value={b} onChange={e => setB(e.target.valueAsNumber)} />
+            =
             <output>
                 {result}
             </output>
