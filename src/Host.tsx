@@ -30,7 +30,7 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
 
                 <Route path="/" >
-                    (todo: number these)
+
                     <ul>
                         <li>
                             <LinkTo href="/Debug">Debug</LinkTo>
