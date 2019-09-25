@@ -10,6 +10,7 @@ import { Trails } from './services/Trails';
 import { Cameras } from './services/Cameras';
 import { Position } from './services/Position';
 import { Content } from './services/Content';
+import { Calculator } from './services/Calculator';
 
 let LOCAL = sessionStorage.getItem('LOCAL_ID') || Math.random().toString(36).slice(1)
 sessionStorage.setItem('LOCAL_ID', LOCAL)
@@ -35,6 +36,10 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
                 <Route path="/Debug">
                     <Debug.Client />
+                </Route>
+
+                <Route path="/Calculator" >
+                    <Calculator.Client />
                 </Route>
 
                 <Route path="/Content">

@@ -1,0 +1,15 @@
+
+syntax = 'proto3';
+
+message NumberPair {
+    int32 value1 = 1;
+    int32 value2 = 2;
+}
+
+message Result {
+    int32 value = 1;
+}
+
+service CalculatorService {
+    rpc Calculate (NumberPair) returns (Result);
+}
