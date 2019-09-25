@@ -35,10 +35,21 @@
 
 ---
 
-# [fit] Taking the web on
-# [fit] an adventure
+# [fit] Taking the 
+# [fit] web on an
+# [fit] adventure
 
 ^ Making the web useful down the stack
+
+---
+
+
+![fit](sketch/Adventure-1.png)
+
+---
+
+![fit](sketch/Adventure-2.png)
+
 
 ---
 
@@ -104,6 +115,8 @@
 
 # [fit] JSON
 
+(2001)
+
 ^ JSON - March 2001
 
 ---
@@ -140,7 +153,7 @@ const content = {
 
 ---
 
-![](images/netscape-navigator-2-0.png)
+![fit](images/netscape-navigator-2-0.png)
 
 
 <!-- [^1]:https://www.webdesignmuseum.org/web-design-history/netscape-navigator-2-0-1995. -->
@@ -153,17 +166,15 @@ const content = {
 # JSON is baked 
 # into the web platform
 
----
-
 
 ```js
-const res = await fetch('post/1234/comments')
-const comments = await res.json()
+const comments = await response.json()
 ```
 
 ---
 
-# An alternative
+# JSON is awesome.
+# But, an alternative?
 
 ---
 
@@ -214,6 +225,18 @@ const output = message.serialiseBinary()
 ```
 
 ---
+
+
+# ❤️Protocol Buffers ❤️
+
+* impossible to make a mistake
+* efficient on the wire
+* Type safety __across__ languages
+
+[.build-lists: true]
+
+---
+
 
 # Generated data
 
@@ -302,9 +325,6 @@ protoc
 
 # [fit] Demo
 
----
-
-# Recap
 
 ---
 
@@ -328,7 +348,10 @@ protoc
 
 ---
 
+# [fit] REST
 # [fit] Representational state transfer
+
+(2000)
 
 
 <!-- [^rest]: https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm -->
@@ -337,13 +360,12 @@ protoc
 
 ---
 
-```
 GET /posts
-GET /post/53
-GET /post/53/comments
-PUT /post/53/comments/23/reactions
-POST /post/53/comments
-```
+GET /posts/53
+GET /posts/53/comments
+PUT /posts/53/comments/23/reactions
+POST /posts/53/comments
+
 
 ---
 
@@ -375,10 +397,9 @@ POST /post/53/comments
 
 ---
 
-## Popular in server->server
+# Resources → Services
 
 ---
-
 
 ```
 POST PostService/getList
@@ -401,20 +422,6 @@ protoc
   --plugin=protoc-gen-grpc=grpc-plugin \
   --grpc_out=. \
   example.proto
-```  
-
----
-
-```js
-const service = new ExampleService({
-  Add: (req, res) => {
-    res.setAnswer(req.getA() + req.getB())
-  }
-})
-
-const server = new Server('localhost:5050')
-server.add(service)
-server.start()
 ```
 
 ---
@@ -429,17 +436,27 @@ const answer = await client.add(5, 5)
 
 ---
 
-# TODO [ GRPC VERSION ]
+# ❤️gRPC ❤️
 
-![](sketch/owls4.png)
+
+* Interface code is generated / mistake free
+* Type safety __between__ langages
+
+
+[.build-lists: true]
 
 ---
 
-# ❤️
+# 🤫 gRPC – slight probleem
 
-# Type Safety 
+* It's not supported by web-browsers
+* At all
+* Option – web-gRPC ⇔︎ gRPC bridge:
+  * grpcwebproxy
+  * envoy proxy
+  * wait a while
 
-# *between* languages
+[.build-lists: true]
 
 ---
 
@@ -462,47 +479,66 @@ const answer = await client.add(5, 5)
 
 ---
 
-[first web page]
+![fit](images/first-web-page.png)
 
 ---
 
-# [A] <=> [S] <=> [B]
+![fit](images/first-web-page-source.png)
 
 ---
 
-# HTTP
-# Websockets
+[ two browsers ]
+
+---
+
+[ two browsers ]
+
+[ web server ]
 
 ---
 
 # An alternative?
-<!-- 
-* loose
-* manual -->
 
 ---
 
-# [fit] Peer-2-peer
-
-# [fit] with WebRTC
+# [fit] PeerToPeer
+# with 
+# [fit] WebRTC
+# datachannels
 
 [.background-color: #ccc]
 
 ---
 
-# [A] <=> [S] <=> [B]
+[ two browsers ]
 
-# [A] <=> [B]
+[ web server ]
 
 ---
+
+[ TURN / STUN ]
+
+[ two browsers ]
+
+[ web server ]
+
+---
+
+# Data
 
 * Media streams
 * Data Channels
 
+[.build-lists: true]
+
 ---
 
-* Latency
-* Bandwidth
+# ❤️ WebRTC DataChannels ❤️
+
+* Appropriate latency & bandwidth
+* Interactive applications
+
+[.build-lists: true]
 
 ---
 
@@ -530,28 +566,158 @@ const answer = await client.add(5, 5)
 
 ---
 
-Mash them together
+Two windows
+
+[ ] [ ]
 
 ---
 
-Strongly typed peer-to-peer communication
+
+Two windows
+
+[ ] --- [ ]
+
+webRTC connection
+
+---
+
+Two windows
+
+[ ] --- [ ]
+
+Nominate "Server", and "Client"
+
+---
+
+Two windows
+
+[ ] --- [ ]
+
+Use gRPC semantics to add typing to the connection
+
+---
+
+Web Server, inside a web browser
+
+---
+
+# [fit] [prpc.me](https://prpc.me)
+
+---
+
+# Code Example
+
+---
 
 
+# 1. Define a service
+
+```
+syntax = 'proto3';
+
+message NumberPair {
+    float value1 = 1;
+    float value2 = 2;
+}
+
+message Result {
+    float value = 1;
+}
+
+service CalculatorService {
+    rpc Calculate (NumberPair) returns (Result);
+}
+
+```
+
+---
+
+# 2. Write Server/Client components
+
+```jsx
+const Client: FunctionComponent = () => {
+    const [a, setA] = useState(1)
+    const [b, setB] = useState(1)
+    const [result, setResult] = useState<string | number>('?')
+
+    const calculate = () => {}
+
+    return (
+        <div className="Calculator">
+            <input type="number" value={a} onChange={e => setA(e.target.valueAsNumber)} />
+            ?
+            <input type="number" value={b} onChange={e => setB(e.target.valueAsNumber)} />
+            =
+            <output onClick={calculate} tabIndex={0}>{result}</output>
+        </div>
+    );
+}
 
 
+const Server: FunctionComponent = () => {
+    const server = useContext(ServerContext)
+    const [operation, setOperation] = useState('+');
+
+    return (
+        <div className="Calculator">
+            <select value={operation} onChange={e => setOperation(e.target.value)} >
+                <option>+</option>
+                <option>-</option>
+                <option>/</option>
+            </select>
+        </div>
+    )
+}
 
 
-
-
-
-
-
-
-
+export const Calculator = { Server, Client }
+```
 
 
 ---
 
+# 3. Hook them together
+
+```ts
+// <Calculator.Server>
+server.addService(CalculatorService, {
+    Calculate: (req, res) => {
+        res.setValue(
+            compute(
+                req.getValue1(),
+                operation,
+                req.getValue2(),
+            )
+        )
+    }
+})
+
+// <Calculator.Client>
+const calculate = () => {
+    const calc = client.getService(CalculatorService)
+
+    calc('Calculate', (req) => {
+        req.setValue1(a)
+        req.setValue2(b)
+    }).then(res => {
+        setResult(res.getValue())
+    })
+}
+```
+
+---
+
+# [fit] prpc.me
+
+## /Calculator
+
+---
+
+
+# ...
+
+
+---
 
 # [fit] 4.
 
@@ -561,14 +727,134 @@ Strongly typed peer-to-peer communication
 
 # [fit] 4.
 
-# [fit] Web servers have all the content
+# [fit] Data lives in
+# [fit] a data centre
 
 [.background-color: #f08]
 
 ---
 
+[ SERVER ]
+
+Throw your data somewhere
+do something with it
+
+---
+
+Great, because ownership.
+
+---
+
+# An alternative?
+
+---
+
+# [fit] Peer-to-peer
+# [fit] storage
+
+[.background-color: #ccc]
+
+---
+
+# [fit] prpc.me
+
+## /Content
+## /Chat
+
+---
+
+# [fit] Distributed web
+
+---
+
+![fit](images/ipfs.png)
+
+---
+
+![fit](images/beakerbrowser.png)
+
+---
+
+# ❤️ Distributed web ❤️
+
+* It feels like we own it
+* Performance potential
+
+[.build-lists: true]
+
+---
 
 
+# [fit] 5.
+
+[.background-color: #f08]
+
+---
+
+# [fit] 5.
+
+# [fit] Interaction & Focus
+# [fit] happen on the same device
+
+[.background-color: #f08]
+
+---
+
+![70%](sketch/phone.png)
+
+---
+
+# An alternative?
+
+---
+
+# [fit] Multi
+# [fit] device
+# [fit] interactions
+
+[.background-color: #ccc]
+
+---
+
+# [fit] prpc.me
+
+## /Draw
+
+---
+
+### [fit] Focus
+### Interaction
+
+
+---
+
+### [fit] Big screen
+### Small phones
+
+---
+
+![fit](images/ipad-os.png)
+
+---
+
+![fit](images/jsjoust.png)
+
+---
+
+![](images/jsjoust-photo05.jpg)
+
+---
+
+![fit](images/echo-frames.jpg)
+
+---
+
+# ❤️ Multi device interactions ❤️
+
+* Bridges between tech and our environment
+* Make the most of device capabilities
+
+[.build-lists: true]
 
 ---
 
@@ -583,21 +869,28 @@ Strongly typed peer-to-peer communication
 
 
 
-
-
-
-
-
-
-
-
-
-
 ---
 
 ---
 
 ---
+
+
+# Game UX
+
+---
+
+![fit](images/spaceteam-1.png)
+
+---
+
+![](images/spaceteam-2.png)
+
+---
+
+![fit](images/keep-talking.png)
+
+
 
 ---
 
