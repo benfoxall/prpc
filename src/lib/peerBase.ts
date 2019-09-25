@@ -143,7 +143,9 @@ export class PeerClient {
         await new Promise(r => setTimeout(r, 700))
       }
 
-      const peer = new Peer({ initiator: true, config: await client.twillio })
+      const config = await client.twillio;
+
+      const peer = new Peer({ initiator: true, config })
 
       peer.on('error', err => console.log('error', err))
 

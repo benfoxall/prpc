@@ -120,6 +120,8 @@ export class SignalClient {
 
                 if (data.type === 'twillio' && data.token) {
                     sessionStorage.setItem(TWILLIO_KEY, JSON.stringify(data.token))
+
+                    twRes(data.token)
                 }
 
                 if (data.type === 'send' && data.to === this.uuid) {
