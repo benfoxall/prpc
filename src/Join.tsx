@@ -31,7 +31,7 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
                 </h2>
 
                 <Route path="/">
-                    <h1>Hello!</h1>
+                    <Connection />
                 </Route>
 
                 <Route path="/Debug">
@@ -66,4 +66,16 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
         </ClientContext.Provider>
     )
+}
+
+
+const Connection: FunctionComponent = () => {
+
+    const connection = useSelector(app => app.connection);
+
+
+    return <div className="JoinConnection">
+        <h1>Backend: {connection.wsState ? '✅ On' : '❌ Off'}</h1>
+        <h1>Peer: {connection.dcState ? '✅ On' : '❌ Off'}</h1>
+    </div>
 }

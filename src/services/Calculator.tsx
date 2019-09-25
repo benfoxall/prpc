@@ -11,9 +11,7 @@ const Client: FunctionComponent = () => {
 
     const client = useContext(ClientContext);
 
-    useEffect(() => {
-        if (!client) return;
-
+    const calculate = () => {
         const calc = client.getService(CalculatorService)
 
         calc('Calculate', (req) => {
@@ -22,9 +20,7 @@ const Client: FunctionComponent = () => {
         }).then(res => {
             setResult(res.getValue())
         })
-
-
-    }, [client, a, b])
+    }
 
     return (
         <div className="Calculator">
@@ -32,7 +28,7 @@ const Client: FunctionComponent = () => {
             ?
             <input type="number" value={b} onChange={e => setB(e.target.valueAsNumber)} />
             =
-            <output>
+            <output onClick={calculate} tabIndex={0}>
                 {result}
             </output>
         </div>
