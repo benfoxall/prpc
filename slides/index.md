@@ -821,13 +821,186 @@ service Controller {
 ---
 
 # [PART 2]
+# Challenging the state of interaction
 
+---
 
+# prpc.me
+
+(keep this open)
+
+[todo: debug - list of emoji buttons]
+
+[talk through disconnections]
+
+---
+
+## Statement 1
+
+# Web Content needs to come from a web server
+
+[.background-color: #f0f]
+
+---
+
+# 🌮 Demo /Content
+
+---
+
+## What we just saw
+
+* peer to peer data
+* server unaware of content
+
+---
+
+## Other things
+
+* DAT
+* Beaker Browser
+* IPFS
+
+---
+
+## Statement 2
+
+# We need to the cloud to store data
+
+[.background-color: #fc0]
+
+---
+
+# 🌮 Demo /Chat
+
+---
+
+## What we just saw
+
+* A client-side datastore
+* Who owns the data?
+* Is GDPR an issue?
+* What is authentication?
 
 
 ---
 
-# Chat
+## Other things
+
+* IndexedDB
+* 
+
+---
+
+## Statement 3
+
+# Web servers live in a datacentre
+
+[.background-color: #0cf]
+
+---
+
+# 🌮 Demo /Draw
+
+---
+
+## What we saw
+
+* different places of input & attention
+* multi-device interactions
+
+---
+
+# Other things
+
+* Space-Team – asymetrical interactions
+* iPad handoff – making use of device capabilities
+* Johann Sebastian Joust - inverse, don't need a computer
+
+---
+
+## Statement 4
+
+# Web browsers only browse the web
+
+[.background-color: #0cf]
+
+---
+
+# 🌮 Demo [todo] OFFLINE BLE
+
+---
+
+## What we saw
+
+* The offline web 
+* Web Bluetooth
+
+---
+
+# Other things
+
+* Espruino
+
+---
+
+## Statement 5
+
+# We only post text content
+
+[.background-color: #0cf]
+
+---
+
+## What we saw
+
+* GetUserMedia
+
+---
+
+# Other things
+
+* Speech recognition
+* Privacy/grant issues
+
+
+---
+
+## Statement 6
+
+# Web interactions span the globe
+
+[.background-color: #0cf]
+
+---
+
+# 🌮 Demo [todo] NEW POSITIONING STUFF
+
+---
+
+## What we saw
+
+* AR markers
+* Web Audio
+* Space Matters
+
+---
+
+# Other things
+
+* WebXR
+* Apple Wideband?
+
+---
+
+
+
+
+
+https://www.webdesignmuseum.org/web-design-history/netscape-navigator-2-0-1995
+
+
+
+
 
 ---
 
@@ -903,3 +1076,8 @@ A Web Server doesn't just have to serve the web.
 >> Johann Sebastian Joust
 >> 
 >> 
+
+
+
+Constraints.  Push button. Single dimension game berlin. 
+Constrain. A web browser doesn’t have to just browse the web. (Ble)
