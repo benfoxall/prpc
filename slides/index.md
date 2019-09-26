@@ -6,15 +6,34 @@
 
 ---
 
-# Selected projects
-
-* Fairy lights
-* NZ - stuffometer
-* WebGL Hacks
-* Publishing rooms
+![](images/projects-2.jpg)
 
 ---
 
+![](images/projects-3.mp4)
+
+---
+
+![](images/nz-1.jpg)
+
+---
+
+![](images/nz-4.jpg)
+
+---
+
+![left fit](images/hacks-cardboctober.png)
+![right fit](images/hacks-webgl.png)
+
+---
+
+![](images/pr1-1200x849.jpg)
+
+---
+
+![](images/pr2-1200x947.png)
+
+---
 
 ![fit](images/oxb-5.jpg)
 
@@ -81,6 +100,8 @@
 <!-- # [fit] Assumptions -->
 
 ---
+
+Received Wisdom
 
 # [fit] 1.
 
@@ -312,6 +333,7 @@ protoc
 
 ---
 
+Received Wisdom
 
 # [fit] 2.
 
@@ -410,16 +432,6 @@ protoc
 
 ---
 
-```js
-const client = new ExampleServiceClient('localhost:5050')
-
-const answer = await client.add(5, 5)
-
-// 10
-```
-
----
-
 # ❤️gRPC ❤️
 
 
@@ -433,12 +445,10 @@ const answer = await client.add(5, 5)
 
 # 🤫 gRPC – slight probleem
 
-* It's not supported by web-browsers
-* At all
+* It's not supported by web-browsers (yet)
 * Option – web-gRPC ⇔︎ gRPC bridge:
   * grpcwebproxy
   * envoy proxy
-  * wait a while
 
 [.build-lists: true]
 
@@ -447,6 +457,8 @@ const answer = await client.add(5, 5)
 # [fit] Demo
 
 ---
+
+Received Wisdom
 
 # [fit] 3.
 
@@ -470,13 +482,16 @@ const answer = await client.add(5, 5)
 ![fit](images/first-web-page-source.png)
 --- -->
 
-[ two browsers ]
+<!-- [ two browsers ] -->
+![](sketch/network-0.png)
 
 ---
 
-[ two browsers ]
+<!-- [ two browsers ] -->
+<!-- [ web server ] -->
 
-[ web server ]
+![](sketch/network-1.png)
+
 
 ---
 
@@ -493,23 +508,37 @@ const answer = await client.add(5, 5)
 
 ---
 
-[ two browsers ]
 
-[ web server ]
+![](sketch/network-1.png)
+
+<!-- [ two browsers ]
+
+[ web server ] -->
 
 ---
 
-[ TURN / STUN ]
+![](sketch/network-2.png)
+
+
+<!-- [ TURN / STUN ]
 
 [ two browsers ]
 
-[ web server ]
+[ web server ] -->
+
+---
+
+![](sketch/network-3.png)
+
+---
+
+![](sketch/network-4.png)
 
 ---
 
 # Data
 
-* Media streams
+* Media Streams
 * Data Channels
 
 [.build-lists: true]
@@ -549,38 +578,36 @@ const answer = await client.add(5, 5)
 
 ---
 
-Two windows
+![](sketch/prpc-network-0.png)
 
-[ ] [ ]
+---
+
+![](sketch/prpc-network-1.png)
+
+---
+
+![](sketch/prpc-network-2.png)
+
+---
+
+![](sketch/prpc-network-2.5.png)
+
+---
+
+![](sketch/prpc-network-3.png)
+
+---
+
+![](sketch/prpc-network-4.png)
 
 ---
 
 
-Two windows
-
-[ ] --- [ ]
-
-webRTC connection
+![](sketch/prpc-network-5.png)
 
 ---
 
-Two windows
-
-[ ] --- [ ]
-
-Nominate "Server", and "Client"
-
----
-
-Two windows
-
-[ ] --- [ ]
-
-Use gRPC semantics to add typing to the connection
-
----
-
-Web Server, inside a web browser
+# [fit] pRPC
 
 ---
 
@@ -690,6 +717,16 @@ const calculate = () => {
 
 ---
 
+# …What we're not doing
+
+* Implementing interface code
+* Assuming types
+
+[.build-lists: true]
+
+
+---
+
 # [fit] prpc.me
 
 ## /Calculator
@@ -701,6 +738,8 @@ const calculate = () => {
 
 
 ---
+
+Received Wisdom
 
 # [fit] 4.
 
@@ -717,14 +756,7 @@ const calculate = () => {
 
 ---
 
-[ SERVER ]
-
-Throw your data somewhere
-do something with it
-
----
-
-Great, because ownership.
+![fit](sketch/server.png)
 
 ---
 
@@ -743,6 +775,7 @@ Great, because ownership.
 
 ## /Content
 ## /Chat
+## /Camera
 
 ---
 
@@ -767,6 +800,7 @@ Great, because ownership.
 
 ---
 
+Received Wisdom
 
 # [fit] 5.
 
@@ -776,7 +810,7 @@ Great, because ownership.
 
 # [fit] 5.
 
-# [fit] Interaction & Focus
+# [fit] Interaction & focus
 # [fit] happen on the same device
 
 [.background-color: #f08]
@@ -841,13 +875,143 @@ Great, because ownership.
 
 ---
 
+Received Wisdom
+
+# [fit] 6.
+
+[.background-color: #f08]
+
+---
+
+# [fit] 6.
+
+# [fit] A UI should provide 
+# [fit] the same features 
+# [fit] to every user
+
+[.background-color: #f08]
+
+---
+
+![70%](sketch/phone.png)
+
+![70%](sketch/laptop.png)
+
+---
+
+# As a User
+# I press the button
+# In order to …
+
+---
+
+# Tim Berners-Lee
+### WorldWideWeb
+
+![right](images/timbl.jpg)
+
+---
+
+# Nicola Pellow
+### Line Mode
+
+![right](images/linemode.jpg)
+
+---
+
+# Line Mode
+* Expanded and prove the web
+* Showed browsers can be different
+
+---
 
 
+# An alternative?
+
+---
+
+# [fit] Interface as
+# [fit] a function
+
+[.background-color: #ccc]
+
+---
+
+# [fit]Features = UI( Content, Capabilities, Context)
+
+* **Content** – What you're providing to the user
+* **Capabilities** – What features that users device has
+* **Context** – Where the user is
 
 
+[.build-lists: true]
 
 
+---
 
+# Capabilities
+
+* Audio, SpeechRecognition
+* Video
+* XR
+* Bluetooth
+* GPU
+
+[.build-lists: true]
+
+---
+
+# Context
+
+Where the user is
+
+* Portability
+* Network
+* Spatial
+* Drunkeness
+
+[.build-lists: true]
+
+---
+
+# ❤️ UI as a function ❤️
+
+* Let's us make use of features
+* Avoids over-perfection
+* Higher level goals
+
+[.build-lists: true]
+
+---
+
+
+# [fit] Summary
+
+
+---
+
+# [fit] 1. Use JSON for data
+# [fit] 2. Use REST for interfaces
+# [fit] 3. Browsers connect to web servers
+# [fit] 4. Data lives in a data centre
+# [fit] 5. Interaction & focus happen on the same device
+# [fit] 6. A UI should provide the same features to every user
+
+[.build-lists: true]
+
+[.background-color: #f08]
+
+---
+
+Quote?
+
+---
+
+# [fit] Thanks
+
+ben.foxall@oxbotica.com
+
+---
 
 
 

@@ -49,15 +49,15 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
                         </li>
 
                         <li>
-                            <LinkTo href="/Trails">Trails</LinkTo>
-                        </li>
-
-                        <li>
                             <LinkTo href="/Cameras">Cameras</LinkTo>
                         </li>
 
                         <li>
-                            TODO: BLE
+                            <LinkTo href="/Trails">Trails</LinkTo>
+                        </li>
+
+                        <li>
+                            <LinkTo href="/Position">WIP: Position</LinkTo>
                         </li>
 
                         <li>
@@ -65,8 +65,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
                         </li>
 
                         <li>
-                            <LinkTo href="/Position">Position</LinkTo>
+                            TODO: BLE
                         </li>
+
+
                     </ul>
                 </Route>
 
