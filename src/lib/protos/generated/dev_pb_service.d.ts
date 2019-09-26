@@ -2,6 +2,7 @@
 // file: dev.proto
 
 import * as dev_pb from "./dev_pb";
+import * as common_pb from "./common_pb";
 import {grpc} from "@improbable-eng/grpc-web";
 
 type DevMouseMove = {
@@ -22,10 +23,20 @@ type DevBackground = {
   readonly responseType: typeof dev_pb.ColorResponse;
 };
 
+type DevSetEmoji = {
+  readonly methodName: string;
+  readonly service: typeof Dev;
+  readonly requestStream: false;
+  readonly responseStream: false;
+  readonly requestType: typeof dev_pb.Emoji;
+  readonly responseType: typeof common_pb.Noop;
+};
+
 export class Dev {
   static readonly serviceName: string;
   static readonly MouseMove: DevMouseMove;
   static readonly Background: DevBackground;
+  static readonly SetEmoji: DevSetEmoji;
 }
 
 export type ServiceError = { message: string, code: number; metadata: grpc.Metadata }
@@ -77,6 +88,15 @@ export class DevClient {
   background(
     requestMessage: dev_pb.Color,
     callback: (error: ServiceError|null, responseMessage: dev_pb.ColorResponse|null) => void
+  ): UnaryResponse;
+  setEmoji(
+    requestMessage: dev_pb.Emoji,
+    metadata: grpc.Metadata,
+    callback: (error: ServiceError|null, responseMessage: common_pb.Noop|null) => void
+  ): UnaryResponse;
+  setEmoji(
+    requestMessage: dev_pb.Emoji,
+    callback: (error: ServiceError|null, responseMessage: common_pb.Noop|null) => void
   ): UnaryResponse;
 }
 

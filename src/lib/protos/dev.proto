@@ -1,6 +1,8 @@
 
 syntax = 'proto3';
 
+import "common.proto";
+
 message MoveResponse {
   int32 answer = 1;
 }
@@ -18,9 +20,17 @@ message ColorResponse {
   string value = 1;
 }
 
+message Emoji {
+  // use the index of a set of emoji for easier 
+  // input
+  int32 choice = 1;
+}
+
 service Dev {
   rpc MouseMove (MoveEvent) returns (MoveResponse);
 
   rpc Background (Color) returns (ColorResponse);
+
+  rpc SetEmoji (Emoji) returns (Noop);
 }
 

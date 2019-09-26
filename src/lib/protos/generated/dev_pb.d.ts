@@ -2,6 +2,7 @@
 // file: dev.proto
 
 import * as jspb from "google-protobuf";
+import * as common_pb from "./common_pb";
 
 export class MoveResponse extends jspb.Message {
   getAnswer(): number;
@@ -84,6 +85,26 @@ export class ColorResponse extends jspb.Message {
 export namespace ColorResponse {
   export type AsObject = {
     value: string,
+  }
+}
+
+export class Emoji extends jspb.Message {
+  getChoice(): number;
+  setChoice(value: number): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): Emoji.AsObject;
+  static toObject(includeInstance: boolean, msg: Emoji): Emoji.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: Emoji, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Emoji;
+  static deserializeBinaryFromReader(message: Emoji, reader: jspb.BinaryReader): Emoji;
+}
+
+export namespace Emoji {
+  export type AsObject = {
+    choice: number,
   }
 }
 

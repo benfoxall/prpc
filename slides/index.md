@@ -73,7 +73,8 @@
 
 <!-- # [fit] Paradigms  -->
 
-# [fit] Wisdom
+# [fit] Received 
+# [fit] Wisdoms
 
 <!-- # [fit] Convention -->
 

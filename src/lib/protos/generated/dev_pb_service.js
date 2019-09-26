@@ -2,6 +2,7 @@
 // file: dev.proto
 
 var dev_pb = require("./dev_pb");
+var common_pb = require("./common_pb");
 var grpc = require("@improbable-eng/grpc-web").grpc;
 
 var Dev = (function () {
@@ -26,6 +27,15 @@ Dev.Background = {
   responseStream: false,
   requestType: dev_pb.Color,
   responseType: dev_pb.ColorResponse
+};
+
+Dev.SetEmoji = {
+  methodName: "SetEmoji",
+  service: Dev,
+  requestStream: false,
+  responseStream: false,
+  requestType: dev_pb.Emoji,
+  responseType: common_pb.Noop
 };
 
 exports.Dev = Dev;
@@ -71,6 +81,37 @@ DevClient.prototype.background = function background(requestMessage, metadata, c
     callback = arguments[1];
   }
   var client = grpc.unary(Dev.Background, {
+    request: requestMessage,
+    host: this.serviceHost,
+    metadata: metadata,
+    transport: this.options.transport,
+    debug: this.options.debug,
+    onEnd: function (response) {
+      if (callback) {
+        if (response.status !== grpc.Code.OK) {
+          var err = new Error(response.statusMessage);
+          err.code = response.status;
+          err.metadata = response.trailers;
+          callback(err, null);
+        } else {
+          callback(null, response.message);
+        }
+      }
+    }
+  });
+  return {
+    cancel: function () {
+      callback = null;
+      client.close();
+    }
+  };
+};
+
+DevClient.prototype.setEmoji = function setEmoji(requestMessage, metadata, callback) {
+  if (arguments.length === 2) {
+    callback = arguments[1];
+  }
+  var client = grpc.unary(Dev.SetEmoji, {
     request: requestMessage,
     host: this.serviceHost,
     metadata: metadata,

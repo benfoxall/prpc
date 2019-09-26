@@ -258,3 +258,35 @@ input[type=number]::-webkit-outer-spin-button {
 .JoinConnection {
     margin: 3em 0;
 }
+
+.Debug {
+    margin: 2em 0;
+
+    .EmojiList {
+        display: flex;
+        flex-wrap: wrap;
+        button {
+            font-size: 4em;
+            width: 1.2em;
+            height: 1.2em;
+            margin: .05em;
+
+            transition: .3s;
+
+            &.selected {
+                background: #aaa;
+                transform: scale(1.1);
+                outline: none;
+
+            }
+        }
+    }
+ 
+
+    h2 {
+        span {
+            font-size: 2em;
+            margin-right: .5em;
+        }
+    }
+}

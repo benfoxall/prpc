@@ -4,22 +4,33 @@ import { ServerContext } from "../Host";
 import { Dev } from "../lib/protos/generated/dev_pb_service";
 
 
+const EMOJI_LIST = Array.from(
+    '🐙🤘👻🍀⭐🍩🍕🌶🌞👾🤖🧶🦜🌈⭐⚡🛹🎸'
+)
+
 const Client: FunctionComponent = () => {
-    const [color, setColor] = useState('#000000')
+    const [selected, setSelected] = useState(0);
 
     const client = useContext(ClientContext);
 
     useEffect(() => {
         if (client) {
             const devService = client.getService(Dev)
-            devService("Background", res => res.setValue(color))
+            devService("SetEmoji", res => res.setChoice(selected))
         }
 
-    }, [color, client])
+    }, [selected, client])
 
-    return <>
-        <input type="color" value={color} onChange={e => setColor(e.target.value)} />
-    </>
+    return <div className="Debug">
+
+        <div className="EmojiList">
+            {EMOJI_LIST.map((item, i) =>
+                <button key={i} onClick={e => setSelected(i)} className={selected === i && 'selected'}>
+                    {item}
+                </button>
+            )}
+        </div>
+    </div>
 }
 
 
@@ -27,18 +38,18 @@ const Server: FunctionComponent = () => {
 
     const server = useContext(ServerContext);
 
-    const [clients, setClients] = useState<Map<string, string>>(new Map);
+    const [clients, setClients] = useState<Map<string, number>>(new Map);
 
     useEffect(() => {
         if (!server) return
 
         server.addService(Dev, {
-            Background: (req, _res, meta) => {
+            SetEmoji: (req, _res, meta) => {
                 setClients(prev => {
                     const next = new Map(prev);
 
                     next.set(
-                        meta.peerId, req.getValue()
+                        meta.peerId, req.getChoice()
                     )
 
                     return next;
@@ -53,11 +64,16 @@ const Server: FunctionComponent = () => {
 
     }, [server])
 
-    return <>
+    return <div className="Debug">
         {Array.from(clients).map(([name, color]) =>
-            <h2 key={name} style={{ color: color }}>{name}</h2>
+            <h2 key={name}>
+                <span>
+                    {EMOJI_LIST[color] || '❓'}
+                </span>
+                {name}
+            </h2>
         )}
-    </>
+    </div>
 }
 
 
