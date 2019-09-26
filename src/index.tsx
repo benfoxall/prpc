@@ -66,8 +66,8 @@ const Connection = () => {
                 client: {uuid || '_'}
             </h2>
             <h3>
-                [ws {connection.wsState ? '⚡️' : '❎'}]
-                [dc {connection.dcState ? '⚡️' : '❌'}]
+                [web {connection.wsState ? '✅️' : '❌'}]
+                [peer {connection.dcState ? '✅️' : '❌'}]
             </h3>
         </footer>
     )

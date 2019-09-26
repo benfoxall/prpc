@@ -174,8 +174,7 @@ const comments = await response.json()
 
 ---
 
-# JSON is awesome.
-# But, an alternative?
+# An alternative?
 
 ---
 
@@ -249,20 +248,13 @@ const output = message.serialiseBinary()
 
 ---
 
-# ❤️ Efficiency
-
----
-
-# ❤️ Efficiency
-
-No keys or padding
+# Tags
 
 ```
 {1}0010010101010001010010010010101
-0101010{2}100010120100100101010011
+0101010{2}100010100100100101010011
 10001010010010010{3}10101000101...
 ```
-
 
 ```
 string name = {1};
@@ -272,7 +264,7 @@ float size = {3};
 
 ---
 
-# ❤️ Efficiency
+# Efficiency
 
 
 # [fit] 1234567890
@@ -290,7 +282,7 @@ float size = {3};
 
 ---
 
-# ❤️ Efficiency
+# Efficiency
 
 # [fit] true
 
@@ -303,15 +295,6 @@ float size = {3};
 ```
 
 ---
-
-# ❤️❤️ 
-
----
-
-# ❤️❤️ 
-# Type Safety
-# *across* languages
-
 
 ```bash
 protoc 
@@ -483,10 +466,9 @@ const answer = await client.add(5, 5)
 ![fit](images/first-web-page.png)
 
 ---
-
+<!-- 
 ![fit](images/first-web-page-source.png)
-
----
+--- -->
 
 [ two browsers ]
 
