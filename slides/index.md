@@ -1,16 +1,19 @@
 
 # Hello,
 # [fit] I'm Ben
-## Thanks for having me
-# 🦉
+## It's nice to be here
 
 ---
 
-![](images/projects-2.jpg)
+![](sketch/Mike.png)
 
 ---
 
-![](images/projects-3.mp4)
+![](images/oxford-map.png)
+
+---
+
+![fit](images/nz-sarah-map.png)
 
 ---
 
@@ -26,16 +29,24 @@
 
 ---
 
+![](images/projects-2.jpg)
+
+---
+
+![](images/projects-3.mp4)
+
+---
+
 ![left fit](images/hacks-cardboctober.png)
 ![right fit](images/hacks-webgl.png)
 
----
+<!-- ---
 
 ![](images/pr1-1200x849.jpg)
 
 ---
 
-![fit](images/pr2-1200x947.png)
+![fit](images/pr2-1200x947.png) -->
 
 ---
 
@@ -80,11 +91,11 @@
 
 ---
 
-# 🦉 Today
+# Today
 
 ---
 
-# 🦉 Today
+# Today
 
 # [fit] Challenging 
 # [fit] the way we 
@@ -240,6 +251,8 @@ protoc
 
 
 ```js
+import {Message} from './stubs/Message' 
+
 const message = new Message()
 message.setName('frank')
 message.setNight(false)
@@ -254,8 +267,9 @@ const output = message.serialiseBinary()
 
 # ❤️Protocol Buffers ❤️
 
-* impossible to make a mistake
-* efficient on the wire
+* Impossible to make a mistake
+* Efficient on the wire
+* Type safety
 * Type safety __across__ languages
 
 [.build-lists: true]
@@ -440,6 +454,7 @@ protoc
 
 
 * Interface code is generated / mistake free
+* Type safety (`await getComment()`)
 * Type safety __between__ langages
 
 
@@ -447,12 +462,13 @@ protoc
 
 ---
 
-# 🤫 gRPC – slight probleem
+# 🤫 gRPC – slight problem
 
 * It's not supported by web-browsers (yet)
+  * http2, frames, streaming
 * Option – web-gRPC ⇔︎ gRPC bridge:
   * grpcwebproxy
-  * envoy proxy
+  * envoy
 
 [.build-lists: true]
 
@@ -889,7 +905,7 @@ Received Wisdom
 
 # [fit] 6.
 
-# [fit] A UI should provide 
+# [fit] The web should provide 
 # [fit] the same features 
 # [fit] to every user
 
@@ -897,9 +913,9 @@ Received Wisdom
 
 ---
 
-![70%](sketch/phone.png)
+![60%](sketch/phone.png)
 
-![70%](sketch/laptop.png)
+![60%](sketch/laptop.png)
 
 ---
 
