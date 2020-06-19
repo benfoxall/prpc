@@ -1,0 +1,22 @@
+
+syntax = 'proto3';
+
+import "common.proto";
+
+message Bubble {
+  int32 row = 1;
+  int32 col = 2;
+  bool popped = 3; 
+}
+
+message Bubbles {
+  repeated Bubble bubbles = 1;
+}
+
+service BubbleService {
+    rpc Press (Bubble) returns (Noop);
+    rpc State (Noop) returns (Bubbles);
+
+    // todo: implement streams properly
+    rpc Changes (Noop) returns (stream Bubble);
+}
