@@ -4,21 +4,21 @@
 import * as jspb from "google-protobuf";
 import * as common_pb from "./common_pb";
 
-export class EchoMessage extends jspb.Message {
+export class ZoomEchoMessage extends jspb.Message {
   getText(): string;
   setText(value: string): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): EchoMessage.AsObject;
-  static toObject(includeInstance: boolean, msg: EchoMessage): EchoMessage.AsObject;
+  toObject(includeInstance?: boolean): ZoomEchoMessage.AsObject;
+  static toObject(includeInstance: boolean, msg: ZoomEchoMessage): ZoomEchoMessage.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: EchoMessage, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): EchoMessage;
-  static deserializeBinaryFromReader(message: EchoMessage, reader: jspb.BinaryReader): EchoMessage;
+  static serializeBinaryToWriter(message: ZoomEchoMessage, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ZoomEchoMessage;
+  static deserializeBinaryFromReader(message: ZoomEchoMessage, reader: jspb.BinaryReader): ZoomEchoMessage;
 }
 
-export namespace EchoMessage {
+export namespace ZoomEchoMessage {
   export type AsObject = {
     text: string,
   }

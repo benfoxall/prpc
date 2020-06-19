@@ -10,8 +10,8 @@ type Zoomecho = {
   readonly service: typeof Zoom;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof zoom_pb.EchoMessage;
-  readonly responseType: typeof zoom_pb.EchoMessage;
+  readonly requestType: typeof zoom_pb.ZoomEchoMessage;
+  readonly responseType: typeof zoom_pb.ZoomEchoMessage;
 };
 
 type ZoomsystemInfo = {
@@ -82,13 +82,13 @@ export class ZoomClient {
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
   echo(
-    requestMessage: zoom_pb.EchoMessage,
+    requestMessage: zoom_pb.ZoomEchoMessage,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: zoom_pb.EchoMessage|null) => void
+    callback: (error: ServiceError|null, responseMessage: zoom_pb.ZoomEchoMessage|null) => void
   ): UnaryResponse;
   echo(
-    requestMessage: zoom_pb.EchoMessage,
-    callback: (error: ServiceError|null, responseMessage: zoom_pb.EchoMessage|null) => void
+    requestMessage: zoom_pb.ZoomEchoMessage,
+    callback: (error: ServiceError|null, responseMessage: zoom_pb.ZoomEchoMessage|null) => void
   ): UnaryResponse;
   systemInfo(requestMessage: common_pb.Noop, metadata?: grpc.Metadata): ResponseStream<zoom_pb.SystemInfo>;
   screenShot(

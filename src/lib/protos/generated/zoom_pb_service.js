@@ -16,8 +16,8 @@ Zoom.echo = {
   service: Zoom,
   requestStream: false,
   responseStream: false,
-  requestType: zoom_pb.EchoMessage,
-  responseType: zoom_pb.EchoMessage
+  requestType: zoom_pb.ZoomEchoMessage,
+  responseType: zoom_pb.ZoomEchoMessage
 };
 
 Zoom.systemInfo = {

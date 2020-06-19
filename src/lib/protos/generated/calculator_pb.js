@@ -60,13 +60,15 @@ if (goog.DEBUG && !COMPILED) {
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.NumberPair.prototype.toObject = function(opt_includeInstance) {
@@ -76,8 +78,8 @@ proto.NumberPair.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.NumberPair} msg The msg instance to transform.
  * @return {!Object}
@@ -85,8 +87,8 @@ proto.NumberPair.prototype.toObject = function(opt_includeInstance) {
  */
 proto.NumberPair.toObject = function(includeInstance, msg) {
   var f, obj = {
-    value1: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
-    value2: +jspb.Message.getFieldWithDefault(msg, 2, 0.0)
+    value1: jspb.Message.getFloatingPointFieldWithDefault(msg, 1, 0.0),
+    value2: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0)
   };
 
   if (includeInstance) {
@@ -182,7 +184,7 @@ proto.NumberPair.serializeBinaryToWriter = function(message, writer) {
  * @return {number}
  */
 proto.NumberPair.prototype.getValue1 = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 1, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 1, 0.0));
 };
 
 
@@ -197,7 +199,7 @@ proto.NumberPair.prototype.setValue1 = function(value) {
  * @return {number}
  */
 proto.NumberPair.prototype.getValue2 = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 2, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 2, 0.0));
 };
 
 
@@ -212,13 +214,15 @@ proto.NumberPair.prototype.setValue2 = function(value) {
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.Result.prototype.toObject = function(opt_includeInstance) {
@@ -228,8 +232,8 @@ proto.Result.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.Result} msg The msg instance to transform.
  * @return {!Object}
@@ -237,7 +241,7 @@ proto.Result.prototype.toObject = function(opt_includeInstance) {
  */
 proto.Result.toObject = function(includeInstance, msg) {
   var f, obj = {
-    value: +jspb.Message.getFieldWithDefault(msg, 1, 0.0)
+    value: jspb.Message.getFloatingPointFieldWithDefault(msg, 1, 0.0)
   };
 
   if (includeInstance) {
@@ -322,7 +326,7 @@ proto.Result.serializeBinaryToWriter = function(message, writer) {
  * @return {number}
  */
 proto.Result.prototype.getValue = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 1, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 1, 0.0));
 };
 
 
