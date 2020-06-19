@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "common.proto";
 
-message EchoMessage {
+message ZoomEchoMessage {
     string text = 1;
 }
 
@@ -28,7 +28,7 @@ message Image {
 
 service Zoom {
 
-    rpc echo(EchoMessage) returns (EchoMessage);
+    rpc echo(ZoomEchoMessage) returns (ZoomEchoMessage);
 
     rpc systemInfo (Noop) returns (stream SystemInfo);
     
