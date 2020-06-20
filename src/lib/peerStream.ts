@@ -12,41 +12,6 @@ export type Handler = (
 // meta
 // service/method/$id
 
-/** Maintains a peer-to-peer stream */
-export class PeerStreamServer extends PeerServer {
-  constructor(room: string, handler: Handler, dispatch?: Dispatch) {
-    super(room, dispatch);
-
-    this.onConnect = (peer, id) => {
-      // wrap this peer in a socket
-      const sock = new Socket(peer);
-
-      // pass it to the handler
-      // (would be nice to have this via async iterator)
-      // (before, this was .on("data"))
-      handler(id, sock);
-    };
-  }
-
-  on() {}
-  send() {}
-}
-
-export class PeerStreamClient extends PeerClient {
-  // maybe we could avoid this wrapping down the line
-  public readonly sock: Socket;
-
-  constructor(room: string, dispatch?: Dispatch) {
-    super(room, dispatch);
-
-    this.sock = new Socket(this.peer);
-  }
-
-  send(payload: Uint8Array) {
-    return this.sock.send(payload);
-  }
-}
-
 // const ping = new PRPCStreamChunk();
 // ping.setType(PRPCStreamChunk.Type.PING);
 
@@ -59,7 +24,9 @@ class Socket extends ReadableStream<Uint8Array> {
   /** Send a message back */
   send: (payload: Uint8Array) => void;
 
-  constructor(_peer: Promise<SimplePeer.Instance> | SimplePeer.Instance) {
+  constructor(
+    private readonly _peer: Promise<SimplePeer.Instance> | SimplePeer.Instance,
+  ) {
     super({
       start: (controller) => {
         Promise.resolve(_peer).then((peer) => {
@@ -92,15 +59,38 @@ class Socket extends ReadableStream<Uint8Array> {
 
             peer.send(chunk.serializeBinary());
           };
-
-          // const interval = setInterval(() => {
-          //   peer.send(pong.getPayload_asU8());
-          // }, 30 * 1000);
         });
-      },
-      cancel: async () => {
-        (await _peer).destroy();
       },
     });
   }
+
+  async close() {
+    (await this._peer).destroy();
+  }
+}
+
+export class PeerStreamClient extends Socket {
+  constructor(room: string, dispatch?: Dispatch) {
+    super(new PeerClient(room, dispatch).peer);
+  }
+}
+
+/** Maintains a peer-to-peer stream */
+export class PeerStreamServer extends PeerServer {
+  constructor(room: string, handler: Handler, dispatch?: Dispatch) {
+    super(room, dispatch);
+
+    this.onConnect = (peer, id) => {
+      // wrap this peer in a socket
+      const sock = new Socket(peer);
+
+      // pass it to the handler
+      // (would be nice to have this via async iterator)
+      // (before, this was .on("data"))
+      handler(id, sock);
+    };
+  }
+
+  on() {}
+  send() {}
 }

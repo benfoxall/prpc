@@ -122,7 +122,7 @@ export class PeerServer {
 
 export class PeerClient {
   private listeners = new Set<(d: Uint8Array) => void>();
-  protected peer: Promise<Peer.Instance>;
+  public peer: Promise<Peer.Instance>;
 
   constructor(room: string, private dispatch?: Dispatch) {
     this.notify(Events.PEER_CLIENT_START);
