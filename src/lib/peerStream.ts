@@ -1,9 +1,7 @@
 import { PeerServer, PeerClient } from "./peerBase";
-import { PRPCStreamChunk } from "./protos/generated/peer-rpc_pb";
 import { Dispatch } from "redux";
 import SimplePeer from "simple-peer";
 
-export type Meta = { serviceName: string; fnName: string; peerId: string };
 export type Handler = (
   peerId: string,
   socket: Socket,
@@ -21,44 +19,39 @@ export type Handler = (
 // todo: use polyfill
 /** Wrap a peer socket in a readable stream (including ping/pong) */
 class Socket extends ReadableStream<Uint8Array> {
+  // queue up packets before join
+  private queue = [] as Uint8Array[];
+
   /** Send a message back */
-  send: (payload: Uint8Array) => void;
+  send(payload: Uint8Array) {
+    this.queue.push(payload);
+  }
 
   constructor(
+    public readonly peerId: string,
     private readonly _peer: Promise<SimplePeer.Instance> | SimplePeer.Instance,
   ) {
     super({
       start: (controller) => {
         Promise.resolve(_peer).then((peer) => {
           peer.addListener("data", (payload) => {
-            const chunk = PRPCStreamChunk.deserializeBinary(payload);
-
-            switch (chunk.getType()) {
-              case PRPCStreamChunk.Type.DATA:
-                controller.enqueue(chunk.getPayload_asU8());
-                break;
-
-                // case PRPCStreamChunk.Type.PING:
-                //   // reply
-                //   peer.send(pong.getPayload_asU8());
-                //   break;
-
-                // case PRPCStreamChunk.Type.PONG:
-                //   break;
-            }
+            controller.enqueue(payload);
           });
 
           peer.addListener("close", () => {
             controller.close();
           });
 
+          // replace the send function
           this.send = (payload) => {
-            const chunk = new PRPCStreamChunk();
-            chunk.setType(PRPCStreamChunk.Type.DATA);
-            chunk.setPayload(payload);
-
-            peer.send(chunk.serializeBinary());
+            peer.send(payload);
           };
+
+          // process any waiting messsages
+          for (const u8 of this.queue) {
+            peer.send(u8);
+          }
+          this.queue = [];
         });
       },
     });
@@ -71,26 +64,29 @@ class Socket extends ReadableStream<Uint8Array> {
 
 export class PeerStreamClient extends Socket {
   constructor(room: string, dispatch?: Dispatch) {
-    super(new PeerClient(room, dispatch).peer);
+    super(room, new PeerClient(room, dispatch).peer);
   }
 }
 
 /** Maintains a peer-to-peer stream */
-export class PeerStreamServer extends PeerServer {
-  constructor(room: string, handler: Handler, dispatch?: Dispatch) {
-    super(room, dispatch);
+export class PeerStreamServer implements AsyncIterable<Socket> {
+  private base: PeerServer;
 
-    this.onConnect = (peer, id) => {
-      // wrap this peer in a socket
-      const sock = new Socket(peer);
+  constructor(room: string, dispatch?: Dispatch) {
+    this.base = new PeerServer(room, dispatch);
 
-      // pass it to the handler
-      // (would be nice to have this via async iterator)
-      // (before, this was .on("data"))
-      handler(id, sock);
+    this.base.onConnect = (peer) => {
+      console.error("Missed connection");
     };
   }
 
-  on() {}
-  send() {}
+  async *[Symbol.asyncIterator]() {
+    while (true) {
+      const [peerId, peer] = await new Promise<[string, SimplePeer.Instance]>((
+        res,
+      ) => this.base.onConnect = res);
+
+      yield new Socket(peerId, peer);
+    }
+  }
 }

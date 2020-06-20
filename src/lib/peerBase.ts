@@ -22,7 +22,7 @@ export class PeerServer {
   private peers: Map<string, Peer.Instance>;
 
   // hack, for streaming version
-  protected onConnect?: (peer: Peer.Instance, peerId: string) => void;
+  onConnect?: (peer: [string, Peer.Instance]) => void;
 
   constructor(room: string, private dispatch?: Dispatch) {
     this.listeners = new Set();
@@ -54,7 +54,7 @@ export class PeerServer {
           this.notify(Events.PEER_SERVER_CONNECT, remoteId);
 
           if (this.onConnect) {
-            this.onConnect(peer, remoteId);
+            this.onConnect([remoteId, peer]);
           }
         });
 
