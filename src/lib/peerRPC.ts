@@ -70,6 +70,8 @@ export class PeerRPCClient extends PeerClient {
 
     this.wrapper.setPayload(payload)
 
+    this.wrapper.setDone(true)
+
     super.send(this.wrapper.serializeBinary())
 
     // return promise of response

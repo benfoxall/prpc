@@ -16,6 +16,9 @@ export class RPCWrapper extends jspb.Message {
   getRequestid(): number;
   setRequestid(value: number): void;
 
+  getDone(): boolean;
+  setDone(value: boolean): void;
+
   getPayload(): Uint8Array | string;
   getPayload_asU8(): Uint8Array;
   getPayload_asB64(): string;
@@ -37,7 +40,43 @@ export namespace RPCWrapper {
     methodname: string,
     servicename: string,
     requestid: number,
+    done: boolean,
     payload: Uint8Array | string,
   }
+}
+
+export class PRPCStreamChunk extends jspb.Message {
+  getType(): PRPCStreamChunk.TypeMap[keyof PRPCStreamChunk.TypeMap];
+  setType(value: PRPCStreamChunk.TypeMap[keyof PRPCStreamChunk.TypeMap]): void;
+
+  getPayload(): Uint8Array | string;
+  getPayload_asU8(): Uint8Array;
+  getPayload_asB64(): string;
+  setPayload(value: Uint8Array | string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): PRPCStreamChunk.AsObject;
+  static toObject(includeInstance: boolean, msg: PRPCStreamChunk): PRPCStreamChunk.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: PRPCStreamChunk, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): PRPCStreamChunk;
+  static deserializeBinaryFromReader(message: PRPCStreamChunk, reader: jspb.BinaryReader): PRPCStreamChunk;
+}
+
+export namespace PRPCStreamChunk {
+  export type AsObject = {
+    type: PRPCStreamChunk.TypeMap[keyof PRPCStreamChunk.TypeMap],
+    payload: Uint8Array | string,
+  }
+
+  export interface TypeMap {
+    DATA: 0;
+    PING: 1;
+    PONG: 2;
+    CLOSE: 3;
+  }
+
+  export const Type: TypeMap;
 }
 

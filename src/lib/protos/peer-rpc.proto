@@ -16,5 +16,19 @@ message RPCWrapper {
   // for matching up responses
   int32 requestId = 4;
 
-  bytes payload = 5;
+  bytes payload = 6;
+}
+
+
+message PRPCStreamChunk {
+
+  enum Type {
+    DATA = 0;
+    PING = 1;
+    PONG = 2;
+    CLOSE = 3;
+  }
+
+  Type type = 1;
+  bytes payload = 2;
 }
