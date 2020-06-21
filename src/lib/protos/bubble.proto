@@ -1,0 +1,18 @@
+
+syntax = 'proto3';
+
+import "common.proto";
+
+message Bubble {
+  int32 col = 1;
+  int32 row = 2;
+}
+
+service BubbleService {
+    rpc GetAll (Noop) returns (stream Bubble);
+
+    rpc Pop (Bubble) returns (Noop);
+
+    // Watch for bubbles being popped
+    rpc Popped (Noop) returns (stream Bubble);
+}

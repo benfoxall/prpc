@@ -1,42 +1,42 @@
 // package: 
-// file: bubblewrap.proto
+// file: bubble.proto
 
-import * as bubblewrap_pb from "./bubblewrap_pb";
+import * as bubble_pb from "./bubble_pb";
 import * as common_pb from "./common_pb";
 import {grpc} from "@improbable-eng/grpc-web";
 
-type BubbleServicePress = {
-  readonly methodName: string;
-  readonly service: typeof BubbleService;
-  readonly requestStream: false;
-  readonly responseStream: false;
-  readonly requestType: typeof bubblewrap_pb.Bubble;
-  readonly responseType: typeof common_pb.Noop;
-};
-
-type BubbleServiceState = {
-  readonly methodName: string;
-  readonly service: typeof BubbleService;
-  readonly requestStream: false;
-  readonly responseStream: false;
-  readonly requestType: typeof common_pb.Noop;
-  readonly responseType: typeof bubblewrap_pb.Bubbles;
-};
-
-type BubbleServiceChanges = {
+type BubbleServiceGetAll = {
   readonly methodName: string;
   readonly service: typeof BubbleService;
   readonly requestStream: false;
   readonly responseStream: true;
   readonly requestType: typeof common_pb.Noop;
-  readonly responseType: typeof bubblewrap_pb.Bubble;
+  readonly responseType: typeof bubble_pb.Bubble;
+};
+
+type BubbleServicePop = {
+  readonly methodName: string;
+  readonly service: typeof BubbleService;
+  readonly requestStream: false;
+  readonly responseStream: false;
+  readonly requestType: typeof bubble_pb.Bubble;
+  readonly responseType: typeof common_pb.Noop;
+};
+
+type BubbleServicePopped = {
+  readonly methodName: string;
+  readonly service: typeof BubbleService;
+  readonly requestStream: false;
+  readonly responseStream: true;
+  readonly requestType: typeof common_pb.Noop;
+  readonly responseType: typeof bubble_pb.Bubble;
 };
 
 export class BubbleService {
   static readonly serviceName: string;
-  static readonly Press: BubbleServicePress;
-  static readonly State: BubbleServiceState;
-  static readonly Changes: BubbleServiceChanges;
+  static readonly GetAll: BubbleServiceGetAll;
+  static readonly Pop: BubbleServicePop;
+  static readonly Popped: BubbleServicePopped;
 }
 
 export type ServiceError = { message: string, code: number; metadata: grpc.Metadata }
@@ -71,24 +71,16 @@ export class BubbleServiceClient {
   readonly serviceHost: string;
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
-  press(
-    requestMessage: bubblewrap_pb.Bubble,
+  getAll(requestMessage: common_pb.Noop, metadata?: grpc.Metadata): ResponseStream<bubble_pb.Bubble>;
+  pop(
+    requestMessage: bubble_pb.Bubble,
     metadata: grpc.Metadata,
     callback: (error: ServiceError|null, responseMessage: common_pb.Noop|null) => void
   ): UnaryResponse;
-  press(
-    requestMessage: bubblewrap_pb.Bubble,
+  pop(
+    requestMessage: bubble_pb.Bubble,
     callback: (error: ServiceError|null, responseMessage: common_pb.Noop|null) => void
   ): UnaryResponse;
-  state(
-    requestMessage: common_pb.Noop,
-    metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: bubblewrap_pb.Bubbles|null) => void
-  ): UnaryResponse;
-  state(
-    requestMessage: common_pb.Noop,
-    callback: (error: ServiceError|null, responseMessage: bubblewrap_pb.Bubbles|null) => void
-  ): UnaryResponse;
-  changes(requestMessage: common_pb.Noop, metadata?: grpc.Metadata): ResponseStream<bubblewrap_pb.Bubble>;
+  popped(requestMessage: common_pb.Noop, metadata?: grpc.Metadata): ResponseStream<bubble_pb.Bubble>;
 }
 
