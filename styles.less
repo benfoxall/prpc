@@ -1,292 +1,325 @@
 body {
-    font-family: 'Roboto Mono', monospace;
-    background: #fff;
-    margin: 0;
-    overscroll-behavior: none;
-    margin-bottom: 5em;
+  font-family: "Roboto Mono", monospace;
+  background: #fff;
+  margin: 0;
+  overscroll-behavior: none;
+  margin-bottom: 5em;
 
-    transition: .4s;
+  transition: 0.4s;
 }
 
-
 a {
-    color: #000;
+  color: #000;
 
-    &:hover, &:focus {
-        color: #f0f;
-    }
+  &:hover,
+  &:focus {
+    color: #f0f;
+  }
 
-    &.active {
-        color: #08f
-    }
+  &.active {
+    color: #08f;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
-    body {
-        background: #333;
-        color:#fff
-    }
+  body {
+    background: #333;
+    color: #fff;
+  }
 
-    a {
-        color: #fff;
-    }
+  a {
+    color: #fff;
+  }
 }
-
-
 
 ::placeholder {
-    color: #000;
-    opacity: 0.3;
+  color: #000;
+  opacity: 0.3;
 }
 
-h1, h2, h3 {
-    margin: 0;
-    font-weight: 100;
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 100;
 }
 
 .Start {
-    margin: 3em;
+  margin: 3em;
 
-    h2 {
-        margin-top: 1em;
-    }
+  h2 {
+    margin-top: 1em;
+  }
 
-    code {
-        font-size: 2em;
-        color: #000;
-        background: rgba(127,127,127,0.3);
-        padding: .2em;
-        margin: .5em 1em;
-        display:inline-block;
-    }
+  code {
+    font-size: 2em;
+    color: #000;
+    background: rgba(127, 127, 127, 0.3);
+    padding: 0.2em;
+    margin: 0.5em 1em;
+    display: inline-block;
+  }
 }
-
 
 .Connection {
+  color: #000;
+  a {
     color: #000;
-    a {
-        color: #000;
-    }
+  }
 
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: .6em;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.6em;
 
-    background-image: linear-gradient(-45deg, #d1ff78 0%, #0eff9b 100%);
+  background-image: linear-gradient(-45deg, #d1ff78 0%, #0eff9b 100%);
 
-    transition: all .6s;
+  transition: all 0.6s;
 
-    &.error {
-        padding: 2em;
-        background-image: linear-gradient(45deg, #c10000 0%, #ff00ff 100%);
-    }
-
-    a {
-        color: #000;
-    }
-
-}
-
-
-.Host, .Join {
+  &.error {
     padding: 2em;
+    background-image: linear-gradient(45deg, #c10000 0%, #ff00ff 100%);
+  }
+
+  a {
+    color: #000;
+  }
 }
 
+.Host,
+.Join {
+  padding: 2em;
+}
 
 .Trails {
-    canvas {
-        background: linear-gradient(45deg, #8e8787 0%, #dedede 100%);
-        border-radius: 5px;
-        box-shadow: rgba(0,0,0,0.1) 4px 2px 10px;
-        display: block;
-        width: 80vmin;
-        height: 80vmin;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%)
-    }
+  canvas {
+    background: linear-gradient(45deg, #8e8787 0%, #dedede 100%);
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 4px 2px 10px;
+    display: block;
+    width: 80vmin;
+    height: 80vmin;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-    input[type=color] {
-        width: 4em;
-        height: 4em;
-        position: absolute;
-        left: 50%;
-        padding: 0;
-        margin: 0;
-        transform: translateX(-50%)
-    }
+  input[type="color"] {
+    width: 4em;
+    height: 4em;
+    position: absolute;
+    left: 50%;
+    padding: 0;
+    margin: 0;
+    transform: translateX(-50%);
+  }
 }
-
 
 .Camera {
-    form {
+  form {
+    text-align: center;
 
-        text-align: center;
+    button {
+      display: block;
+      font-size: 5em;
+      background: rgba(0, 0, 0, 0.2);
+      border: none;
+      margin: 0.25em auto;
 
-        button {
-            display: block;
-            font-size: 5em;
-            background: rgba(0,0,0,0.2);
-            border: none;
-            margin: 0.25em auto;
+      transition: 0.2s;
+      cursor: pointer;
 
-            transition: .2s;
-            cursor: pointer;
-
-            &:hover, &:focus {
-                background: #fc0
-            }
-        }
-
-        input {
-            border: none;
-            font-size: 1em;
-            background: rgba(255,255,255, 0.5)
-        }
-
-        label {
-            display: block;
-            margin: .5em;
-        }
+      &:hover,
+      &:focus {
+        background: #fc0;
+      }
     }
 
-
-    .emoj {
-        font-size: 30vmax;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%)
+    input {
+      border: none;
+      font-size: 1em;
+      background: rgba(255, 255, 255, 0.5);
     }
 
-    video {
-        object-fit: cover;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 1;
-        transform: scale(-1, 1)
+    label {
+      display: block;
+      margin: 0.5em;
     }
+  }
 
-    .photos {
-        list-style: none;
-        margin: 0;
-        padding: 0;
+  .emoj {
+    font-size: 30vmax;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-        display: flex;
-        flex-wrap: wrap;
-        
-        li {
-            display: inline;
-            margin: .5em;
-        }
-        img {
-            height: 100px;
-            box-shadow: rgba(0,0,0,0.4) 0 2px 5px;
-            border-radius: 5px;
-        }
+  video {
+    object-fit: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    transform: scale(-1, 1);
+  }
+
+  .photos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+      display: inline;
+      margin: 0.5em;
     }
-
+    img {
+      height: 100px;
+      box-shadow: rgba(0, 0, 0, 0.4) 0 2px 5px;
+      border-radius: 5px;
+    }
+  }
 }
-
 
 .Marker {
-    svg {
-        background: #fff;
-        border: 5vw solid #fff;
-        width: 50vw;
-        height: 50vw;
-        stroke: #000;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%)
-    }
+  svg {
+    background: #fff;
+    border: 5vw solid #fff;
+    width: 50vw;
+    height: 50vw;
+    stroke: #000;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
-
 
 .Content {
-    textarea {
-        font-family: inherit;
-        font-size: 1.5em;
-        border: none;
-        background: rgba(127,127,127,0.5);
-        margin: 1em 0;
-        padding: .5em;
-        width: 100%;
-        min-height: 10em;
-    }
+  textarea {
+    font-family: inherit;
+    font-size: 1.5em;
+    border: none;
+    background: rgba(127, 127, 127, 0.5);
+    margin: 1em 0;
+    padding: 0.5em;
+    width: 100%;
+    min-height: 10em;
+  }
 }
-
 
 .Calculator {
+  text-align: center;
+  margin: 2em 0;
+  input {
+    font-size: 1em;
+    width: 4em;
+    margin: 0.5em;
     text-align: center;
-    margin: 2em 0;
-    input {
-        font-size: 1em;
-        width: 4em;
-        margin: .5em;
-        text-align: center;
-        padding: .5em; 
-    }
-    select {
-        margin: 2em;
-        font-size: 3em;
-    }
-    output {
-        background: rgba(127,127,127,0.5);
-        display: inline-block;
-        min-width: 3em;
-        height: 3em;
-        line-height: 3em;
-        margin: .5em;
-    }
+    padding: 0.5em;
+  }
+  select {
+    margin: 2em;
+    font-size: 3em;
+  }
+  output {
+    background: rgba(127, 127, 127, 0.5);
+    display: inline-block;
+    min-width: 3em;
+    height: 3em;
+    line-height: 3em;
+    margin: 0.5em;
+  }
 }
 
-
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .JoinConnection {
-    margin: 3em 0;
+  margin: 3em 0;
 }
 
 .Debug {
-    margin: 2em 0;
+  margin: 2em 0;
 
-    .EmojiList {
-        display: flex;
-        flex-wrap: wrap;
-        button {
-            font-size: 4em;
-            width: 1.2em;
-            height: 1.2em;
-            margin: .05em;
+  .EmojiList {
+    display: flex;
+    flex-wrap: wrap;
+    button {
+      font-size: 4em;
+      width: 1.2em;
+      height: 1.2em;
+      margin: 0.05em;
 
-            transition: .3s;
+      transition: 0.3s;
 
-            &.selected {
-                background: #aaa;
-                transform: scale(1.1);
-                outline: none;
-
-            }
-        }
+      &.selected {
+        background: #aaa;
+        transform: scale(1.1);
+        outline: none;
+      }
     }
- 
+  }
 
-    h2 {
-        span {
-            font-size: 2em;
-            margin-right: .5em;
-        }
+  h2 {
+    span {
+      font-size: 2em;
+      margin-right: 0.5em;
     }
+  }
+}
+
+.Bubble {
+  width: 50px;
+  padding: 0.1em;
+  color: black;
+  height: 50px;
+  border-radius: 100%;
+  position: relative;
+  background: radial-gradient(
+    circle at 50% 55%,
+    rgba(240, 245, 255, 0.9),
+    rgba(240, 245, 255, 0.9),
+    40%,
+    rgba(225, 238, 255, 0.8) 60%,
+    rgba(43, 130, 255, 0.4)
+  );
+
+  &::before {
+    content: "";
+    display: inline-block;
+    padding-top: 10;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 5%;
+    left: 10%;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    filter: blur(1px);
+    z-index: 2;
+    transform: rotateZ(-30deg);
+    display: block;
+    background: radial-gradient(
+      circle at 50% 80%,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0) 74%,
+      white 80%,
+      white 84%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
 }

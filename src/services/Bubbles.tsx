@@ -44,6 +44,10 @@ const Client: FunctionComponent = () => {
   }, []);
 
   const click = async (bub: Bubble.AsObject) => {
+    if (navigator.vibrate) {
+      navigator.vibrate(200);
+    }
+
     unary("Pop", (req) => {
       req.setRow(bub.row);
       req.setCol(bub.col);
@@ -153,14 +157,16 @@ const Server: FunctionComponent = () => {
   }, [server]);
 
   return (
-    <div className="Bubbles" style={{ display: "grid" }}>
+    <div className="Bubbles" style={{ display: "grid", gap: "0.3em" }}>
       {bubbles.map((bubble) => {
         const { row, col } = bubble.toObject();
 
         return (
-          <div key={row + " " + col} style={{ gridRow: row, gridColumn: col }}>
-            🎾
-          </div>
+          <div
+            key={row + " " + col}
+            className="Bubble"
+            style={{ gridRow: row, gridColumn: col }}
+          />
         );
       })}
     </div>
