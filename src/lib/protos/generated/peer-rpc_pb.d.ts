@@ -4,17 +4,20 @@
 import * as jspb from "google-protobuf";
 
 export class RPCWrapper extends jspb.Message {
-  getPeerid(): string;
-  setPeerid(value: string): void;
-
   getMethodname(): string;
   setMethodname(value: string): void;
 
   getServicename(): string;
   setServicename(value: string): void;
 
+  getIsstream(): boolean;
+  setIsstream(value: boolean): void;
+
   getRequestid(): number;
   setRequestid(value: number): void;
+
+  getDone(): boolean;
+  setDone(value: boolean): void;
 
   getPayload(): Uint8Array | string;
   getPayload_asU8(): Uint8Array;
@@ -33,18 +36,16 @@ export class RPCWrapper extends jspb.Message {
 
 export namespace RPCWrapper {
   export type AsObject = {
-    peerid: string,
     methodname: string,
     servicename: string,
+    isstream: boolean,
     requestid: number,
+    done: boolean,
     payload: Uint8Array | string,
   }
 }
 
 export class PRPCStreamChunk extends jspb.Message {
-  getType(): PRPCStreamChunk.TypeMap[keyof PRPCStreamChunk.TypeMap];
-  setType(value: PRPCStreamChunk.TypeMap[keyof PRPCStreamChunk.TypeMap]): void;
-
   getMeta(): string;
   setMeta(value: string): void;
 
@@ -71,20 +72,10 @@ export class PRPCStreamChunk extends jspb.Message {
 
 export namespace PRPCStreamChunk {
   export type AsObject = {
-    type: PRPCStreamChunk.TypeMap[keyof PRPCStreamChunk.TypeMap],
     meta: string,
     id: number,
     done: boolean,
     payload: Uint8Array | string,
   }
-
-  export interface TypeMap {
-    DATA: 0;
-    PING: 1;
-    PONG: 2;
-    CLOSE: 3;
-  }
-
-  export const Type: TypeMap;
 }
 

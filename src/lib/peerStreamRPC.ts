@@ -13,7 +13,7 @@ for await( {stream, meta, peerId} of s) {
 }
 
 const c = new Client("foo")
-const stream = c.call(meta)
+const stream = c.call("bar/baz")
 
 */
 
@@ -36,7 +36,6 @@ export class PeerStreamRPCServer implements AsyncIterable<Call> {
   private async listen() {
     for await (const socket of this.base) {
       new WhatsItCalled(socket, (call) => {
-        console.log("CREATED", call);
         this.emit(call);
       });
     }

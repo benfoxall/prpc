@@ -9,27 +9,20 @@ IGNORE THIS!
 syntax = 'proto3';
 
 message RPCWrapper {
-  string peerId = 1;
-  string methodName = 2;
-  string serviceName = 3;
+  string methodName = 1;
+  string serviceName = 2;
+  bool isStream = 3;
 
   // for matching up responses
   int32 requestId = 4;
+  bool done = 5;
 
   bytes payload = 6;
 }
 
 
+// For multiplexed streams
 message PRPCStreamChunk {
-
-  enum Type {
-    DATA = 0;
-    PING = 1;
-    PONG = 2;
-    CLOSE = 3;
-  }
-  Type type = 1;
-
   // "service/method"
   string meta = 2;
 
