@@ -28,3 +28,25 @@ export namespace Bubble {
   }
 }
 
+export class BubbleList extends jspb.Message {
+  clearBubblesList(): void;
+  getBubblesList(): Array<Bubble>;
+  setBubblesList(value: Array<Bubble>): void;
+  addBubbles(value?: Bubble, index?: number): Bubble;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): BubbleList.AsObject;
+  static toObject(includeInstance: boolean, msg: BubbleList): BubbleList.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: BubbleList, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): BubbleList;
+  static deserializeBinaryFromReader(message: BubbleList, reader: jspb.BinaryReader): BubbleList;
+}
+
+export namespace BubbleList {
+  export type AsObject = {
+    bubblesList: Array<Bubble.AsObject>,
+  }
+}
+

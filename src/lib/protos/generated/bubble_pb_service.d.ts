@@ -9,9 +9,9 @@ type BubbleServiceGetAll = {
   readonly methodName: string;
   readonly service: typeof BubbleService;
   readonly requestStream: false;
-  readonly responseStream: true;
+  readonly responseStream: false;
   readonly requestType: typeof common_pb.Noop;
-  readonly responseType: typeof bubble_pb.Bubble;
+  readonly responseType: typeof bubble_pb.BubbleList;
 };
 
 type BubbleServicePop = {
@@ -71,7 +71,15 @@ export class BubbleServiceClient {
   readonly serviceHost: string;
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
-  getAll(requestMessage: common_pb.Noop, metadata?: grpc.Metadata): ResponseStream<bubble_pb.Bubble>;
+  getAll(
+    requestMessage: common_pb.Noop,
+    metadata: grpc.Metadata,
+    callback: (error: ServiceError|null, responseMessage: bubble_pb.BubbleList|null) => void
+  ): UnaryResponse;
+  getAll(
+    requestMessage: common_pb.Noop,
+    callback: (error: ServiceError|null, responseMessage: bubble_pb.BubbleList|null) => void
+  ): UnaryResponse;
   pop(
     requestMessage: bubble_pb.Bubble,
     metadata: grpc.Metadata,

@@ -8,8 +8,12 @@ message Bubble {
   int32 row = 2;
 }
 
+message BubbleList {
+  repeated Bubble bubbles = 1;
+}
+
 service BubbleService {
-    rpc GetAll (Noop) returns (stream Bubble);
+    rpc GetAll (Noop) returns (BubbleList);
 
     rpc Pop (Bubble) returns (Noop);
 

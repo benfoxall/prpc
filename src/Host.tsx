@@ -11,7 +11,7 @@ import { Cameras } from "./services/Cameras";
 // import { Position } from "./services/Position";
 import { Content } from "./services/Content";
 import { Calculator } from "./services/Calculator";
-import { Bubblewrap } from "./services/Bubblewrap";
+import { Bubbles } from "./services/Bubbles";
 import { Clock } from "./services/Clock";
 
 export const ServerContext = createContext<PeerServiceServer>(null);
@@ -52,7 +52,7 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
             </li>
 
             <li>
-              <LinkTo href="/Bubbles">Bubblewrap</LinkTo>
+              <LinkTo href="/Bubbles">Bubbles</LinkTo>
             </li>
 
             <li>
@@ -90,7 +90,7 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
         </Route>
 
         <Route path="/Bubbles">
-          <Bubblewrap.Server />
+          <Bubbles.Server />
         </Route>
 
         <Route path="/Clock">

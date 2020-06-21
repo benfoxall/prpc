@@ -11,7 +11,7 @@ import { Cameras } from "./services/Cameras";
 // import { Position } from "./services/Position";
 import { Content } from "./services/Content";
 import { Calculator } from "./services/Calculator";
-import { Bubblewrap } from "./services/Bubblewrap";
+import { Bubbles } from "./services/Bubbles";
 import { Clock } from "./services/Clock";
 
 let LOCAL =
@@ -61,7 +61,7 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
         </Route>
 
         <Route path="/Bubbles">
-          <Bubblewrap.Client />
+          <Bubbles.Client />
         </Route>
 
         <Route path="/Clock">

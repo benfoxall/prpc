@@ -27,14 +27,11 @@ const Client: FunctionComponent = () => {
     const load = async () => {
       let bubs = [] as Bubble.AsObject[];
 
-      for await (const bub of stream("GetAll")) {
-        bubs.push(bub.toObject());
-      }
+      const list = await unary("GetAll");
 
-      setBubbles(bubs);
+      setBubbles(list.getBubblesList().map((b) => b.toObject()));
 
       for await (const bub of stream("Popped")) {
-        console.log("POP", bub);
         setBubbles((prev) =>
           prev.filter((t) => t.row !== bub.getRow() || t.col !== bub.getCol())
         );
@@ -54,7 +51,7 @@ const Client: FunctionComponent = () => {
   };
 
   return (
-    <div className="BubbleWrap" style={{ display: "grid" }}>
+    <div className="Bubbles" style={{ display: "grid" }}>
       {bubbles.map((bub) => {
         const { row, col } = bub;
 
@@ -77,18 +74,15 @@ const range = (length: number) => Array.from({ length }, (_, i) => i);
 const Server: FunctionComponent = () => {
   const server = useContext(ServerContext);
 
-  const rows = 10;
-  const cols = 10;
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
-
-  // get a ref to the bubbles for within the service
-  const bubbleRef = useRef(bubbles);
-  bubbleRef.current = bubbles;
 
   useEffect(() => {
     if (!server) return;
 
     let list: Bubble[] = [];
+
+    const rows = 10;
+    const cols = 10;
 
     // initial list of bubbles
     for (const row of range(rows)) {
@@ -101,31 +95,6 @@ const Server: FunctionComponent = () => {
       }
     }
     setBubbles(list);
-
-    // this could definitely drop pops, but meh
-    // let resolve: () => void;
-    // let pop = new Promise(res => resolve = res)
-    // const chain = {
-    //   res: null,
-    //   next: new Promise(_ => this.res = _)
-    // }
-
-    // const c = {}
-
-    // for(thing of c) {
-
-    // }
-
-    //  let resolve: (bub: Bubble) => void;
-    //  let pop = new Promise<Bubble>(res => resolve = res)
-
-    // async function* listen () {
-    //   const bub = await pop;
-
-    // }
-    // const notify = (bub: Bubble) => {
-    //   resolve(bub)
-    // }
 
     const listeners = new Set<(bub: Bubble) => void>();
 
@@ -146,11 +115,8 @@ const Server: FunctionComponent = () => {
     let stop = false;
 
     server.addService(BubbleService, {
-      // this is way inefficient, but kind of cool
-      async *GetAll() {
-        for (const bub of list) {
-          yield bub;
-        }
+      GetAll(req, res) {
+        res.setBubblesList(list);
       },
 
       Pop(req) {
@@ -164,7 +130,7 @@ const Server: FunctionComponent = () => {
           // pop
           setBubbles(list);
 
-          // notify any listners
+          // notify any listeners
           listeners.forEach((fn) => fn(found));
         }
       },
@@ -187,7 +153,7 @@ const Server: FunctionComponent = () => {
   }, [server]);
 
   return (
-    <div className="BubbleWrap" style={{ display: "grid" }}>
+    <div className="Bubbles" style={{ display: "grid" }}>
       {bubbles.map((bubble) => {
         const { row, col } = bubble.toObject();
 
@@ -201,4 +167,4 @@ const Server: FunctionComponent = () => {
   );
 };
 
-export const Bubblewrap = { Server, Client };
+export const Bubbles = { Server, Client };

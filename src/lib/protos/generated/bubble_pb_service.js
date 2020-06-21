@@ -15,9 +15,9 @@ BubbleService.GetAll = {
   methodName: "GetAll",
   service: BubbleService,
   requestStream: false,
-  responseStream: true,
+  responseStream: false,
   requestType: common_pb.Noop,
-  responseType: bubble_pb.Bubble
+  responseType: bubble_pb.BubbleList
 };
 
 BubbleService.Pop = {
@@ -45,40 +45,32 @@ function BubbleServiceClient(serviceHost, options) {
   this.options = options || {};
 }
 
-BubbleServiceClient.prototype.getAll = function getAll(requestMessage, metadata) {
-  var listeners = {
-    data: [],
-    end: [],
-    status: []
-  };
-  var client = grpc.invoke(BubbleService.GetAll, {
+BubbleServiceClient.prototype.getAll = function getAll(requestMessage, metadata, callback) {
+  if (arguments.length === 2) {
+    callback = arguments[1];
+  }
+  var client = grpc.unary(BubbleService.GetAll, {
     request: requestMessage,
     host: this.serviceHost,
     metadata: metadata,
     transport: this.options.transport,
     debug: this.options.debug,
-    onMessage: function (responseMessage) {
-      listeners.data.forEach(function (handler) {
-        handler(responseMessage);
-      });
-    },
-    onEnd: function (status, statusMessage, trailers) {
-      listeners.status.forEach(function (handler) {
-        handler({ code: status, details: statusMessage, metadata: trailers });
-      });
-      listeners.end.forEach(function (handler) {
-        handler({ code: status, details: statusMessage, metadata: trailers });
-      });
-      listeners = null;
+    onEnd: function (response) {
+      if (callback) {
+        if (response.status !== grpc.Code.OK) {
+          var err = new Error(response.statusMessage);
+          err.code = response.status;
+          err.metadata = response.trailers;
+          callback(err, null);
+        } else {
+          callback(null, response.message);
+        }
+      }
     }
   });
   return {
-    on: function (type, handler) {
-      listeners[type].push(handler);
-      return this;
-    },
     cancel: function () {
-      listeners = null;
+      callback = null;
       client.close();
     }
   };
