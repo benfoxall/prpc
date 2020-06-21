@@ -16,9 +16,6 @@ export class RPCWrapper extends jspb.Message {
   getRequestid(): number;
   setRequestid(value: number): void;
 
-  getDone(): boolean;
-  setDone(value: boolean): void;
-
   getPayload(): Uint8Array | string;
   getPayload_asU8(): Uint8Array;
   getPayload_asB64(): string;
@@ -40,7 +37,6 @@ export namespace RPCWrapper {
     methodname: string,
     servicename: string,
     requestid: number,
-    done: boolean,
     payload: Uint8Array | string,
   }
 }
@@ -48,6 +44,15 @@ export namespace RPCWrapper {
 export class PRPCStreamChunk extends jspb.Message {
   getType(): PRPCStreamChunk.TypeMap[keyof PRPCStreamChunk.TypeMap];
   setType(value: PRPCStreamChunk.TypeMap[keyof PRPCStreamChunk.TypeMap]): void;
+
+  getMeta(): string;
+  setMeta(value: string): void;
+
+  getId(): number;
+  setId(value: number): void;
+
+  getDone(): boolean;
+  setDone(value: boolean): void;
 
   getPayload(): Uint8Array | string;
   getPayload_asU8(): Uint8Array;
@@ -67,6 +72,9 @@ export class PRPCStreamChunk extends jspb.Message {
 export namespace PRPCStreamChunk {
   export type AsObject = {
     type: PRPCStreamChunk.TypeMap[keyof PRPCStreamChunk.TypeMap],
+    meta: string,
+    id: number,
+    done: boolean,
     payload: Uint8Array | string,
   }
 

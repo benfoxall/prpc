@@ -18,7 +18,7 @@ export type Handler = (
 
 // todo: use polyfill
 /** Wrap a peer socket in a readable stream (including ping/pong) */
-class Socket extends ReadableStream<Uint8Array> {
+export class Socket extends ReadableStream<Uint8Array> {
   // queue up packets before join
   private queue = [] as Uint8Array[];
 

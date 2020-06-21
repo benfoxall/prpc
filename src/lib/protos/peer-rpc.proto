@@ -28,7 +28,17 @@ message PRPCStreamChunk {
     PONG = 2;
     CLOSE = 3;
   }
-
   Type type = 1;
-  bytes payload = 2;
+
+  // "service/method"
+  string meta = 2;
+
+  // request id
+  uint32 id = 3;
+
+  // if this is the last message
+  bool done = 4;
+
+  // the content
+  bytes payload = 5;
 }

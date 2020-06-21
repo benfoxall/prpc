@@ -92,7 +92,6 @@ proto.RPCWrapper.toObject = function(includeInstance, msg) {
     methodname: jspb.Message.getFieldWithDefault(msg, 2, ""),
     servicename: jspb.Message.getFieldWithDefault(msg, 3, ""),
     requestid: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    done: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
     payload: msg.getPayload_asB64()
   };
 
@@ -145,10 +144,6 @@ proto.RPCWrapper.deserializeBinaryFromReader = function(msg, reader) {
     case 4:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setRequestid(value);
-      break;
-    case 5:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setDone(value);
       break;
     case 6:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
@@ -208,13 +203,6 @@ proto.RPCWrapper.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0) {
     writer.writeInt32(
       4,
-      f
-    );
-  }
-  f = message.getDone();
-  if (f) {
-    writer.writeBool(
-      5,
       f
     );
   }
@@ -285,21 +273,6 @@ proto.RPCWrapper.prototype.getRequestid = function() {
 /** @param {number} value */
 proto.RPCWrapper.prototype.setRequestid = function(value) {
   jspb.Message.setProto3IntField(this, 4, value);
-};
-
-
-/**
- * optional bool done = 5;
- * @return {boolean}
- */
-proto.RPCWrapper.prototype.getDone = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 5, false));
-};
-
-
-/** @param {boolean} value */
-proto.RPCWrapper.prototype.setDone = function(value) {
-  jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
@@ -375,6 +348,9 @@ proto.PRPCStreamChunk.prototype.toObject = function(opt_includeInstance) {
 proto.PRPCStreamChunk.toObject = function(includeInstance, msg) {
   var f, obj = {
     type: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    meta: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    id: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    done: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
     payload: msg.getPayload_asB64()
   };
 
@@ -417,6 +393,18 @@ proto.PRPCStreamChunk.deserializeBinaryFromReader = function(msg, reader) {
       msg.setType(value);
       break;
     case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMeta(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setId(value);
+      break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setDone(value);
+      break;
+    case 5:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setPayload(value);
       break;
@@ -456,10 +444,31 @@ proto.PRPCStreamChunk.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getMeta();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getId();
+  if (f !== 0) {
+    writer.writeUint32(
+      3,
+      f
+    );
+  }
+  f = message.getDone();
+  if (f) {
+    writer.writeBool(
+      4,
+      f
+    );
+  }
   f = message.getPayload_asU8();
   if (f.length > 0) {
     writer.writeBytes(
-      2,
+      5,
       f
     );
   }
@@ -492,16 +501,61 @@ proto.PRPCStreamChunk.prototype.setType = function(value) {
 
 
 /**
- * optional bytes payload = 2;
- * @return {!(string|Uint8Array)}
+ * optional string meta = 2;
+ * @return {string}
  */
-proto.PRPCStreamChunk.prototype.getPayload = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+proto.PRPCStreamChunk.prototype.getMeta = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.PRPCStreamChunk.prototype.setMeta = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional bytes payload = 2;
+ * optional uint32 id = 3;
+ * @return {number}
+ */
+proto.PRPCStreamChunk.prototype.getId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.PRPCStreamChunk.prototype.setId = function(value) {
+  jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional bool done = 4;
+ * @return {boolean}
+ */
+proto.PRPCStreamChunk.prototype.getDone = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
+};
+
+
+/** @param {boolean} value */
+proto.PRPCStreamChunk.prototype.setDone = function(value) {
+  jspb.Message.setProto3BooleanField(this, 4, value);
+};
+
+
+/**
+ * optional bytes payload = 5;
+ * @return {!(string|Uint8Array)}
+ */
+proto.PRPCStreamChunk.prototype.getPayload = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * optional bytes payload = 5;
  * This is a type-conversion wrapper around `getPayload()`
  * @return {string}
  */
@@ -512,7 +566,7 @@ proto.PRPCStreamChunk.prototype.getPayload_asB64 = function() {
 
 
 /**
- * optional bytes payload = 2;
+ * optional bytes payload = 5;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getPayload()`
@@ -526,7 +580,7 @@ proto.PRPCStreamChunk.prototype.getPayload_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.PRPCStreamChunk.prototype.setPayload = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 5, value);
 };
 
 
