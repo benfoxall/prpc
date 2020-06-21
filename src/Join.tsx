@@ -1,4 +1,4 @@
-import React, { FunctionComponent, createContext } from "react";
+import React, { FunctionComponent, createContext, useEffect } from "react";
 import { usePeerClient } from "./lib/hooks";
 import { Route } from "./routing";
 import { useSelector } from "./reducers";
@@ -8,10 +8,11 @@ import { SyncPath } from "./services/SyncPath";
 import { Chat } from "./services/Chat";
 import { Trails } from "./services/Trails";
 import { Cameras } from "./services/Cameras";
-import { Position } from "./services/Position";
+// import { Position } from "./services/Position";
 import { Content } from "./services/Content";
 import { Calculator } from "./services/Calculator";
 import { Bubblewrap } from "./services/Bubblewrap";
+import { Clock } from "./services/Clock";
 
 let LOCAL =
   sessionStorage.getItem("LOCAL_ID") || Math.random().toString(36).slice(1);
@@ -63,9 +64,13 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
           <Bubblewrap.Client />
         </Route>
 
-        <Route path="/Position">
-          <Position.Client />
+        <Route path="/Clock">
+          <Clock.Client />
         </Route>
+
+        {/* <Route path="/Position">
+          <Position.Client />
+        </Route> */}
       </main>
     </ClientContext.Provider>
   );

@@ -8,10 +8,11 @@ import { SyncPath } from "./services/SyncPath";
 import { Chat } from "./services/Chat";
 import { Trails } from "./services/Trails";
 import { Cameras } from "./services/Cameras";
-import { Position } from "./services/Position";
+// import { Position } from "./services/Position";
 import { Content } from "./services/Content";
 import { Calculator } from "./services/Calculator";
 import { Bubblewrap } from "./services/Bubblewrap";
+import { Clock } from "./services/Clock";
 
 export const ServerContext = createContext<PeerServiceServer>(null);
 
@@ -55,6 +56,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
             </li>
 
             <li>
+              <LinkTo href="/Clock">Clock</LinkTo>
+            </li>
+
+            <li>
               <LinkTo href="/Trails">Trails</LinkTo>
             </li>
 
@@ -88,6 +93,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
           <Bubblewrap.Server />
         </Route>
 
+        <Route path="/Clock">
+          <Clock.Server />
+        </Route>
+
         <Route path="/Trails">
           <Trails.Server />
         </Route>
@@ -96,9 +105,9 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
           <Cameras.Server />
         </Route>
 
-        <Route path="/Position">
+        {/* <Route path="/Position">
           <Position.Server />
-        </Route>
+        </Route> */}
       </main>
     </ServerContext.Provider>
   );
