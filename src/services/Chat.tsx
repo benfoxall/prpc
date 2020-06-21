@@ -103,7 +103,7 @@ const Server: FunctionComponent = () => {
       Send(req, message, meta) {
         message.setId(id++);
         message.setAuthor(meta.peerId);
-        message.setBody(req.getBody());
+        message.setBody(req.getBody().slice(0, 300));
         message.setPosttime(+new Date());
 
         messageList.push(message);
@@ -118,7 +118,7 @@ const Server: FunctionComponent = () => {
       },
 
       async *List() {
-        for (const message of messageList) {
+        for (const message of messageList.slice(-30)) {
           yield message;
         }
 
