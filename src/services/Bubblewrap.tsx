@@ -80,7 +80,7 @@ const Server: FunctionComponent = () => {
     if (!server) return;
 
     server.addService(BubbleService, {
-      State: (req, res) => {
+      State(req, res) {
         for (const bub of bubbles) {
           const b = new Bubble();
           b.setCol(bub.col);
@@ -90,7 +90,7 @@ const Server: FunctionComponent = () => {
           res.addBubbles(b);
         }
       },
-      Press: (req) => {
+      Press(req) {
         const col = req.getCol();
         const row = req.getRow();
 

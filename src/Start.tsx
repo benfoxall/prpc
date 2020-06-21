@@ -1,22 +1,17 @@
-import React, { useState, ChangeEventHandler } from 'react';
+import React from "react";
 
 export const Start = () => {
+  return (
+    <div className="Start">
+      <h2>Start a server</h2>
+      <code>
+        {document.location.host}/host/<span>[code]</span>
+      </code>
 
-    const [code, setCode] = useState('')
-
-    const change: ChangeEventHandler<HTMLInputElement> = (e) =>
-        setCode(
-            e.target.value.replace(/\W/, '').toLowerCase()
-        )
-
-    return (
-        <div className="Start">
-
-            <h2>Start a server</h2>
-            <code>{document.location.host}/host/<span>[code]</span></code>
-
-            <h2>Join a server</h2>
-            <code>{document.location.host}/<span>[code]</span></code>
-        </div>
-    )
-}
+      <h2>Join a server</h2>
+      <code>
+        {document.location.host}/<span>[code]</span>
+      </code>
+    </div>
+  );
+};

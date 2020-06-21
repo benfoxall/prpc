@@ -16,7 +16,7 @@ const logger = store => next => action => {
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(logger)))
 
-// work out if we're hosting or joinging
+// work out if we're hosting or joining
 const path = document.location.pathname
 const hostR = path.match(/^\/host\/(\w+)/)
 const host = hostR && hostR[1];

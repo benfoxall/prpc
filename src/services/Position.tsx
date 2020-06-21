@@ -1,183 +1,168 @@
-import React, { FunctionComponent, useState, useContext, useEffect, useRef, FormEventHandler, MutableRefObject } from "react";
+import React, {
+  FunctionComponent,
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+  MutableRefObject,
+} from "react";
 import { ClientContext } from "../Join";
 import { ServerContext } from "../Host";
-import { Dev } from "../lib/protos/generated/dev_pb_service";
-import { ChatService } from "../lib/protos/generated/chat_pb_service";
-import { Message } from "../lib/protos/generated/chat_pb";
+// import { Dev } from "../lib/protos/generated/dev_pb_service";
+// import { ChatService } from "../lib/protos/generated/chat_pb_service";
+// import { Message } from "../lib/protos/generated/chat_pb";
 
-import { AR, POS2 } from 'js-aruco'
+// import { AR, POS2 } from 'js-aruco'
 
-console.log("ARRR", AR)
+// console.log("ARRR", AR)
 
 const Client: FunctionComponent = () => {
+  const client = useContext(ClientContext);
+  const video = useRef<HTMLVideoElement>();
 
-    const client = useContext(ClientContext);
-    const video = useRef<HTMLVideoElement>();
+  const markers = useMarkers(video);
 
-    const markers = useMarkers(video);
-
-    return <div className="Marker">
-        <video ref={video} autoPlay={true} />
-
-        [camera]
-        <h4>
-            {JSON.stringify(markers)}
-        </h4>
-
+  return (
+    <div className="Marker">
+      <video ref={video} autoPlay={true} />
+      [camera]
+      <h4>{JSON.stringify(markers)}</h4>
     </div>
-}
-
-
+  );
+};
 
 const Server: FunctionComponent = () => {
+  const server = useContext(ServerContext);
 
-    const server = useContext(ServerContext);
-
-    return <div className="Marker">
-
-        [AR code]
-
-        <Marker i={123} />
-
+  return (
+    <div className="Marker">
+      [AR code]
+      <Marker i={123} />
     </div>
-}
-
+  );
+};
 
 export const Position = { Server, Client };
 
-
-
 // Marker stuff
 
-const Marker: FunctionComponent<{ i: number, size?: number }> = ({ i, size = 100 }) =>
-    <svg viewBox="0 0 7 7" width={size} height={size} >
-        {
-            generate(i)
-                .map((row, x) =>
-                    <g key={x}>
-                        {row.map((value, y) =>
-                            value &&
-                            <rect
-                                key={y}
-                                strokeWidth="0.01"
-                                width="1"
-                                height="1"
-                                x={x}
-                                y={y}
-                            />
-                        )}
-                    </g>
-                )
-        }
-    </svg>
+const Marker: FunctionComponent<{ i: number; size?: number }> = ({
+  i,
+  size = 100,
+}) => (
+  <svg viewBox="0 0 7 7" width={size} height={size}>
+    {generate(i).map((row, x) => (
+      <g key={x}>
+        {row.map(
+          (value, y) =>
+            value && (
+              <rect
+                key={y}
+                strokeWidth="0.01"
+                width="1"
+                height="1"
+                x={x}
+                y={y}
+              />
+            )
+        )}
+      </g>
+    ))}
+  </svg>
+);
 
-const w = false, b = true
+const w = false,
+  b = true;
 
 const rows = [
-    [b, w, b, b, b, b, b],
-    [b, w, b, w, w, w, b],
-    [b, b, w, b, b, w, b],
-    [b, b, w, w, w, b, b],
+  [b, w, b, b, b, b, b],
+  [b, w, b, w, w, w, b],
+  [b, b, w, b, b, w, b],
+  [b, b, w, w, w, b, b],
 
-    [b, b, b, b, b, b, b] // border
-]
+  [b, b, b, b, b, b, b], // border
+];
 
-const generate = (i: number) =>
-    [
-        rows[4],
-        rows[i >> 8 & 3],
-        rows[i >> 6 & 3],
-        rows[i >> 4 & 3],
-        rows[i >> 2 & 3],
-        rows[i & 3],
-        rows[4]
-    ]
-
-
+const generate = (i: number) => [
+  rows[4],
+  rows[(i >> 8) & 3],
+  rows[(i >> 6) & 3],
+  rows[(i >> 4) & 3],
+  rows[(i >> 2) & 3],
+  rows[i & 3],
+  rows[4],
+];
 
 interface Marker {
-    id: number,
-    corners: [number, number, number, number]
+  id: number;
+  corners: [number, number, number, number];
 }
 
 const useMarkers = (videoRef: MutableRefObject<HTMLVideoElement>) => {
+  const [markers, setMarkers] = useState<Marker[]>([]);
 
-    const [markers, setMarkers] = useState<Marker[]>([])
+  useEffect(() => {
+    let stream: MediaStream;
+    let stop = false;
 
-    useEffect(() => {
+    const run = async () => {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: false,
+          video: { facingMode: "environment" },
+        });
 
-        let stream: MediaStream;
-        let stop = false;
+        const { current: videoEl } = videoRef;
 
-        const run = async () => {
-            try {
+        videoEl.srcObject = stream;
+        await new Promise((res) => (videoEl.onloadedmetadata = res));
+        videoEl.play();
 
-                stream = await navigator.mediaDevices.getUserMedia({
-                    audio: false, video: { facingMode: 'environment' }
-                });
+        const canvas = document.createElement("canvas");
+        canvas.width = videoEl.videoWidth;
+        canvas.height = videoEl.videoWidth;
 
-                const { current: videoEl } = videoRef;
+        const modelSize = 1000; // 1m
 
-                videoEl.srcObject = stream;
-                await new Promise(res => videoEl.onloadedmetadata = res);
-                videoEl.play();
+        const detector = new AR.Detector();
+        const posit = new POS2.Posit(modelSize, canvas.width);
 
-                const canvas = document.createElement('canvas');
-                canvas.width = videoEl.videoWidth;
-                canvas.height = videoEl.videoWidth;
+        const loop = async () => {
+          if (stop) return;
 
-                const modelSize = 1000; // 1m
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(videoEl, 0, 0);
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-                const detector = new AR.Detector()
-                const posit = new POS2.Posit(modelSize, canvas.width);
+          var markers = detector.detect(imageData);
 
-                const loop = async () => {
-                    if (stop) return;
+          if (markers.length) setMarkers(markers);
 
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(videoEl, 0, 0);
-                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+          // markers.forEach(marker => {
+          //     const pose = posit.pose(marker.corners);
 
-                    var markers = detector.detect(imageData)
+          //     const rotate = pose.bestRotation;
 
-                    if (markers.length) setMarkers(markers)
+          //     const mat3 = rotate.reduce((a, b) => a.concat(b))
 
-                    // markers.forEach(marker => {
-                    //     const pose = posit.pose(marker.corners);
+          //     console.log(mat3)
+          // })
 
-                    //     const rotate = pose.bestRotation;
+          setTimeout(loop, 500);
+        };
+        loop();
+      } catch (e) {
+        console.error(e);
+      }
+    };
 
-                    //     const mat3 = rotate.reduce((a, b) => a.concat(b))
+    run();
 
-                    //     console.log(mat3)
-                    // })
+    return () => {
+      stream && stream.getVideoTracks().forEach((track) => track.stop());
+      stop = true;
+    };
+  }, []);
 
-                    setTimeout(loop, 500)
-                }
-                loop()
-
-
-
-            } catch (e) {
-
-                console.error(e)
-            }
-
-
-        }
-
-        run()
-
-
-
-        return () => {
-            stream && stream.getVideoTracks().forEach(track => track.stop())
-            stop = true;
-        }
-
-    }, [])
-
-
-    return markers;
-
-}
+  return markers;
+};
