@@ -1,0 +1,13 @@
+
+syntax = 'proto3';
+
+import "common.proto";
+
+message Tick {
+    int32 count = 1;
+}
+
+service ClockService {
+    rpc Listen (Noop) returns (Tick);
+}
+
