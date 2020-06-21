@@ -5,7 +5,11 @@ import { Dispatch } from "redux";
 export type Meta = { serviceName: string; fnName: string; peerId: string };
 
 export interface Handler {
-  stream: (meta: Meta, payload: Uint8Array) => AsyncGenerator<Uint8Array>;
+  stream: (
+    meta: Meta,
+    payload: Uint8Array,
+    stopFn: () => {},
+  ) => AsyncGenerator<Uint8Array>;
   unary: (meta: Meta, payload: Uint8Array) => Promise<Uint8Array>;
 }
 
@@ -17,7 +21,7 @@ export class PeerRPCServer extends PeerServer {
 
     const send = (id: string, payload: Uint8Array) => super.send(id, payload);
 
-    const stops = new Map<string, () => {}>();
+    const stops = new Map<string, () => void>();
 
     super.on("data", async (id, payload) => {
       const request = RPCWrapper.deserializeBinary(payload);
@@ -43,11 +47,12 @@ export class PeerRPCServer extends PeerServer {
           return;
         }
 
-        const resp = handler.stream(meta, request.getPayload_asU8());
-
         let stop = false;
         const cb = () => stop = true;
+
         stops.set(stopKey, cb);
+
+        const resp = handler.stream(meta, request.getPayload_asU8(), cb);
 
         for await (const u8 of resp) {
           if (stop) {

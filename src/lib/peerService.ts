@@ -43,22 +43,32 @@ export class PeerServiceServer {
   private services = new Map<string, NamedService>();
   private implementations = new WeakMap<NamedService, Implementation<any>>();
 
+  // track any streams that want to be cleaned up
+  private stops = new WeakMap<NamedService, (() => void)[]>();
+
   public addService<T extends NamedService>(
     service: T,
     impl: Implementation<T>,
   ) {
     this.services.set(service.serviceName, service);
     this.implementations.set(service, impl);
+    this.stops.set(service, []);
   }
 
   public removeService(service: NamedService) {
     this.services.delete(service.serviceName);
     this.implementations.delete(service);
+
+    // cancel any streams
+    const stops = this.stops.get(service) || [];
+    stops.forEach((fn) => fn());
+    this.stops.delete(service);
   }
 
   private async *handleStream(
     meta: Meta,
     payload: Uint8Array,
+    stop: () => void,
   ): AsyncGenerator<Uint8Array> {
     const service = this.services.get(meta.serviceName);
     const impl = this.implementations.get(service);
@@ -68,6 +78,8 @@ export class PeerServiceServer {
 
       return new Uint8Array([]);
     }
+
+    this.stops.get(service).push(stop);
 
     const name = meta.fnName;
     const handle = impl[name];
@@ -194,8 +206,6 @@ export class PeerServiceClient extends PeerRPCClient {
 
       const reader = u8Stream.getReader() as ReadableStreamDefaultReader;
 
-      let i = 5;
-
       while (true) {
         const { value, done } = await reader.read();
         if (done) break;
@@ -204,8 +214,6 @@ export class PeerServiceClient extends PeerRPCClient {
         const obj = Resp.deserializeBinary(value);
 
         yield obj;
-
-        if (i-- < 0) break;
       }
 
       reader.releaseLock();
