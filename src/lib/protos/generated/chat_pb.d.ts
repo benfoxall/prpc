@@ -4,21 +4,21 @@
 import * as jspb from "google-protobuf";
 import * as common_pb from "./common_pb";
 
-export class PostMessageRequest extends jspb.Message {
+export class SendMessageRequest extends jspb.Message {
   getBody(): string;
   setBody(value: string): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): PostMessageRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: PostMessageRequest): PostMessageRequest.AsObject;
+  toObject(includeInstance?: boolean): SendMessageRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: SendMessageRequest): SendMessageRequest.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: PostMessageRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): PostMessageRequest;
-  static deserializeBinaryFromReader(message: PostMessageRequest, reader: jspb.BinaryReader): PostMessageRequest;
+  static serializeBinaryToWriter(message: SendMessageRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): SendMessageRequest;
+  static deserializeBinaryFromReader(message: SendMessageRequest, reader: jspb.BinaryReader): SendMessageRequest;
 }
 
-export namespace PostMessageRequest {
+export namespace SendMessageRequest {
   export type AsObject = {
     body: string,
   }
@@ -75,26 +75,6 @@ export class MessageList extends jspb.Message {
 export namespace MessageList {
   export type AsObject = {
     listList: Array<Message.AsObject>,
-  }
-}
-
-export class NewMessageRequest extends jspb.Message {
-  getLastid(): number;
-  setLastid(value: number): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): NewMessageRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: NewMessageRequest): NewMessageRequest.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: NewMessageRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): NewMessageRequest;
-  static deserializeBinaryFromReader(message: NewMessageRequest, reader: jspb.BinaryReader): NewMessageRequest;
-}
-
-export namespace NewMessageRequest {
-  export type AsObject = {
-    lastid: number,
   }
 }
 

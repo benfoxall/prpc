@@ -5,38 +5,28 @@ import * as chat_pb from "./chat_pb";
 import * as common_pb from "./common_pb";
 import {grpc} from "@improbable-eng/grpc-web";
 
-type ChatServicePostMessage = {
+type ChatServiceSend = {
   readonly methodName: string;
   readonly service: typeof ChatService;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof chat_pb.PostMessageRequest;
+  readonly requestType: typeof chat_pb.SendMessageRequest;
   readonly responseType: typeof chat_pb.Message;
 };
 
-type ChatServicegetMessageList = {
+type ChatServiceList = {
   readonly methodName: string;
   readonly service: typeof ChatService;
   readonly requestStream: false;
-  readonly responseStream: false;
+  readonly responseStream: true;
   readonly requestType: typeof common_pb.Noop;
-  readonly responseType: typeof chat_pb.MessageList;
-};
-
-type ChatServicenewMessages = {
-  readonly methodName: string;
-  readonly service: typeof ChatService;
-  readonly requestStream: false;
-  readonly responseStream: false;
-  readonly requestType: typeof chat_pb.NewMessageRequest;
-  readonly responseType: typeof chat_pb.MessageList;
+  readonly responseType: typeof chat_pb.Message;
 };
 
 export class ChatService {
   static readonly serviceName: string;
-  static readonly PostMessage: ChatServicePostMessage;
-  static readonly getMessageList: ChatServicegetMessageList;
-  static readonly newMessages: ChatServicenewMessages;
+  static readonly Send: ChatServiceSend;
+  static readonly List: ChatServiceList;
 }
 
 export type ServiceError = { message: string, code: number; metadata: grpc.Metadata }
@@ -71,32 +61,15 @@ export class ChatServiceClient {
   readonly serviceHost: string;
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
-  postMessage(
-    requestMessage: chat_pb.PostMessageRequest,
+  send(
+    requestMessage: chat_pb.SendMessageRequest,
     metadata: grpc.Metadata,
     callback: (error: ServiceError|null, responseMessage: chat_pb.Message|null) => void
   ): UnaryResponse;
-  postMessage(
-    requestMessage: chat_pb.PostMessageRequest,
+  send(
+    requestMessage: chat_pb.SendMessageRequest,
     callback: (error: ServiceError|null, responseMessage: chat_pb.Message|null) => void
   ): UnaryResponse;
-  getMessageList(
-    requestMessage: common_pb.Noop,
-    metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: chat_pb.MessageList|null) => void
-  ): UnaryResponse;
-  getMessageList(
-    requestMessage: common_pb.Noop,
-    callback: (error: ServiceError|null, responseMessage: chat_pb.MessageList|null) => void
-  ): UnaryResponse;
-  newMessages(
-    requestMessage: chat_pb.NewMessageRequest,
-    metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: chat_pb.MessageList|null) => void
-  ): UnaryResponse;
-  newMessages(
-    requestMessage: chat_pb.NewMessageRequest,
-    callback: (error: ServiceError|null, responseMessage: chat_pb.MessageList|null) => void
-  ): UnaryResponse;
+  list(requestMessage: common_pb.Noop, metadata?: grpc.Metadata): ResponseStream<chat_pb.Message>;
 }
 

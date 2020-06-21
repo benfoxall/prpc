@@ -1,3 +1,4 @@
+// source: position.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -198,9 +199,12 @@ proto.Pose.prototype.getMarkerid = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.Pose} returns this
+ */
 proto.Pose.prototype.setMarkerid = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -213,26 +217,31 @@ proto.Pose.prototype.getMat3List = function() {
 };
 
 
-/** @param {!Array<number>} value */
+/**
+ * @param {!Array<number>} value
+ * @return {!proto.Pose} returns this
+ */
 proto.Pose.prototype.setMat3List = function(value) {
-  jspb.Message.setField(this, 2, value || []);
+  return jspb.Message.setField(this, 2, value || []);
 };
 
 
 /**
  * @param {number} value
  * @param {number=} opt_index
+ * @return {!proto.Pose} returns this
  */
 proto.Pose.prototype.addMat3 = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 2, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 2, value, opt_index);
 };
 
 
 /**
  * Clears the list making it empty but non-null.
+ * @return {!proto.Pose} returns this
  */
 proto.Pose.prototype.clearMat3List = function() {
-  this.setMat3List([]);
+  return this.setMat3List([]);
 };
 
 
@@ -365,9 +374,12 @@ proto.Command.prototype.getAction = function() {
 };
 
 
-/** @param {!proto.Command.Action} value */
+/**
+ * @param {!proto.Command.Action} value
+ * @return {!proto.Command} returns this
+ */
 proto.Command.prototype.setAction = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
+  return jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
