@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import ReactDOM from "react-dom";
@@ -41,6 +41,12 @@ const Connection = () => {
 
   const { error, uuid, active, connections } = connection;
 
+  // if we have been previously connected
+  const [wasConnected, setWasConnected] = useState(false);
+  useEffect(() => {
+    if (connection.dcState) setWasConnected(true);
+  }, [connection.dcState]);
+
   if (!active) {
     return null;
   }
@@ -75,6 +81,16 @@ const Connection = () => {
       <h3>
         [web {connection.wsState ? "✅️" : "❌"}] [peer{" "}
         {connection.dcState ? "✅️" : "❌"}]
+        {wasConnected && !connection.dcState && (
+          <>
+            <button
+              className="reconnect"
+              onClick={() => window.location.reload()}
+            >
+              CLICK TO RECONNECT
+            </button>
+          </>
+        )}
       </h3>
     </footer>
   );
