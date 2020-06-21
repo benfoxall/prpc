@@ -25,7 +25,7 @@ const Client: FunctionComponent = () => {
 
     const chat = client.getService(ChatService);
 
-    chat("PostMessage", (req) => {
+    chat("Send", (req) => {
       req.setBody(text.current.value);
       text.current.value = "";
     });
@@ -38,15 +38,10 @@ const Client: FunctionComponent = () => {
     let stop = false;
 
     const run = async () => {
-      const chat = client.getService(ChatService);
+      const service = client.getServiceStream(ChatService);
 
-      const list = await chat("getMessageList");
-
-      setMessages(list.getListList());
-
-      while (!stop && max-- > 0) {
-        const message = await chat("newMessages");
-        setMessages((prior) => prior.concat(message.getListList()));
+      for await (const message of service("List")) {
+        setMessages((prior) => prior.concat(message));
       }
     };
     run();
@@ -83,34 +78,36 @@ const Server: FunctionComponent = () => {
     let id = 1;
 
     server.addService(ChatService, {
-      PostMessage: (req, response, meta) => {
-        response.setId(id++);
-        response.setAuthor(meta.peerId);
-        response.setBody(req.getBody());
-        response.setPosttime(+new Date());
+      Send(req, message, meta) {
+        message.setId(id++);
+        message.setAuthor(meta.peerId);
+        message.setBody(req.getBody());
+        message.setPosttime(+new Date());
 
-        messageList.push(response);
+        messageList.push(message);
 
         setCount(messageList.length);
 
         updates.forEach((up) => {
-          up(response);
+          up(message);
         });
       },
 
-      getMessageList: (req, res) => {
-        res.setListList(messageList);
-      },
+      async *List() {
+        for (const message of messageList) {
+          yield message;
+        }
 
-      newMessages: async (req, res) => {
-        let resolve: () => void;
-        const promise = new Promise<Message>((r) => (resolve = r));
-        updates.add(resolve);
+        while (true) {
+          let resolve: (m: Message) => void;
+          const promise = new Promise<Message>((r) => (resolve = r));
+          updates.add(resolve);
 
-        return promise.then((m) => {
-          // backfill?
-          res.addList(m);
-        });
+          const message = await promise;
+          yield message;
+
+          updates.delete(resolve);
+        }
       },
     });
 

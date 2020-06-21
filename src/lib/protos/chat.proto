@@ -3,31 +3,21 @@ syntax = 'proto3';
 
 import "common.proto";
 
-message PostMessageRequest {
-    string body = 1;
-}
+message SendMessageRequest { string body = 1; }
 
 message Message {
-    int32 id = 1;
-    string body = 2;
-    string author = 3;
-    uint64 postTime = 4;
+  int32 id = 1;
+  string body = 2;
+  string author = 3;
+  uint64 postTime = 4;
 }
 
-message MessageList {
-    repeated Message list = 1;
-}
-
-// don't have streaming at the moment so this is a hack
-message NewMessageRequest {
-    int32 lastId = 1;
-}
-
+message MessageList { repeated Message list = 1; }
 
 service ChatService {
-    rpc PostMessage (PostMessageRequest) returns (Message);
-    rpc getMessageList (Noop) returns (MessageList);
+  // post a new message
+  rpc Send(SendMessageRequest) returns (Message);
 
-    rpc newMessages (NewMessageRequest) returns (MessageList);
+  // get the last message & live stream
+  rpc List(Noop) returns (stream Message);
 }
-
