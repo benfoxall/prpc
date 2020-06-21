@@ -1,72 +1,49 @@
-
-import { useState, useEffect } from 'react';
-import { SignalClient } from './signal';
-import { useDispatch } from 'react-redux';
-import { PeerServer, PeerClient } from './peerBase';
-import { PeerRPCServer, PeerRPCClient } from './peerRPC';
-import { PeerServiceServer, PeerServiceClient } from './peerService';
-import { Dev } from './protos/generated/dev_pb_service'
-
+import { useState, useEffect } from "react";
+import { SignalClient } from "./signal";
+import { useDispatch } from "react-redux";
+import { PeerServiceServer, PeerServiceClient } from "./peerService";
 
 export const useSignal = (uuid: string) => {
+  const [connection, setConnection] = useState<SignalClient>();
+  const dispatch = useDispatch();
 
-    const [connection, setConnection] = useState<SignalClient>();
-    const dispatch = useDispatch();
+  useEffect(() => {
+    const client = new SignalClient(uuid, dispatch);
 
-    useEffect(() => {
-        const client = new SignalClient(
-            uuid,
-            dispatch
-        );
+    setConnection(client);
 
-        setConnection(client);
+    (window as any).client = client;
 
-        (window as any).client = client;
+    return () => {
+      client.disconnect();
+    };
+  }, [uuid]);
 
-        return () => {
-            client.disconnect()
-        }
-
-    }, [uuid]);
-
-    return connection;
-
-}
+  return connection;
+};
 
 export const usePeerServer = (uuid: string) => {
+  const [server, setServer] = useState<PeerServiceServer>();
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    const server = new PeerServiceServer(uuid, dispatch);
 
-    const [server, setServer] = useState<PeerServiceServer>();
-    const dispatch = useDispatch();
+    setServer(server);
+  }, [uuid]);
 
-    useEffect(() => {
-        const server = new PeerServiceServer(uuid, dispatch);
-
-        setServer(server)
-
-    }, [uuid]);
-
-    return server;
-
-}
-
-
+  return server;
+};
 
 export const usePeerClient = (uuid: string) => {
+  const [client, setClient] = useState<PeerServiceClient>();
+  const dispatch = useDispatch();
 
-    const [client, setClient] = useState<PeerServiceClient>();
-    const dispatch = useDispatch();
+  useEffect(() => {
+    const client = new PeerServiceClient(uuid, dispatch);
 
-    useEffect(() => {
-        const client = new PeerServiceClient(uuid, dispatch);
+    setClient(client);
+  }, [uuid]);
 
-        // client.issue(Dev, "Background", (e) => e.setValue(Math.random().toString(16)))
-
-
-        setClient(client)
-
-    }, [uuid]);
-
-    return client;
-
-}
+  return client;
+};
