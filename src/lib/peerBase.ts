@@ -33,7 +33,7 @@ export class PeerServer {
     const client = new SignalClient(room, dispatch);
 
     let peerConfig;
-    client.twillio.then((c) => peerConfig = c);
+    client.twillio.then((c) => (peerConfig = c));
 
     client.on("data", (message, remoteId) => {
       // if we haven't see this connection before
@@ -128,7 +128,8 @@ export class PeerClient {
     this.notify(Events.PEER_CLIENT_START);
 
     const connect = async (room: string) => {
-      let LOCAL = sessionStorage.getItem("LOCAL_ID") ||
+      let LOCAL =
+        sessionStorage.getItem("LOCAL_ID") ||
         Math.random().toString(36).slice(1);
       sessionStorage.setItem("LOCAL_ID", LOCAL);
 

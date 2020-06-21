@@ -278,3 +278,91 @@ input[type="number"]::-webkit-outer-spin-button {
     }
   }
 }
+
+.ChatUI {
+  border-radius: 3px;
+  background: rgba(156, 156, 156, 0.2);
+
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 7em);
+  margin: 1em;
+
+  justify-content: baseline;
+
+  ol {
+    flex: 1;
+    padding: 0;
+
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: flex-end;
+
+    overflow: scroll;
+
+    // https://blog.eqrion.net/pin-to-bottom/
+    overflow-anchor: none;
+    li.anchor {
+      overflow-anchor: auto;
+      height: 1px;
+      padding: 0;
+      border: 0;
+      visibility: hidden;
+    }
+
+    li {
+      list-style: none;
+      margin: 0.5em;
+      padding: 0.5em;
+      border-radius: 10px;
+      background-color: rgba(200, 200, 200, 0.9);
+
+      background-image: linear-gradient(120deg, #f7d6ef 0%, #f4efbb 100%);
+      color: #000;
+
+      display: flex;
+      flex-direction: column;
+      margin: 0.4em;
+
+      width: 80%;
+      float: left;
+      &.self {
+        float: right;
+        background: rgba(52, 255, 221, 0.6);
+
+        background-image: linear-gradient(45deg, #78f6ff 0%, #0ea3ff 100%);
+      }
+
+      display: grid;
+
+      .name {
+        grid-column: 1;
+        font-size: 0.5em;
+      }
+      .time {
+        grid-column: 2;
+        font-size: 0.5em;
+        text-align: right;
+      }
+
+      .body {
+        grid-row: 2;
+        grid-column-start: 1;
+        grid-column-end: 3;
+      }
+    }
+  }
+  form {
+    background: rgb(52, 255, 221);
+    padding: 0.5em;
+    flex: 0;
+    margin: 0;
+    display: flex;
+    input {
+      font-size: 2em;
+      padding: 0.25em;
+      flex: 1;
+      border: none;
+    }
+  }
+}
