@@ -49,6 +49,7 @@
   "dependencies": {
     "@improbable-eng/grpc-web": "~0.11.0",
     "@types/react-redux": "^7.1.5",
+    "dexie": "^3.0.1",
     "google-protobuf": "^3.9.2"
   }
 }

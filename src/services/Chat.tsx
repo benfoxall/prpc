@@ -12,6 +12,7 @@ import { Dev } from "../lib/protos/generated/dev_pb_service";
 import { ChatService } from "../lib/protos/generated/chat_pb_service";
 import { Message } from "../lib/protos/generated/chat_pb";
 import { useSelector } from "../reducers";
+import { useDB } from "../lib/hooks";
 
 const time = new Intl.DateTimeFormat("en-gb", {
   hour: "numeric",
@@ -92,12 +93,26 @@ const Server: FunctionComponent = () => {
   const server = useContext(ServerContext);
   const [count, setCount] = useState(0);
 
+  const uuid = useSelector((a) => a.connection.uuid);
+  const db = useDB(uuid || undefined);
+
   useEffect(() => {
     if (!server) return;
+    if (!db) return;
 
     const updates = new Set<(m: Message) => void>();
     const messageList: Message[] = [];
     let id = 1;
+
+    db.chat
+      .each((item) => {
+        id = Math.max(item.id + 1, id);
+
+        messageList.push(Message.deserializeBinary(item.data));
+      })
+      .then(() => {
+        setCount(messageList.length);
+      });
 
     server.addService(ChatService, {
       Send(req, message, meta) {
@@ -114,6 +129,11 @@ const Server: FunctionComponent = () => {
 
         updates.forEach((up) => {
           up(message);
+        });
+
+        db.chat.add({
+          id: message.getId(),
+          data: message.serializeBinary(),
         });
       },
 
@@ -137,7 +157,7 @@ const Server: FunctionComponent = () => {
     return () => {
       server.removeService(Dev);
     };
-  }, [server]);
+  }, [server, db]);
 
   return (
     <>
