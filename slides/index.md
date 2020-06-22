@@ -1,23 +1,51 @@
-
 # Hello,
+
 # [fit] I'm Ben
+
 ## It's nice to be here
 
+^ This is my first time speaking at a remote meetup.
+
+^ Get a pen and write down any comments or questions
+
 ---
 
-![](sketch/Mike.png)
+# And, hello
+
+# [fit] Mike
+
+## This is awesome
 
 ---
 
+# Before
+
+# We
+
+# Start
+
+[.header: #fff, text-scale(2.0), avenir next bold]
+
+[.background-color: #000]
+
+^ We should awknoledge that shit's been going down
+
+^ What can we do as the tech industry
+
+---
+
+<!--
 ![](images/oxford-map.png)
 
----
+# [Scotland, Oxford, Dublin]
 
-![fit](images/nz-sarah-map.png)
+--- -->
 
----
+# :heart: JavaScript
 
-![](images/nz-0.jpg)
+^ I really love JS, and doing fun things
+
+^ I'll show you some things that I've been doing to give you a feel for the sort of stuff I'm up to
 
 ---
 
@@ -50,8 +78,7 @@
 
 ---
 
-![fit](images/oxb-5.jpg)
-
+![cover](images/oxb-5.jpg)
 
 ---
 
@@ -65,18 +92,28 @@
 
 ---
 
+# [fit] The Web
+
+---
+
+# [frontend projects]
+
+---
+
 ![fit](images/oxb-3.png)
 
 ---
 
-# [fit] Taking the 
+<!--
+# [fit] Taking the
+
 # [fit] web on an
+
 # [fit] adventure
 
 ^ Making the web useful down the stack
 
 ---
-
 
 ![fit](sketch/Adventure-1.png)
 
@@ -84,21 +121,24 @@
 
 ![fit](sketch/Adventure-2.png)
 
-
----
-
+--- -->
+<!--
 ![video](~/work-demo.mov)
 
----
-
-# Today
+--- -->
 
 ---
 
 # Today
 
-# [fit] Challenging 
-# [fit] the way we 
+---
+
+# Today
+
+# [fit] Challenging
+
+# [fit] the way we
+
 # [fit] build the web
 
 ^ gonna talk about some technical stuff, as well as dipping into UX and design.
@@ -107,7 +147,8 @@
 
 <!-- # [fit] Paradigms  -->
 
-# [fit] Received 
+# [fit] Received
+
 # [fit] Wisdoms
 
 <!-- # [fit] Convention -->
@@ -126,13 +167,13 @@ Received Wisdom
 
 # [fit] 1.
 
-# [fit] Use JSON 
+# [fit] Use JSON
+
 # [fit] for data
 
 [.background-color: #f08]
 
 ---
-
 
 ![](sketch/owls.png)
 
@@ -158,13 +199,12 @@ Received Wisdom
 
 ---
 
-
 ```json
 {
   "list": [
     {
-      "body": "I totally identify with this", 
-      "author_id": "038bb12m", 
+      "body": "I totally identify with this",
+      "author_id": "038bb12m",
       "created_at": 12345,
       "spam": false
     }
@@ -174,24 +214,22 @@ Received Wisdom
 
 ---
 
-
 ```js
 const content = {
-  "list": [
+  list: [
     {
-      "body": "I totally identify with this", 
-      "author_id": "038bb12m", 
-      "created_at": 12345,
-      "spam": false
-    }
-  ]
-}
+      body: "I totally identify with this",
+      author_id: "038bb12m",
+      created_at: 12345,
+      spam: false,
+    },
+  ],
+};
 ```
 
 ---
 
 ![fit](images/netscape-navigator-2-0.png)
-
 
 <!-- [^1]:https://www.webdesignmuseum.org/web-design-history/netscape-navigator-2-0-1995. -->
 
@@ -200,12 +238,12 @@ const content = {
 
 ---
 
-# JSON is baked 
+# JSON is baked
+
 # into the web platform
 
-
 ```js
-const comments = await response.json()
+const comments = await response.json();
 ```
 
 ---
@@ -215,6 +253,7 @@ const comments = await response.json()
 ---
 
 # [fit] Protocol
+
 # [fit] Buffers
 
 [.background-color: #ccc]
@@ -240,7 +279,7 @@ message Example {
 # Generate stubs
 
 ```bash
-protoc 
+protoc
   --js-out=./dist
   example.proto
 ```
@@ -249,33 +288,30 @@ protoc
 
 # Use stubs
 
-
 ```js
-import {Message} from './stubs/Message' 
+import { Message } from "./stubs/Message";
 
-const message = new Message()
-message.setName('frank')
-message.setNight(false)
-message.setSize(2)
+const message = new Message();
+message.setName("frank");
+message.setNight(false);
+message.setSize(2);
 
-const output = message.serialiseBinary()
+const output = message.serialiseBinary();
 // -> Buffer(...)
 ```
 
 ---
 
-
 # ❤️Protocol Buffers ❤️
 
-* Impossible to make a mistake
-* Efficient on the wire
-* Type safety
-* Type safety __across__ languages
+- Impossible to make a mistake
+- Efficient on the wire
+- Type safety
+- Type safety **across** languages
 
 [.build-lists: true]
 
 ---
-
 
 # Generated data
 
@@ -305,7 +341,6 @@ float size = {3};
 
 # Efficiency
 
-
 # [fit] 1234567890
 
 ```
@@ -315,7 +350,6 @@ float size = {3};
 # Var Int
 000000  d2 85 d8 cc 04                                   Ò.ØÌ.
 ```
-
 
 [observablehq.com/@benfoxall/var-int-encoding](https://observablehq.com/@benfoxall/var-int-encoding)
 
@@ -336,7 +370,7 @@ float size = {3};
 ---
 
 ```bash
-protoc 
+protoc
   --js-out=./dist
   --python-out=./dist
   --go-out=./dist
@@ -347,7 +381,6 @@ protoc
 ---
 
 # [fit] Demo
-
 
 ---
 
@@ -361,7 +394,8 @@ Received Wisdom
 
 # [fit] 2.
 
-# [fit] Use REST 
+# [fit] Use REST
+
 # [fit] for interfaces
 
 [.background-color: #f08]
@@ -373,10 +407,10 @@ Received Wisdom
 ---
 
 # [fit] REST
+
 # [fit] Representational state transfer
 
 (2000)
-
 
 <!-- [^rest]: https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm -->
 
@@ -390,26 +424,25 @@ GET /posts/53/comments
 PUT /posts/53/comments/23/reactions
 POST /posts/53/comments
 
-
 ---
 
 # Built on HTTP
 
 ![](images/timbl.jpg)
 
-
 <!-- https://home.cern/science/computing/birth-web -->
 
 ---
 
-# REST is baked 
+# REST is baked
+
 # into the web platform
 
 ---
 
-
 # An alternative?
-<!-- 
+
+<!--
 * loose
 * manual -->
 
@@ -452,11 +485,9 @@ protoc
 
 # ❤️gRPC ❤️
 
-
-* Interface code is generated / mistake free
-* Type safety (`await getComment()`)
-* Type safety __between__ langages
-
+- Interface code is generated / mistake free
+- Type safety (`await getComment()`)
+- Type safety **between** langages
 
 [.build-lists: true]
 
@@ -464,11 +495,11 @@ protoc
 
 # 🤫 gRPC – slight problem
 
-* It's not supported by web-browsers (yet)
-  * http2, frames, streaming
-* Option – web-gRPC ⇔︎ gRPC bridge:
-  * grpcwebproxy
-  * envoy
+- It's not supported by web-browsers (yet)
+  - http2, frames, streaming
+- Option – web-gRPC ⇔︎ gRPC bridge:
+  - grpcwebproxy
+  - envoy
 
 [.build-lists: true]
 
@@ -489,6 +520,7 @@ Received Wisdom
 # [fit] 3.
 
 # [fit] Browsers connect
+
 # [fit] to web servers
 
 [.background-color: #f08]
@@ -498,11 +530,13 @@ Received Wisdom
 ![fit](images/first-web-page.png)
 
 ---
-<!-- 
+
+<!--
 ![fit](images/first-web-page-source.png)
 --- -->
 
 <!-- [ two browsers ] -->
+
 ![](sketch/network-0.png)
 
 ---
@@ -512,7 +546,6 @@ Received Wisdom
 
 ![](sketch/network-1.png)
 
-
 ---
 
 # An alternative?
@@ -520,14 +553,16 @@ Received Wisdom
 ---
 
 # [fit] PeerToPeer
-# with 
+
+# with
+
 # [fit] WebRTC
+
 # datachannels
 
 [.background-color: #ccc]
 
 ---
-
 
 ![](sketch/network-1.png)
 
@@ -538,7 +573,6 @@ Received Wisdom
 ---
 
 ![](sketch/network-2.png)
-
 
 <!-- [ TURN / STUN ]
 
@@ -558,8 +592,8 @@ Received Wisdom
 
 # Data
 
-* Media Streams
-* Data Channels
+- Media Streams
+- Data Channels
 
 [.build-lists: true]
 
@@ -567,14 +601,13 @@ Received Wisdom
 
 # ❤️ WebRTC DataChannels ❤️
 
-* Appropriate latency & bandwidth
-* Interactive applications
+- Feels like a WebSocket
+- Appropriate latency & bandwidth
+- Interactive applications
 
 [.build-lists: true]
 
 ---
-
-
 
 # [fit] Quick Summary
 
@@ -583,7 +616,9 @@ Received Wisdom
 ---
 
 # [fit] 1. Protocol Buffers
-# [fit] 2. gRPC 
+
+# [fit] 2. gRPC
+
 # [fit] 3. webRTC
 
 [.background-color: #08f]
@@ -591,7 +626,9 @@ Received Wisdom
 ---
 
 # [fit] 1. Serialisation
+
 # [fit] 2. Interface
+
 # [fit] 3. Transport
 
 [.background-color: #08f]
@@ -622,7 +659,6 @@ Received Wisdom
 
 ---
 
-
 ![](sketch/prpc-network-5.png)
 
 ---
@@ -631,14 +667,13 @@ Received Wisdom
 
 ---
 
-# [fit] [prpc.me](https://prpc.me)
+# [fit][prpc.me](https://prpc.me)
 
 ---
 
 # Code Example
 
 ---
-
 
 # 1. Define a service
 
@@ -666,43 +701,49 @@ service CalculatorService {
 
 ```jsx
 const Client: FunctionComponent = () => {
-    const [a, setA] = useState(1)
-    const [b, setB] = useState(1)
-    const [result, setResult] = useState<string | number>('?')
+  const [a, setA] = useState(1);
+  const [b, setB] = useState(1);
+  const [result, setResult] = (useState < string) | (number > "?");
 
-    const calculate = () => {}
+  const calculate = () => {};
 
-    return (
-        <div className="Calculator">
-            <input type="number" value={a} onChange={e => setA(e.target.valueAsNumber)} />
-            ?
-            <input type="number" value={b} onChange={e => setB(e.target.valueAsNumber)} />
-            =
-            <output onClick={calculate} tabIndex={0}>{result}</output>
-        </div>
-    );
-}
-
+  return (
+    <div className="Calculator">
+      <input
+        type="number"
+        value={a}
+        onChange={(e) => setA(e.target.valueAsNumber)}
+      />
+      ?
+      <input
+        type="number"
+        value={b}
+        onChange={(e) => setB(e.target.valueAsNumber)}
+      />
+      =<output onClick={calculate} tabIndex={0}>
+        {result}
+      </output>
+    </div>
+  );
+};
 
 const Server: FunctionComponent = () => {
-    const server = useContext(ServerContext)
-    const [operation, setOperation] = useState('+');
+  const server = useContext(ServerContext);
+  const [operation, setOperation] = useState("+");
 
-    return (
-        <div className="Calculator">
-            <select value={operation} onChange={e => setOperation(e.target.value)} >
-                <option>+</option>
-                <option>-</option>
-                <option>/</option>
-            </select>
-        </div>
-    )
-}
+  return (
+    <div className="Calculator">
+      <select value={operation} onChange={(e) => setOperation(e.target.value)}>
+        <option>+</option>
+        <option>-</option>
+        <option>/</option>
+      </select>
+    </div>
+  );
+};
 
-
-export const Calculator = { Server, Client }
+export const Calculator = { Server, Client };
 ```
-
 
 ---
 
@@ -711,39 +752,32 @@ export const Calculator = { Server, Client }
 ```ts
 // <Calculator.Server>
 server.addService(CalculatorService, {
-    Calculate: (req, res) => {
-        res.setValue(
-            compute(
-                req.getValue1(),
-                operation,
-                req.getValue2(),
-            )
-        )
-    }
-})
+  Calculate: (req, res) => {
+    res.setValue(compute(req.getValue1(), operation, req.getValue2()));
+  },
+});
 
 // <Calculator.Client>
 const calculate = () => {
-    const calc = client.getService(CalculatorService)
+  const calc = client.getService(CalculatorService);
 
-    calc('Calculate', (req) => {
-        req.setValue1(a)
-        req.setValue2(b)
-    }).then(res => {
-        setResult(res.getValue())
-    })
-}
+  calc("Calculate", (req) => {
+    req.setValue1(a);
+    req.setValue2(b);
+  }).then((res) => {
+    setResult(res.getValue());
+  });
+};
 ```
 
 ---
 
 # …What we're not doing
 
-* Implementing interface code
-* Assuming types
+- Implementing interface code
+- Assuming types
 
 [.build-lists: true]
-
 
 ---
 
@@ -753,9 +787,7 @@ const calculate = () => {
 
 ---
 
-
 # ...
-
 
 ---
 
@@ -770,6 +802,7 @@ Received Wisdom
 # [fit] 4.
 
 # [fit] Data lives in
+
 # [fit] a data centre
 
 [.background-color: #f08]
@@ -785,6 +818,7 @@ Received Wisdom
 ---
 
 # [fit] Peer-to-peer
+
 # [fit] storage
 
 [.background-color: #ccc]
@@ -794,7 +828,9 @@ Received Wisdom
 # [fit] prpc.me
 
 ## /Content
+
 ## /Chat
+
 ## /Camera
 
 ---
@@ -813,8 +849,8 @@ Received Wisdom
 
 # ❤️ Distributed web ❤️
 
-* It feels like we own it
-* Performance potential
+- It feels like we own it
+- Performance potential
 
 [.build-lists: true]
 
@@ -831,6 +867,7 @@ Received Wisdom
 # [fit] 5.
 
 # [fit] Interaction & focus
+
 # [fit] happen on the same device
 
 [.background-color: #f08]
@@ -846,7 +883,9 @@ Received Wisdom
 ---
 
 # [fit] Multi
+
 # [fit] device
+
 # [fit] interactions
 
 [.background-color: #ccc]
@@ -860,12 +899,13 @@ Received Wisdom
 ---
 
 ### [fit] Focus
-### Interaction
 
+### Interaction
 
 ---
 
 ### [fit] Big screen
+
 ### Small phones
 
 ---
@@ -888,8 +928,8 @@ Received Wisdom
 
 # ❤️ Multi device interactions ❤️
 
-* Bridges between tech and our environment
-* Make the most of device capabilities
+- Bridges between tech and our environment
+- Make the most of device capabilities
 
 [.build-lists: true]
 
@@ -905,8 +945,10 @@ Received Wisdom
 
 # [fit] 6.
 
-# [fit] The web should provide 
-# [fit] the same features 
+# [fit] The web should provide
+
+# [fit] the same features
+
 # [fit] to every user
 
 [.background-color: #f08]
@@ -920,12 +962,15 @@ Received Wisdom
 ---
 
 # As a User
+
 # I press the button
+
 # In order to …
 
 ---
 
 # Tim Berners-Lee
+
 ### WorldWideWeb
 
 ![right](images/timbl.jpg)
@@ -933,6 +978,7 @@ Received Wisdom
 ---
 
 # Nicola Pellow
+
 ### Line Mode
 
 ![right](images/linemode.jpg)
@@ -940,19 +986,20 @@ Received Wisdom
 ---
 
 # Line Mode
-* Expanded and prove the web
-* Showed browsers can be different
+
+- Expanded and prove the web
+- Showed browsers can be different
 
 ---
 
 # Modern Browsers
 
-* Audio
-* Video
-* SpeechRecognition
-* XR
-* Bluetooth
-* GPU
+- Audio
+- Video
+- SpeechRecognition
+- XR
+- Bluetooth
+- GPU
 
 [.build-lists: true]
 
@@ -963,6 +1010,7 @@ Received Wisdom
 ---
 
 # [fit] Interface as
+
 # [fit] a function
 
 [.background-color: #ccc]
@@ -971,10 +1019,9 @@ Received Wisdom
 
 # [fit]Features = UI( Content, Capabilities, Context)
 
-* **Content** – What you're providing to the user
-* **Capabilities** – What features that users device has
-* **Context** – Where the user is
-
+- **Content** – What you're providing to the user
+- **Capabilities** – What features that users device has
+- **Context** – Where the user is
 
 [.build-lists: true]
 
@@ -984,10 +1031,10 @@ Received Wisdom
 
 Where the user is
 
-* Portability
-* Network
-* Spatial
-* Drunkeness
+- Portability
+- Network
+- Spatial
+- Drunkeness
 
 [.build-lists: true]
 
@@ -995,25 +1042,28 @@ Where the user is
 
 # ❤️ UI as a function ❤️
 
-* Let's us make use of features
-* Avoids over-perfection
-* Higher level goals
+- Let's us make use of features
+- Avoids over-perfection
+- Higher level goals
 
 [.build-lists: true]
 
 ---
 
-
 # [fit] Summary
-
 
 ---
 
 # [fit] 1. Use JSON for data
+
 # [fit] 2. Use REST for interfaces
+
 # [fit] 3. Browsers connect to web servers
+
 # [fit] 4. Data lives in a data centre
+
 # [fit] 5. Interaction & focus happen on the same device
+
 # [fit] 6. A UI should provide the same features to every user
 
 [.build-lists: true]
@@ -1021,7 +1071,8 @@ Where the user is
 [.background-color: #f08]
 
 ---
-<!-- 
+
+<!--
 Quote?
 
 --- -->
@@ -1029,3 +1080,4 @@ Quote?
 # [fit] Thanks
 
 ben.foxall@oxbotica.com
+@benjaminbenben
