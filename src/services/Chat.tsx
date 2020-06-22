@@ -19,6 +19,12 @@ const time = new Intl.DateTimeFormat("en-gb", {
   minute: "numeric",
 });
 
+const emojiList = Array.from(
+  "😀🤩🥳🤓🤯😨👹👻💩🤡🙌💪🦿👀🗣🧠👥🧕" +
+    "👮👩‍🎤🧑‍🎤👩‍🔬👨‍🔬🦹‍♀️🧜🧚‍♂️🕺🧶👞👑⛑👒🐰🐹🐯🦁" +
+    "🐔🐗🦞🦕🦖🦚🦜🌷💐🍄🍁🌼⚡️💥🌈☀️🪐🥝"
+);
+
 const Client: FunctionComponent = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const text = useRef<HTMLInputElement>();
@@ -92,6 +98,11 @@ const Client: FunctionComponent = () => {
 const Server: FunctionComponent = () => {
   const server = useContext(ServerContext);
   const [count, setCount] = useState(0);
+  const [pause, setPause] = useState(false);
+  const [uppercase, setUppercase] = useState(false);
+  const [emoji, setEmoji] = useState(false);
+  const settings = useRef({ pause, uppercase, emoji });
+  settings.current = { pause, uppercase, emoji };
 
   const uuid = useSelector((a) => a.connection.uuid);
   const db = useDB(uuid || undefined);
@@ -120,6 +131,18 @@ const Server: FunctionComponent = () => {
         message.setAuthor(meta.peerId);
         message.setBody(req.getBody().slice(0, 300));
         message.setPosttime(+new Date());
+
+        const { uppercase, emoji } = settings.current;
+
+        if (uppercase) {
+          message.setBody(message.getBody().toLocaleUpperCase());
+        }
+        if (emoji) {
+          const body = Array.from(message.getBody())
+            .map((c) => emojiList[Math.floor(Math.random() * emojiList.length)])
+            .join("");
+          message.setBody(body);
+        }
 
         messageList.push(message);
 
@@ -163,6 +186,26 @@ const Server: FunctionComponent = () => {
     <>
       <h1>Chat server</h1>
       <h4>Messages: {count}</h4>
+      <p>
+        <label>
+          <input
+            type="checkbox"
+            checked={uppercase}
+            onChange={(e) => setUppercase(e.currentTarget.checked)}
+          />
+          Uppercase
+        </label>
+      </p>
+      <p>
+        <label>
+          <input
+            type="checkbox"
+            checked={emoji}
+            onChange={(e) => setEmoji(e.currentTarget.checked)}
+          />
+          Emoji
+        </label>
+      </p>
     </>
   );
 };
