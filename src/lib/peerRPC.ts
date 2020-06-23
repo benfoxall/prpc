@@ -8,12 +8,10 @@ export interface Handler {
   stream: (
     meta: Meta,
     payload: Uint8Array,
-    stopFn: () => {},
+    stopFn: () => {}
   ) => AsyncGenerator<Uint8Array>;
   unary: (meta: Meta, payload: Uint8Array) => Promise<Uint8Array>;
 }
-
-const AsyncGeneratorFunction = async function* () {}.constructor;
 
 export class PeerRPCServer extends PeerServer {
   constructor(room: string, handler: Handler, dispatch?: Dispatch) {
@@ -48,7 +46,7 @@ export class PeerRPCServer extends PeerServer {
         }
 
         let stop = false;
-        const cb = () => stop = true;
+        const cb = () => (stop = true);
 
         stops.set(stopKey, cb);
 
@@ -86,7 +84,7 @@ export class PeerRPCServer extends PeerServer {
 }
 
 export class PeerRPCClient extends PeerClient {
-  private requestCount = 0;
+  private requestCount = Number(sessionStorage.getItem("_req_counter_") || 0);
   private wrapper = new RPCWrapper();
   private pending = new Map<number, Function>();
 
@@ -118,9 +116,12 @@ export class PeerRPCClient extends PeerClient {
   call(
     serviceName: string,
     methodName: string,
-    payload: Uint8Array,
+    payload: Uint8Array
   ): Promise<Uint8Array> {
     const requestId = this.requestCount++;
+
+    // a hack, because my stream cancelling sucks
+    sessionStorage.setItem("_req_counter_", String(requestId));
 
     this.wrapper.setRequestid(requestId);
     this.wrapper.setMethodname(methodName);
@@ -145,7 +146,7 @@ export class PeerRPCClient extends PeerClient {
   callStream(
     serviceName: string,
     methodName: string,
-    payload: Uint8Array,
+    payload: Uint8Array
   ): ReadableStream<Uint8Array> {
     const requestId = this.requestCount++;
 
