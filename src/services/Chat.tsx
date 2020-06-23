@@ -98,11 +98,10 @@ const Client: FunctionComponent = () => {
 const Server: FunctionComponent = () => {
   const server = useContext(ServerContext);
   const [count, setCount] = useState(0);
-  const [pause, setPause] = useState(false);
   const [uppercase, setUppercase] = useState(false);
   const [emoji, setEmoji] = useState(false);
-  const settings = useRef({ pause, uppercase, emoji });
-  settings.current = { pause, uppercase, emoji };
+  const settings = useRef({ uppercase, emoji });
+  settings.current = { uppercase, emoji };
 
   const uuid = useSelector((a) => a.connection.uuid);
   const db = useDB(uuid || undefined);
