@@ -1,23 +1,3 @@
-# Hello,
-
-# [fit] I'm Ben
-
-## It's nice to be here
-
-^ This is my first time speaking at a remote meetup.
-
-^ Get a pen and write down any comments or questions
-
----
-
-# And, hello
-
-# [fit] Mike
-
-## This is awesome
-
----
-
 # Before
 
 # We
@@ -30,51 +10,51 @@
 
 ^ We should awknoledge that shit's been going down
 
+---
+
+# The
+
+# Tech
+
+# Industry
+
+[.header: #fff, text-scale(2.0), avenir next bold]
+
+[.background-color: #000]
+
 ^ What can we do as the tech industry
 
 ---
 
-<!--
-![](images/oxford-map.png)
+# Hello, I'm
 
-# [Scotland, Oxford, Dublin]
+# [fit] Ben
 
---- -->
+# [fit] Foxall
 
-# :heart: JavaScript
+# it's nice to be here
 
-^ I really love JS, and doing fun things
+^ This is my first time speaking at a remote meetup.
 
-^ I'll show you some things that I've been doing to give you a feel for the sort of stuff I'm up to
+^ Though I do spend a lot of time on Zoom, so I guess I feel pretty comfortable
 
----
+^ This is a bit of an odd talk, there's some things that I might not hit
 
-![](images/nz-1.jpg)
-
----
-
-![](images/nz-4.jpg)
+^ Get a pen and write down any comments or questions
 
 ---
 
-![](images/projects-2.jpg)
+# With
+
+# [fit] Mike
+
+# [fit] Smith!
+
+## Hey Mike!
 
 ---
 
-![](images/projects-3.mp4)
-
----
-
-![left fit](images/hacks-cardboctober.png)
-![right fit](images/hacks-webgl.png)
-
-<!-- ---
-
-![](images/pr1-1200x849.jpg)
-
----
-
-![fit](images/pr2-1200x947.png) -->
+# [fit] Oxbotica
 
 ---
 
@@ -92,40 +72,31 @@
 
 ---
 
-# [fit] The Web
+# Web Team
 
 ---
 
-# [frontend projects]
+# Algos & Other stuff
+
+---
+
+# [web projects]
 
 ---
 
 ![fit](images/oxb-3.png)
 
----
-
-<!--
-# [fit] Taking the
-
-# [fit] web on an
-
-# [fit] adventure
-
-^ Making the web useful down the stack
+^ If you find that interesting, then give me a shout
 
 ---
 
-![fit](sketch/Adventure-1.png)
+# [fit] Builing &
 
----
+# [fit] Testing
 
-![fit](sketch/Adventure-2.png)
+# [fit] a new web
 
---- -->
-<!--
-![video](~/work-demo.mov)
-
---- -->
+^ A few months ago we gave similar talks.
 
 ---
 
@@ -197,6 +168,8 @@ Received Wisdom
 
 ^ JSON - March 2001
 
+^ Douglas Crockford
+
 ---
 
 ```json
@@ -234,6 +207,7 @@ const content = {
 <!-- [^1]:https://www.webdesignmuseum.org/web-design-history/netscape-navigator-2-0-1995. -->
 
 ^ NN2 - Sept 1995
+
 ^ JSON - March 2001 (6 years later)
 
 ---
@@ -267,10 +241,10 @@ const comments = await response.json();
 
 syntax = 'proto3';
 
-message Example {
+message Horse {
     string name = 1;
-    bool night = 2;
-    float size = 3;
+    bool likesCarrots = 2;
+    float height = 3;
 }
 ```
 
@@ -289,22 +263,39 @@ protoc
 # Use stubs
 
 ```js
-import { Message } from "./stubs/Message";
+import { Horse } from "./stubs/Horse";
 
-const message = new Message();
-message.setName("frank");
-message.setNight(false);
-message.setSize(2);
+const frank = new Horse();
+frank.setName("frank");
+frank.setLikesCarrots(false);
+frank.setHeight(12);
 
-const output = message.serialiseBinary();
-// -> Buffer(...)
+const output = frank.serialiseBinary();
+
+// -> Buffer("frank,0,2")
+```
+
+---
+
+# Output
+
+### JSON
+
+```json
+{ "name": "frank", "likesCarrots": true, "height": 12 }
+```
+
+### Protocol Buffer
+
+```
+< frank, 0, 12 >
 ```
 
 ---
 
 # ❤️Protocol Buffers ❤️
 
-- Impossible to make a mistake
+- Harder to make a mistake
 - Efficient on the wire
 - Type safety
 - Type safety **across** languages
@@ -313,12 +304,29 @@ const output = message.serialiseBinary();
 
 ---
 
-# Generated data
+## Mistakes
 
+```js
+{
+  ...
+  "likesCarroots": false
+  ...
+}
 ```
+
+-
+
+```js
+// Error!
+frank.setLikesCarroots(false);
+```
+
+---
+
+# Data
+
+````
 0010010101010001010010010010101
-0101010100010120100100101010011
-1000101001001001010101000101...
 ```
 
 ---
@@ -326,14 +334,12 @@ const output = message.serialiseBinary();
 # Tags
 
 ```
-{1}0010010101010001010010010010101
-0101010{2}100010100100100101010011
-10001010010010010{3}10101000101...
+{1}00100101010100010100101 {2}10 {3}010010
 ```
 
 ```
 string name = {1};
-bool night = {2};
+bool likesCarrots = {2};
 float size = {3};
 ```
 
@@ -345,10 +351,12 @@ float size = {3};
 
 ```
 # JSON
-000000  31 32 33 34 35 36 37 38 39 30                    1234567890
+
+000000 31 32 33 34 35 36 37 38 39 30 1234567890
 
 # Var Int
-000000  d2 85 d8 cc 04                                   Ò.ØÌ.
+
+000000 d2 85 d8 cc 04 Ò.ØÌ.
 ```
 
 [observablehq.com/@benfoxall/var-int-encoding](https://observablehq.com/@benfoxall/var-int-encoding)
@@ -361,13 +369,37 @@ float size = {3};
 
 ```
 # JSON encoded
-000000  74 72 75 65                                      true
+
+000000 74 72 75 65 true
 
 # Var Int (1)
-000000  01                                               .
-```
+
+000000 01 .
+
+````
 
 ---
+
+```
+message Horse {
+    ...
+    bytes avatar = 4;
+}
+```
+
+# ↓
+
+```js
+horse.setAvatar(await response.arrayBuffer());
+```
+
+^ Binary data, saves on base64 encoding
+
+^ heaps more
+
+---
+
+# Portability
 
 ```bash
 protoc
@@ -380,7 +412,9 @@ protoc
 
 ---
 
-# [fit] Demo
+# [fit] Demo1
+
+- npm run demo1
 
 ---
 
@@ -424,6 +458,10 @@ GET /posts/53/comments
 PUT /posts/53/comments/23/reactions
 POST /posts/53/comments
 
+^ HTTP VERBS
+
+^ Resource Identifiers
+
 ---
 
 # Built on HTTP
@@ -437,6 +475,8 @@ POST /posts/53/comments
 # REST is baked
 
 # into the web platform
+
+^ It's really suited to what we use the web for
 
 ---
 
@@ -454,7 +494,38 @@ POST /posts/53/comments
 
 ---
 
-# Resources → Services
+Protocol Buffers, but for interfaces
+
+```bash
+# example.proto
+service CommentService {
+  rpc PostComment (Comment) returns (Result);
+  rpc Listen (Result) returns (stream Reaction);
+}
+
+```
+
+---
+
+Protocol Buffers, but for interfaces
+
+```bash
+# example.proto
+service CommentService {
+  rpc PostComment (Comment) returns (Result);
+  rpc Listen (Result) returns (stream Reaction);
+}
+
+# use grpc plugin
+protoc
+  --plugin=protoc-gen-grpc=grpc-plugin \
+  --grpc_out=. \
+  example.proto
+```
+
+---
+
+## Resources → Services
 
 ---
 
@@ -464,21 +535,6 @@ POST PostService/getPostContent
 POST CommentService/getComments
 POST CommentService/setReaction
 POST CommentService/addComment
-```
-
----
-
-```bash
-# example.proto
-service ExampleService {
-  rpc Add (NumberList) returns (Number);
-}
-
-# use grpc plugin
-protoc
-  --plugin=protoc-gen-grpc=grpc-plugin \
-  --grpc_out=. \
-  example.proto
 ```
 
 ---
@@ -500,12 +556,16 @@ protoc
 - Option – web-gRPC ⇔︎ gRPC bridge:
   - grpcwebproxy
   - envoy
+- Ootion – wait
 
 [.build-lists: true]
 
 ---
 
-# [fit] Demo
+# [fit] Demo2
+
+- npm run demo2
+- npm run demo2.backend
 
 ---
 
@@ -519,9 +579,9 @@ Received Wisdom
 
 # [fit] 3.
 
-# [fit] Browsers connect
+# [fit] Browsers get data
 
-# [fit] to web servers
+# [fit] from web servers
 
 [.background-color: #f08]
 
@@ -552,13 +612,16 @@ Received Wisdom
 
 ---
 
-# [fit] PeerToPeer
+<!-- # [fit] PeerToPeer
 
-# with
+# with -->
 
-# [fit] WebRTC
+# [fit] Web RTC
 
-# datachannels
+<!--
+# [fit] data
+
+# [fit] channels -->
 
 [.background-color: #ccc]
 
@@ -663,7 +726,9 @@ Received Wisdom
 
 ---
 
-# [fit] pRPC
+# [fit] demo
+
+- npm run demo3
 
 ---
 
