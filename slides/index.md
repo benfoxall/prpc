@@ -232,6 +232,8 @@ const comments = await response.json();
 
 [.background-color: #ccc]
 
+![](images/meh4.png)
+
 ---
 
 # Define a message
@@ -492,6 +494,8 @@ POST /posts/53/comments
 
 [.background-color: #ccc]
 
+![](images/meh3.png)
+
 ---
 
 Protocol Buffers, but for interfaces
@@ -617,6 +621,8 @@ Received Wisdom
 # with -->
 
 # [fit] Web RTC
+
+![](images/meh2.png)
 
 <!--
 # [fit] data
@@ -887,6 +893,7 @@ Received Wisdom
 # [fit] storage
 
 [.background-color: #ccc]
+![](images/meh.png)
 
 ---
 
@@ -954,6 +961,8 @@ Received Wisdom
 # [fit] interactions
 
 [.background-color: #ccc]
+
+![](images/meh2.png)
 
 ---
 
@@ -1080,6 +1089,8 @@ Received Wisdom
 
 [.background-color: #ccc]
 
+![](images/meh.png)
+
 ---
 
 # [fit]Features = UI( Content, Capabilities, Context)
@@ -1137,12 +1148,59 @@ Where the user is
 
 ---
 
-<!--
-Quote?
+# [fit] Before I go
 
---- -->
+---
+
+# [fit] More things
+
+---
+
+# Tomorrow?
+
+## Milton Keynes
+
+## Geek Night
+
+- mkgeeknight.co.uk
+
+![110%](images/bboys-5.png)
+
+![right fit](images/next-mkgn.png)
+
+---
+
+# lasers and stuff
+
+- mkgeeknight.co.uk
+
+![110%](images/bboys-17.png)
+
+![fit right](images/next-mkgn-ben.png)
+
+---
+
+# Saturday?
+
+## Remote
+
+## Hack
+
+- remotehack.space
+
+# please join us!
+
+### it doesn't have to be tech hacks
+
+![110%](images/bboys-3.png)
+
+![fit right](images/next-remote-hack.png)
+
+---
 
 # [fit] Thanks
 
 ben.foxall@oxbotica.com
 @benjaminbenben
+
+![](images/meh.png)
