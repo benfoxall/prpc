@@ -1,4 +1,3 @@
-// source: calculator.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -189,12 +188,9 @@ proto.NumberPair.prototype.getValue1 = function() {
 };
 
 
-/**
- * @param {number} value
- * @return {!proto.NumberPair} returns this
- */
+/** @param {number} value */
 proto.NumberPair.prototype.setValue1 = function(value) {
-  return jspb.Message.setProto3FloatField(this, 1, value);
+  jspb.Message.setProto3FloatField(this, 1, value);
 };
 
 
@@ -207,12 +203,9 @@ proto.NumberPair.prototype.getValue2 = function() {
 };
 
 
-/**
- * @param {number} value
- * @return {!proto.NumberPair} returns this
- */
+/** @param {number} value */
 proto.NumberPair.prototype.setValue2 = function(value) {
-  return jspb.Message.setProto3FloatField(this, 2, value);
+  jspb.Message.setProto3FloatField(this, 2, value);
 };
 
 
@@ -337,12 +330,9 @@ proto.Result.prototype.getValue = function() {
 };
 
 
-/**
- * @param {number} value
- * @return {!proto.Result} returns this
- */
+/** @param {number} value */
 proto.Result.prototype.setValue = function(value) {
-  return jspb.Message.setProto3FloatField(this, 1, value);
+  jspb.Message.setProto3FloatField(this, 1, value);
 };
 
 

@@ -1,4 +1,3 @@
-// source: clock.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -157,12 +156,9 @@ proto.Tick.prototype.getCount = function() {
 };
 
 
-/**
- * @param {number} value
- * @return {!proto.Tick} returns this
- */
+/** @param {number} value */
 proto.Tick.prototype.setCount = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 

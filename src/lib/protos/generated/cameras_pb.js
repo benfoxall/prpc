@@ -1,4 +1,3 @@
-// source: cameras.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -203,12 +202,9 @@ proto.Photo.prototype.getType = function() {
 };
 
 
-/**
- * @param {string} value
- * @return {!proto.Photo} returns this
- */
+/** @param {string} value */
 proto.Photo.prototype.setType = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -245,12 +241,9 @@ proto.Photo.prototype.getData_asU8 = function() {
 };
 
 
-/**
- * @param {!(string|Uint8Array)} value
- * @return {!proto.Photo} returns this
- */
+/** @param {!(string|Uint8Array)} value */
 proto.Photo.prototype.setData = function(value) {
-  return jspb.Message.setProto3BytesField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -263,12 +256,9 @@ proto.Photo.prototype.getId = function() {
 };
 
 
-/**
- * @param {string} value
- * @return {!proto.Photo} returns this
- */
+/** @param {string} value */
 proto.Photo.prototype.setId = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -417,12 +407,9 @@ proto.When.prototype.getSeconds = function() {
 };
 
 
-/**
- * @param {number} value
- * @return {!proto.When} returns this
- */
+/** @param {number} value */
 proto.When.prototype.setSeconds = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -435,12 +422,9 @@ proto.When.prototype.getFacemode = function() {
 };
 
 
-/**
- * @param {string} value
- * @return {!proto.When} returns this
- */
+/** @param {string} value */
 proto.When.prototype.setFacemode = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -453,12 +437,9 @@ proto.When.prototype.getCancel = function() {
 };
 
 
-/**
- * @param {boolean} value
- * @return {!proto.When} returns this
- */
+/** @param {boolean} value */
 proto.When.prototype.setCancel = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 

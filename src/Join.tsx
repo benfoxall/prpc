@@ -13,6 +13,7 @@ import { Content } from "./services/Content";
 import { Calculator } from "./services/Calculator";
 import { Bubbles } from "./services/Bubbles";
 import { Clock } from "./services/Clock";
+import { SpaceInvaders } from "./services/SpaceInvaders";
 
 let LOCAL =
   sessionStorage.getItem("LOCAL_ID") || Math.random().toString(36).slice(1);
@@ -38,6 +39,10 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
         <Route path="/Debug">
           <Debug.Client />
+        </Route>
+
+        <Route path="/Space">
+          <SpaceInvaders.Client />
         </Route>
 
         <Route path="/Calculator">

@@ -1,4 +1,3 @@
-// source: dev.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -245,12 +244,9 @@ proto.MoveResponse.prototype.getAnswer = function() {
 };
 
 
-/**
- * @param {number} value
- * @return {!proto.MoveResponse} returns this
- */
+/** @param {number} value */
 proto.MoveResponse.prototype.setAnswer = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -387,12 +383,9 @@ proto.MoveEvent.prototype.getLeft = function() {
 };
 
 
-/**
- * @param {number} value
- * @return {!proto.MoveEvent} returns this
- */
+/** @param {number} value */
 proto.MoveEvent.prototype.setLeft = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -405,12 +398,9 @@ proto.MoveEvent.prototype.getTop = function() {
 };
 
 
-/**
- * @param {number} value
- * @return {!proto.MoveEvent} returns this
- */
+/** @param {number} value */
 proto.MoveEvent.prototype.setTop = function(value) {
-  return jspb.Message.setProto3IntField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -535,12 +525,9 @@ proto.Color.prototype.getValue = function() {
 };
 
 
-/**
- * @param {string} value
- * @return {!proto.Color} returns this
- */
+/** @param {string} value */
 proto.Color.prototype.setValue = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -665,12 +652,9 @@ proto.ColorResponse.prototype.getValue = function() {
 };
 
 
-/**
- * @param {string} value
- * @return {!proto.ColorResponse} returns this
- */
+/** @param {string} value */
 proto.ColorResponse.prototype.setValue = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -795,12 +779,9 @@ proto.Emoji.prototype.getChoice = function() {
 };
 
 
-/**
- * @param {number} value
- * @return {!proto.Emoji} returns this
- */
+/** @param {number} value */
 proto.Emoji.prototype.setChoice = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 

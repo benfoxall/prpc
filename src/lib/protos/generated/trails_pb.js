@@ -1,4 +1,3 @@
-// source: trails.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -329,31 +328,26 @@ proto.LineRequest.prototype.getCoordsList = function() {
 };
 
 
-/**
- * @param {!Array<number>} value
- * @return {!proto.LineRequest} returns this
- */
+/** @param {!Array<number>} value */
 proto.LineRequest.prototype.setCoordsList = function(value) {
-  return jspb.Message.setField(this, 1, value || []);
+  jspb.Message.setField(this, 1, value || []);
 };
 
 
 /**
  * @param {number} value
  * @param {number=} opt_index
- * @return {!proto.LineRequest} returns this
  */
 proto.LineRequest.prototype.addCoords = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
+  jspb.Message.addToRepeatedField(this, 1, value, opt_index);
 };
 
 
 /**
  * Clears the list making it empty but non-null.
- * @return {!proto.LineRequest} returns this
  */
 proto.LineRequest.prototype.clearCoordsList = function() {
-  return this.setCoordsList([]);
+  this.setCoordsList([]);
 };
 
 
@@ -478,12 +472,9 @@ proto.Throttle.prototype.getTimeout = function() {
 };
 
 
-/**
- * @param {number} value
- * @return {!proto.Throttle} returns this
- */
+/** @param {number} value */
 proto.Throttle.prototype.setTimeout = function(value) {
-  return jspb.Message.setProto3FloatField(this, 1, value);
+  jspb.Message.setProto3FloatField(this, 1, value);
 };
 
 
@@ -608,12 +599,9 @@ proto.ColorRequest.prototype.getValue = function() {
 };
 
 
-/**
- * @param {string} value
- * @return {!proto.ColorRequest} returns this
- */
+/** @param {string} value */
 proto.ColorRequest.prototype.setValue = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 

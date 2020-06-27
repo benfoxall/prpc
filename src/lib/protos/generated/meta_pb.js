@@ -1,4 +1,3 @@
-// source: meta.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -157,12 +156,9 @@ proto.Page.prototype.getName = function() {
 };
 
 
-/**
- * @param {string} value
- * @return {!proto.Page} returns this
- */
+/** @param {string} value */
 proto.Page.prototype.setName = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 

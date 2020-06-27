@@ -13,6 +13,7 @@ import { Content } from "./services/Content";
 import { Calculator } from "./services/Calculator";
 import { Bubbles } from "./services/Bubbles";
 import { Clock } from "./services/Clock";
+import { SpaceInvaders } from "./services/SpaceInvaders";
 
 export const ServerContext = createContext<PeerServiceServer>(null);
 
@@ -33,6 +34,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
           <ul>
             <li>
               <LinkTo href="/Debug">Debug</LinkTo>
+            </li>
+
+            <li>
+              <LinkTo href="/Space">Space Invaders</LinkTo>
             </li>
 
             <li>
@@ -75,6 +80,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
         <Route path="/Debug">
           <Debug.Server />
+        </Route>
+
+        <Route path="/Space">
+          <SpaceInvaders.Server />
         </Route>
 
         <Route path="/Calculator">

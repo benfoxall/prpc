@@ -1,4 +1,3 @@
-// source: echo.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -155,12 +154,9 @@ proto.EchoMessage.prototype.getValue = function() {
 };
 
 
-/**
- * @param {string} value
- * @return {!proto.EchoMessage} returns this
- */
+/** @param {string} value */
 proto.EchoMessage.prototype.setValue = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 

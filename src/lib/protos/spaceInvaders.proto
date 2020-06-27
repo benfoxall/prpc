@@ -1,0 +1,13 @@
+
+syntax = 'proto3';
+
+message SpaceMessage {
+    float direction = 1;
+}
+
+message SpaceNoop {}
+
+service SpaceService {
+  rpc Move (SpaceMessage) returns (SpaceNoop);
+  rpc Fire (SpaceNoop) returns (SpaceNoop);
+}

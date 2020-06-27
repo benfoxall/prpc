@@ -1,4 +1,3 @@
-// source: zoom.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -224,12 +223,9 @@ proto.ZoomEchoMessage.prototype.getText = function() {
 };
 
 
-/**
- * @param {string} value
- * @return {!proto.ZoomEchoMessage} returns this
- */
+/** @param {string} value */
 proto.ZoomEchoMessage.prototype.setText = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -385,31 +381,26 @@ proto.SystemInfo.prototype.getCpuloadsList = function() {
 };
 
 
-/**
- * @param {!Array<number>} value
- * @return {!proto.SystemInfo} returns this
- */
+/** @param {!Array<number>} value */
 proto.SystemInfo.prototype.setCpuloadsList = function(value) {
-  return jspb.Message.setField(this, 1, value || []);
+  jspb.Message.setField(this, 1, value || []);
 };
 
 
 /**
  * @param {number} value
  * @param {number=} opt_index
- * @return {!proto.SystemInfo} returns this
  */
 proto.SystemInfo.prototype.addCpuloads = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
+  jspb.Message.addToRepeatedField(this, 1, value, opt_index);
 };
 
 
 /**
  * Clears the list making it empty but non-null.
- * @return {!proto.SystemInfo} returns this
  */
 proto.SystemInfo.prototype.clearCpuloadsList = function() {
-  return this.setCpuloadsList([]);
+  this.setCpuloadsList([]);
 };
 
 
@@ -422,12 +413,9 @@ proto.SystemInfo.prototype.getBattery = function() {
 };
 
 
-/**
- * @param {number} value
- * @return {!proto.SystemInfo} returns this
- */
+/** @param {number} value */
 proto.SystemInfo.prototype.setBattery = function(value) {
-  return jspb.Message.setProto3FloatField(this, 2, value);
+  jspb.Message.setProto3FloatField(this, 2, value);
 };
 
 
@@ -440,12 +428,9 @@ proto.SystemInfo.prototype.getCharging = function() {
 };
 
 
-/**
- * @param {boolean} value
- * @return {!proto.SystemInfo} returns this
- */
+/** @param {boolean} value */
 proto.SystemInfo.prototype.setCharging = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -578,12 +563,9 @@ proto.ColorSchemeRequest.prototype.getScheme = function() {
 };
 
 
-/**
- * @param {!proto.ColorSchemeRequest.Scheme} value
- * @return {!proto.ColorSchemeRequest} returns this
- */
+/** @param {!proto.ColorSchemeRequest.Scheme} value */
 proto.ColorSchemeRequest.prototype.setScheme = function(value) {
-  return jspb.Message.setProto3EnumField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -720,12 +702,9 @@ proto.Image.prototype.getType = function() {
 };
 
 
-/**
- * @param {string} value
- * @return {!proto.Image} returns this
- */
+/** @param {string} value */
 proto.Image.prototype.setType = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -762,12 +741,9 @@ proto.Image.prototype.getBytes_asU8 = function() {
 };
 
 
-/**
- * @param {!(string|Uint8Array)} value
- * @return {!proto.Image} returns this
- */
+/** @param {!(string|Uint8Array)} value */
 proto.Image.prototype.setBytes = function(value) {
-  return jspb.Message.setProto3BytesField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 

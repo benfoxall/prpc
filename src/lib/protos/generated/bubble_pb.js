@@ -1,4 +1,3 @@
-// source: bubble.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -191,12 +190,9 @@ proto.Bubble.prototype.getCol = function() {
 };
 
 
-/**
- * @param {number} value
- * @return {!proto.Bubble} returns this
- */
+/** @param {number} value */
 proto.Bubble.prototype.setCol = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -209,12 +205,9 @@ proto.Bubble.prototype.getRow = function() {
 };
 
 
-/**
- * @param {number} value
- * @return {!proto.Bubble} returns this
- */
+/** @param {number} value */
 proto.Bubble.prototype.setRow = function(value) {
-  return jspb.Message.setProto3IntField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -350,12 +343,9 @@ proto.BubbleList.prototype.getBubblesList = function() {
 };
 
 
-/**
- * @param {!Array<!proto.Bubble>} value
- * @return {!proto.BubbleList} returns this
-*/
+/** @param {!Array<!proto.Bubble>} value */
 proto.BubbleList.prototype.setBubblesList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 1, value);
+  jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -371,10 +361,9 @@ proto.BubbleList.prototype.addBubbles = function(opt_value, opt_index) {
 
 /**
  * Clears the list making it empty but non-null.
- * @return {!proto.BubbleList} returns this
  */
 proto.BubbleList.prototype.clearBubblesList = function() {
-  return this.setBubblesList([]);
+  this.setBubblesList([]);
 };
 
 
