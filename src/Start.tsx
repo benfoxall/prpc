@@ -4,7 +4,6 @@ import React from "react";
 export const Start = () => {
   return (
     <div className="Start">
-      <h1>BEN SAYS HELLO</h1>
       <h2>Start a server</h2>
       <code>
         {document.location.host}/host/<span>[code]</span>
