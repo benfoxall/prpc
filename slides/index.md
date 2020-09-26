@@ -8,10 +8,31 @@
 
 [.background-color: #000]
 
-^ We should awknoledge that shit's been going down
+^ There's something more important than this talk, that we should be discussing
 
 ---
 
+# BLM
+
+![original 50% right](images/blm-1.png)
+
+[blacklivesmatters.carrd.co](https://blacklivesmatters.carrd.co/)
+
+[.header: #fff, text-scale(2.0), avenir next bold]
+
+[.background-color: #000]
+
+^ We need to aknowledge that personally, community & proffessionally
+
+---
+
+![fit](images/blm-2.png)
+
+[.background-color: #000]
+
+---
+
+<!--
 # The
 
 # Tech
@@ -24,7 +45,7 @@
 
 ^ What can we do as the tech industry
 
----
+--- -->
 
 # Hello, I'm
 
@@ -38,10 +59,6 @@
 
 ^ Though I do spend a lot of time on Zoom, so I guess I feel pretty comfortable
 
-^ This is a bit of an odd talk, there's some things that I might not hit
-
-^ Get a pen and write down any comments or questions
-
 ---
 
 # With
@@ -51,6 +68,12 @@
 # [fit] Smith!
 
 ## Hey Mike!
+
+^ It's great to be here with mike!
+
+^ Before lockdown, I used to see Mike everyday, I still do
+
+^ I've learned a lot from mike, and I'm glad everyone here will do to
 
 ---
 
@@ -72,15 +95,15 @@
 
 ---
 
-# Web Team
+# [fit] the web team
+
+^ Do we drive cars with Javascript? …No
+
+![110%](images/bboys-3.png)
 
 ---
 
-# Algos & Other stuff
-
----
-
-# [web projects]
+![fit](sketch/Web.png)
 
 ---
 
@@ -90,7 +113,7 @@
 
 ---
 
-# [fit] Builing &
+# [fit] Building &
 
 # [fit] Testing
 
@@ -560,7 +583,6 @@ POST CommentService/addComment
 - Option – web-gRPC ⇔︎ gRPC bridge:
   - grpcwebproxy
   - envoy
-- Ootion – wait
 
 [.build-lists: true]
 
@@ -1019,11 +1041,9 @@ Received Wisdom
 
 # [fit] 6.
 
-# [fit] The web should provide
+# [fit] Browsers should provide
 
 # [fit] the same features
-
-# [fit] to every user
 
 [.background-color: #f08]
 
@@ -1033,6 +1053,8 @@ Received Wisdom
 
 ![60%](sketch/laptop.png)
 
+[.background-color: #000]
+
 ---
 
 # As a User
@@ -1040,6 +1062,8 @@ Received Wisdom
 # I press the button
 
 # In order to …
+
+^ we can fall into this trap because of how we word our user stories
 
 ---
 
@@ -1049,6 +1073,10 @@ Received Wisdom
 
 ![right](images/timbl.jpg)
 
+^ Unlike my wisdoms at the beginning…
+
+^ This was there are the start, but we've lost it along the way
+
 ---
 
 # Nicola Pellow
@@ -1057,11 +1085,16 @@ Received Wisdom
 
 ![right](images/linemode.jpg)
 
+^ broader acceeibility
+
+^ proved the web browser is independent from the web
+
 ---
 
 # Line Mode
 
-- Expanded and prove the web
+- Broadened Accessibility
+- Prove the web / browser
 - Showed browsers can be different
 
 ---
@@ -1099,9 +1132,17 @@ Received Wisdom
 - **Capabilities** – What features that users device has
 - **Context** – Where the user is
 
+^ context:
+
+^ Portability
+
+^ Network
+
+^ Space to move around
+
 [.build-lists: true]
 
----
+<!-- ---
 
 # Context
 
@@ -1112,7 +1153,7 @@ Where the user is
 - Spatial
 - Drunkeness
 
-[.build-lists: true]
+[.build-lists: true] -->
 
 ---
 
@@ -1140,7 +1181,7 @@ Where the user is
 
 # [fit] 5. Interaction & focus happen on the same device
 
-# [fit] 6. A UI should provide the same features to every user
+# [fit] 6. Browsers should have the same features
 
 [.build-lists: true]
 
