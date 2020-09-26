@@ -1,3 +1,4 @@
+// source: peer-rpc.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -236,9 +237,12 @@ proto.RPCWrapper.prototype.getMethodname = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.RPCWrapper} returns this
+ */
 proto.RPCWrapper.prototype.setMethodname = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -251,9 +255,12 @@ proto.RPCWrapper.prototype.getServicename = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.RPCWrapper} returns this
+ */
 proto.RPCWrapper.prototype.setServicename = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -266,9 +273,12 @@ proto.RPCWrapper.prototype.getIsstream = function() {
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.RPCWrapper} returns this
+ */
 proto.RPCWrapper.prototype.setIsstream = function(value) {
-  jspb.Message.setProto3BooleanField(this, 3, value);
+  return jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -281,9 +291,12 @@ proto.RPCWrapper.prototype.getRequestid = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.RPCWrapper} returns this
+ */
 proto.RPCWrapper.prototype.setRequestid = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -296,9 +309,12 @@ proto.RPCWrapper.prototype.getDone = function() {
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.RPCWrapper} returns this
+ */
 proto.RPCWrapper.prototype.setDone = function(value) {
-  jspb.Message.setProto3BooleanField(this, 5, value);
+  return jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
@@ -335,9 +351,12 @@ proto.RPCWrapper.prototype.getPayload_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.RPCWrapper} returns this
+ */
 proto.RPCWrapper.prototype.setPayload = function(value) {
-  jspb.Message.setProto3BytesField(this, 6, value);
+  return jspb.Message.setProto3BytesField(this, 6, value);
 };
 
 
@@ -498,9 +517,12 @@ proto.PRPCStreamChunk.prototype.getMeta = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.PRPCStreamChunk} returns this
+ */
 proto.PRPCStreamChunk.prototype.setMeta = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -513,9 +535,12 @@ proto.PRPCStreamChunk.prototype.getId = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.PRPCStreamChunk} returns this
+ */
 proto.PRPCStreamChunk.prototype.setId = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -528,9 +553,12 @@ proto.PRPCStreamChunk.prototype.getDone = function() {
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.PRPCStreamChunk} returns this
+ */
 proto.PRPCStreamChunk.prototype.setDone = function(value) {
-  jspb.Message.setProto3BooleanField(this, 4, value);
+  return jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -567,9 +595,12 @@ proto.PRPCStreamChunk.prototype.getPayload_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.PRPCStreamChunk} returns this
+ */
 proto.PRPCStreamChunk.prototype.setPayload = function(value) {
-  jspb.Message.setProto3BytesField(this, 5, value);
+  return jspb.Message.setProto3BytesField(this, 5, value);
 };
 
 

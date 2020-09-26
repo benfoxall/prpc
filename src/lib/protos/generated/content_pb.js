@@ -1,3 +1,4 @@
+// source: content.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -178,9 +179,12 @@ proto.ContentWait.prototype.getId = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.ContentWait} returns this
+ */
 proto.ContentWait.prototype.setId = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -317,9 +321,12 @@ proto.Content.prototype.getId = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.Content} returns this
+ */
 proto.Content.prototype.setId = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -332,9 +339,12 @@ proto.Content.prototype.getBody = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.Content} returns this
+ */
 proto.Content.prototype.setBody = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 

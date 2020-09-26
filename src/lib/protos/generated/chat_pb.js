@@ -1,3 +1,4 @@
+// source: chat.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -200,9 +201,12 @@ proto.SendMessageRequest.prototype.getBody = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.SendMessageRequest} returns this
+ */
 proto.SendMessageRequest.prototype.setBody = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -363,9 +367,12 @@ proto.Message.prototype.getId = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.Message} returns this
+ */
 proto.Message.prototype.setId = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -378,9 +385,12 @@ proto.Message.prototype.getBody = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.Message} returns this
+ */
 proto.Message.prototype.setBody = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -393,9 +403,12 @@ proto.Message.prototype.getAuthor = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.Message} returns this
+ */
 proto.Message.prototype.setAuthor = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -408,9 +421,12 @@ proto.Message.prototype.getPosttime = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.Message} returns this
+ */
 proto.Message.prototype.setPosttime = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -546,9 +562,12 @@ proto.MessageList.prototype.getListList = function() {
 };
 
 
-/** @param {!Array<!proto.Message>} value */
+/**
+ * @param {!Array<!proto.Message>} value
+ * @return {!proto.MessageList} returns this
+*/
 proto.MessageList.prototype.setListList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -564,9 +583,10 @@ proto.MessageList.prototype.addList = function(opt_value, opt_index) {
 
 /**
  * Clears the list making it empty but non-null.
+ * @return {!proto.MessageList} returns this
  */
 proto.MessageList.prototype.clearListList = function() {
-  this.setListList([]);
+  return this.setListList([]);
 };
 
 

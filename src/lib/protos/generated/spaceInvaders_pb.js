@@ -1,3 +1,4 @@
+// source: spaceInvaders.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -176,9 +177,12 @@ proto.SpaceMessage.prototype.getDirection = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.SpaceMessage} returns this
+ */
 proto.SpaceMessage.prototype.setDirection = function(value) {
-  jspb.Message.setProto3FloatField(this, 1, value);
+  return jspb.Message.setProto3FloatField(this, 1, value);
 };
 
 

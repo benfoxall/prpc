@@ -1,3 +1,4 @@
+// source: common.proto
 /**
  * @fileoverview
  * @enhanceable

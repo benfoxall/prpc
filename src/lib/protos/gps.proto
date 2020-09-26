@@ -1,0 +1,16 @@
+
+syntax = 'proto3';
+
+message GeolocationCoordinates {
+  double latitude = 1;
+  double longitude = 2;
+  double altitude = 3;
+  double accuracy = 4;
+  double altitudeAccuracy = 5;
+  double heading = 6;
+  double speed = 7;
+}
+
+message GeoNoop {}
+
+service GPS { rpc query(GeoNoop) returns (GeolocationCoordinates); }
