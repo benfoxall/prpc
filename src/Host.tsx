@@ -14,6 +14,7 @@ import { Calculator } from "./services/Calculator";
 import { Bubbles } from "./services/Bubbles";
 import { Clock } from "./services/Clock";
 import { SpaceInvaders } from "./services/SpaceInvaders";
+import { Gps } from "./services/Gps";
 
 export const ServerContext = createContext<PeerServiceServer>(null);
 
@@ -69,6 +70,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
             </li>
 
             <li>
+              <LinkTo href="/Gps">GPS</LinkTo>
+            </li>
+
+            <li>
               <LinkTo href="/Position">WIP: Position</LinkTo>
             </li>
 
@@ -108,6 +113,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
         <Route path="/Trails">
           <Trails.Server />
+        </Route>
+
+        <Route path="/Gps">
+          <Gps.Server />
         </Route>
 
         <Route path="/Cameras">

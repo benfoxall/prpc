@@ -13,4 +13,4 @@ message GeolocationCoordinates {
 
 message GeoNoop {}
 
-service GPS { rpc query(GeoNoop) returns (GeolocationCoordinates); }
+service GPSService { rpc query(GeoNoop) returns (GeolocationCoordinates); }

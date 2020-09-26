@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/benfoxall/pprpc#readme",
   "devDependencies": {
+    "@types/mapbox-gl": "^1.12.2",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
     "@types/simple-peer": "~9.6.0",
@@ -50,6 +51,7 @@
     "@improbable-eng/grpc-web": "~0.13.0",
     "@types/react-redux": "^7.1.9",
     "dexie": "^3.0.2",
-    "google-protobuf": "^3.13.0"
+    "google-protobuf": "^3.13.0",
+    "mapbox-gl": "^1.12.0"
   }
 }
