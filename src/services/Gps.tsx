@@ -11,8 +11,9 @@ import { GeolocationCoordinates } from "../lib/protos/generated/gps_pb";
 import { GPS } from "../lib/protos/generated/gps_pb_service";
 import mapboxgl from "mapbox-gl/dist/mapbox-gl.js";
 
+// scoped to prpc.me
 mapboxgl.accessToken =
-  "pk.eyJ1IjoiYmVuamFtaW5iZW5iZW4iLCJhIjoiT3I1N1hMUSJ9.69a8Y_2A8x122liNhTQe-Q";
+  "pk.eyJ1IjoiYmVuamFtaW5iZW5iZW4iLCJhIjoiY2tmaml2bGl0MTVmczJ5czJoeWM4YWtvOSJ9.rcYzkjikrscdVVe2MsXeag";
 
 const Client: FunctionComponent = () => {
   const client = useContext(ClientContext);
