@@ -6,6 +6,8 @@ import React, {
   useRef,
   FormEventHandler,
 } from "react";
+import pirateSpeak from "pirate-speak";
+
 import { ClientContext } from "../Join";
 import { ServerContext } from "../Host";
 import { Dev } from "../lib/protos/generated/dev_pb_service";
@@ -100,8 +102,9 @@ const Server: FunctionComponent = () => {
   const [count, setCount] = useState(0);
   const [uppercase, setUppercase] = useState(false);
   const [emoji, setEmoji] = useState(false);
-  const settings = useRef({ uppercase, emoji });
-  settings.current = { uppercase, emoji };
+  const [pirate, setPirate] = useState(false);
+  const settings = useRef({ uppercase, emoji, pirate });
+  settings.current = { uppercase, emoji, pirate };
 
   const uuid = useSelector((a) => a.connection.uuid);
   const db = useDB(uuid || undefined);
@@ -131,7 +134,7 @@ const Server: FunctionComponent = () => {
         message.setBody(req.getBody().slice(0, 300));
         message.setPosttime(+new Date());
 
-        const { uppercase, emoji } = settings.current;
+        const { uppercase, emoji, pirate } = settings.current;
 
         if (uppercase) {
           message.setBody(message.getBody().toLocaleUpperCase());
@@ -141,6 +144,9 @@ const Server: FunctionComponent = () => {
             .map((c) => emojiList[Math.floor(Math.random() * emojiList.length)])
             .join("");
           message.setBody(body);
+        }
+        if (pirate) {
+          message.setBody(pirateSpeak.translate(message.getBody()));
         }
 
         messageList.push(message);
@@ -203,6 +209,16 @@ const Server: FunctionComponent = () => {
             onChange={(e) => setEmoji(e.currentTarget.checked)}
           />
           Emoji
+        </label>
+      </p>
+      <p>
+        <label>
+          <input
+            type="checkbox"
+            checked={pirate}
+            onChange={(e) => setPirate(e.currentTarget.checked)}
+          />
+          Pirate
         </label>
       </p>
     </>
