@@ -63,7 +63,7 @@ const Connection = () => {
     return (
       <footer className="Connection">
         <h1>
-          <a href={document.location.origin + "/" + uuid} target="_blank">
+          <a href={document.location.origin + "/" + uuid} target="_blank" rel="noreferrer">
             {document.location.host}/{uuid}
           </a>
         </h1>
