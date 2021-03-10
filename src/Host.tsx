@@ -15,6 +15,8 @@ import { Bubbles } from "./services/Bubbles";
 import { Clock } from "./services/Clock";
 import { SpaceInvaders } from "./services/SpaceInvaders";
 import { Gps } from "./services/Gps";
+import { Puck } from "./services/Puck";
+import { Weather } from "./services/Weather";
 
 export const ServerContext = createContext<PeerServiceServer>(null);
 
@@ -74,12 +76,25 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
             </li>
 
             <li>
+              <LinkTo href="/Puck">Puck</LinkTo>
+            </li>
+
+            <li>
+              <LinkTo href="/Weather">Weather</LinkTo>
+            </li>
+
+            <li>
+              <LinkTo href="/Position">WIP: Position</LinkTo>
+            </li>
+
+            {/* 
+            <li>
               <LinkTo href="/Position">WIP: Position</LinkTo>
             </li>
 
             <li>TODO: Audio</li>
 
-            <li>TODO: BLE</li>
+            <li>TODO: BLE</li> */}
           </ul>
         </Route>
 
@@ -121,6 +136,14 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
         <Route path="/Cameras">
           <Cameras.Server />
+        </Route>
+
+        <Route path="/Puck">
+          <Puck.Server />
+        </Route>
+
+        <Route path="/Weather">
+          <Weather.Server />
         </Route>
 
         {/* <Route path="/Position">
