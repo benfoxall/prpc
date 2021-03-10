@@ -36,55 +36,55 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
         <Route path="/">
           <ul>
             <li>
-              <LinkTo href="/Debug">Debug</LinkTo>
+              <LinkTo href="/Debug">🐙 Emoji</LinkTo>
             </li>
 
             <li>
-              <LinkTo href="/Space">Space Invaders</LinkTo>
+              <LinkTo href="/Calculator">🧮 Calculator</LinkTo>
             </li>
 
             <li>
-              <LinkTo href="/Calculator">Calculator</LinkTo>
+              <LinkTo href="/Content">🌍 Content</LinkTo>
             </li>
 
             <li>
-              <LinkTo href="/Content">Content</LinkTo>
+              <LinkTo href="/Chat">💬 Chat</LinkTo>
             </li>
 
             <li>
-              <LinkTo href="/Chat">Chat</LinkTo>
+              <LinkTo href="/Cameras">📸 Cameras</LinkTo>
             </li>
 
             <li>
-              <LinkTo href="/Cameras">Cameras</LinkTo>
+              <LinkTo href="/Bubbles">👉 Bubbles</LinkTo>
             </li>
 
             <li>
-              <LinkTo href="/Bubbles">Bubbles</LinkTo>
+              <LinkTo href="/Clock">🕰 Clock</LinkTo>
             </li>
 
             <li>
-              <LinkTo href="/Clock">Clock</LinkTo>
+              <LinkTo href="/Trails">✏️ Trails</LinkTo>
             </li>
 
             <li>
-              <LinkTo href="/Trails">Trails</LinkTo>
+              <LinkTo href="/Gps">🛰 GPS</LinkTo>
             </li>
 
             <li>
-              <LinkTo href="/Gps">GPS</LinkTo>
+              <LinkTo href="/Puck">🤖 Puck</LinkTo>
             </li>
 
             <li>
-              <LinkTo href="/Puck">Puck</LinkTo>
+              <LinkTo href="/Weather">🌤 Weather</LinkTo>
             </li>
 
             <li>
-              <LinkTo href="/Weather">Weather</LinkTo>
+              <LinkTo href="/Space">🦞 Lobbersters</LinkTo>
             </li>
 
             <li>
-              <LinkTo href="/Position">WIP: Position</LinkTo>
+              <LinkTo href="/Position">🙅‍♀️ WIP: Position</LinkTo>
             </li>
 
             {/* 
