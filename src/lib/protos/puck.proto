@@ -1,0 +1,35 @@
+
+syntax = "proto3";
+
+message PuckNoop {}
+
+message PuckLED {
+    enum Color {
+        RED = 0;
+        GREEN = 1;
+        BLUE = 2;
+    }
+
+    Color color = 1;
+    bool on = 2;
+}
+
+
+message PuckButton {
+    bool pressed = 1;
+}
+
+message PuckWeather {
+    // Puck.getTemperature()
+    float temperature = 1;
+
+    // Puck.light()
+    float light = 2;
+
+}
+
+service PuckService {
+    rpc setLED(PuckLED) returns (PuckNoop);
+    rpc isPressed(PuckNoop) returns (PuckButton);
+    rpc getWeather(PuckNoop) returns (PuckWeather);
+}

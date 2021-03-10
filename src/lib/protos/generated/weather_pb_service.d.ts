@@ -1,21 +1,21 @@
 // package: 
-// file: gps.proto
+// file: weather.proto
 
-import * as gps_pb from "./gps_pb";
+import * as weather_pb from "./weather_pb";
 import {grpc} from "@improbable-eng/grpc-web";
 
-type GPSServicequery = {
+type WeatherServicequery = {
   readonly methodName: string;
-  readonly service: typeof GPSService;
+  readonly service: typeof WeatherService;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof gps_pb.GeoNoop;
-  readonly responseType: typeof gps_pb.GeolocationCoordinates;
+  readonly requestType: typeof weather_pb.WeatherRequest;
+  readonly responseType: typeof weather_pb.WeatherResponse;
 };
 
-export class GPSService {
+export class WeatherService {
   static readonly serviceName: string;
-  static readonly query: GPSServicequery;
+  static readonly query: WeatherServicequery;
 }
 
 export type ServiceError = { message: string, code: number; metadata: grpc.Metadata }
@@ -46,18 +46,18 @@ interface BidirectionalStream<ReqT, ResT> {
   on(type: 'status', handler: (status: Status) => void): BidirectionalStream<ReqT, ResT>;
 }
 
-export class GPSServiceClient {
+export class WeatherServiceClient {
   readonly serviceHost: string;
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
   query(
-    requestMessage: gps_pb.GeoNoop,
+    requestMessage: weather_pb.WeatherRequest,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: gps_pb.GeolocationCoordinates|null) => void
+    callback: (error: ServiceError|null, responseMessage: weather_pb.WeatherResponse|null) => void
   ): UnaryResponse;
   query(
-    requestMessage: gps_pb.GeoNoop,
-    callback: (error: ServiceError|null, responseMessage: gps_pb.GeolocationCoordinates|null) => void
+    requestMessage: weather_pb.WeatherRequest,
+    callback: (error: ServiceError|null, responseMessage: weather_pb.WeatherResponse|null) => void
   ): UnaryResponse;
 }
 

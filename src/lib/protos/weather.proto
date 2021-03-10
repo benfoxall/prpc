@@ -1,0 +1,20 @@
+
+syntax = "proto3";
+
+message WeatherResponse {
+    string placename       = 1;
+    bool   cloudy          = 2;
+    float  temprature      = 3;
+    float  wind_speed      = 4;
+    float  wind_direction  = 5;
+    bytes  photo           = 6;
+}
+
+message WeatherRequest {
+    string query = 1;
+}
+
+service WeatherService {
+    // What does it look like out there!?
+    rpc query(WeatherRequest) returns (WeatherResponse);
+}

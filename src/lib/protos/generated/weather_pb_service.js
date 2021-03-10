@@ -1,36 +1,36 @@
 // package: 
-// file: gps.proto
+// file: weather.proto
 
-var gps_pb = require("./gps_pb");
+var weather_pb = require("./weather_pb");
 var grpc = require("@improbable-eng/grpc-web").grpc;
 
-var GPSService = (function () {
-  function GPSService() {}
-  GPSService.serviceName = "GPSService";
-  return GPSService;
+var WeatherService = (function () {
+  function WeatherService() {}
+  WeatherService.serviceName = "WeatherService";
+  return WeatherService;
 }());
 
-GPSService.query = {
+WeatherService.query = {
   methodName: "query",
-  service: GPSService,
+  service: WeatherService,
   requestStream: false,
   responseStream: false,
-  requestType: gps_pb.GeoNoop,
-  responseType: gps_pb.GeolocationCoordinates
+  requestType: weather_pb.WeatherRequest,
+  responseType: weather_pb.WeatherResponse
 };
 
-exports.GPSService = GPSService;
+exports.WeatherService = WeatherService;
 
-function GPSServiceClient(serviceHost, options) {
+function WeatherServiceClient(serviceHost, options) {
   this.serviceHost = serviceHost;
   this.options = options || {};
 }
 
-GPSServiceClient.prototype.query = function query(requestMessage, metadata, callback) {
+WeatherServiceClient.prototype.query = function query(requestMessage, metadata, callback) {
   if (arguments.length === 2) {
     callback = arguments[1];
   }
-  var client = grpc.unary(GPSService.query, {
+  var client = grpc.unary(WeatherService.query, {
     request: requestMessage,
     host: this.serviceHost,
     metadata: metadata,
@@ -57,5 +57,5 @@ GPSServiceClient.prototype.query = function query(requestMessage, metadata, call
   };
 };
 
-exports.GPSServiceClient = GPSServiceClient;
+exports.WeatherServiceClient = WeatherServiceClient;
 
