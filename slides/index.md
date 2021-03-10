@@ -1,83 +1,10 @@
-# Before
-
-# We
-
-# Start
-
-[.header: #fff, text-scale(2.0), avenir next bold]
-
-[.background-color: #000]
-
-^ There's something more important than this talk, that we should be discussing
-
----
-
-# BLM
-
-![original 50% right](images/blm-1.png)
-
-[blacklivesmatters.carrd.co](https://blacklivesmatters.carrd.co/)
-
-[.header: #fff, text-scale(2.0), avenir next bold]
-
-[.background-color: #000]
-
-^ We need to aknowledge that personally, community & proffessionally
-
----
-
-![fit](images/blm-2.png)
-
-[.background-color: #000]
-
----
-
-<!--
-# The
-
-# Tech
-
-# Industry
-
-[.header: #fff, text-scale(2.0), avenir next bold]
-
-[.background-color: #000]
-
-^ What can we do as the tech industry
-
---- -->
-
-# Hello, I'm
+# I'm
 
 # [fit] Ben
 
 # [fit] Foxall
 
-# it's nice to be here
-
-^ This is my first time speaking at a remote meetup.
-
-^ Though I do spend a lot of time on Zoom, so I guess I feel pretty comfortable
-
----
-
-# With
-
-# [fit] Mike
-
-# [fit] Smith!
-
-## Hey Mike!
-
-^ It's great to be here with mike!
-
-^ Before lockdown, I used to see Mike everyday, I still do
-
-^ I've learned a lot from mike, and I'm glad everyone here will do to
-
----
-
-# [fit] Oxbotica
+<!-- # [fit] Oxbotica -->
 
 ---
 
@@ -99,8 +26,6 @@
 
 ^ Do we drive cars with Javascript? …No
 
-![110%](images/bboys-3.png)
-
 ---
 
 ![fit](sketch/Web.png)
@@ -113,51 +38,59 @@
 
 ---
 
-# [fit] Building &
+# Today
 
-# [fit] Testing
-
-# [fit] a new web
-
-^ A few months ago we gave similar talks.
+^ That was work stuff, but I'm going to talk about something different
 
 ---
 
 # Today
 
+# [fit] gRPC +
+
+# [fit] Peer to Peer
+
+^ sounds dry, but we'll talk about history, protocols, through to how technology should feel
+
 ---
 
-# Today
-
-# [fit] Challenging
+# [fit] Changing
 
 # [fit] the way we
 
 # [fit] build the web
 
-^ gonna talk about some technical stuff, as well as dipping into UX and design.
+---
+
+### Structure
+
+# → What we do
+
+# → Why we do it
+
+# → An alternative
+
+### ↑ repeat
 
 ---
 
-<!-- # [fit] Paradigms  -->
+# [fit] Let's do this
 
-# [fit] Received
+[.background-color: #f08]
 
-# [fit] Wisdoms
-
-<!-- # [fit] Convention -->
-
-<!-- # [fit] Assumptions -->
+^ Not about you switching over to this tech overnight.
 
 ---
 
-Received Wisdom
+What we do
 
 # [fit] 1.
 
 [.background-color: #f08]
 
 ---
+
+What we do
 
 # [fit] 1.
 
@@ -169,13 +102,41 @@ Received Wisdom
 
 ---
 
-![](sketch/owls.png)
+# [fit] ---> 🖥 ☀️
+
+# A server that knows the weather
+
+[.background-color: #000]
 
 ---
 
+```
+GET /places/birmingham/weather
+```
+
+```json
+{
+  "location": [""],
+  "windspeed": 31,
+  "cloudy": true,
+  "temperature": 15
+}
+```
+
+[.background-color: #000]
+
+---
+
+[.background-color: #000]
+
+<!-- ![](sketch/owls.png) -->
+
+---
+
+<!--
 ![](sketch/owls2.png)
 
----
+--- -->
 
 ![](sketch/owls3.png)
 
@@ -259,6 +220,18 @@ const comments = await response.json();
 
 ---
 
+![fit](images/brumjs.png)
+
+---
+
+# Protocol Buffers
+
+## Tooling to build your own binary formats
+
+![fit](images/brumjs.png)
+
+---
+
 # Define a message
 
 ```
@@ -266,11 +239,15 @@ const comments = await response.json();
 
 syntax = 'proto3';
 
-message Horse {
-    string name = 1;
-    bool likesCarrots = 2;
-    float height = 3;
+message Weather {
+  string placename       = 1;
+  bool   cloudy          = 2;
+  float  temperature     = 3;
+  float  wind_speed      = 4;
+  float  wind_direction  = 5;
+  bytes  photo           = 6;
 }
+
 ```
 
 ---
@@ -288,16 +265,16 @@ protoc
 # Use stubs
 
 ```js
-import { Horse } from "./stubs/Horse";
+import { Weather } from "./dist/Weather";
 
-const frank = new Horse();
-frank.setName("frank");
-frank.setLikesCarrots(false);
-frank.setHeight(12);
+const dublin = new Weather();
+dublin.setPlacename("Dublin");
+dublin.setCloudy(true);
+dublin.setTemperature(12);
 
-const output = frank.serialiseBinary();
+const output = dublin.serialiseBinary();
 
-// -> Buffer("frank,0,2")
+// -> Buffer("Dublin,true,15,..")
 ```
 
 ---
@@ -307,13 +284,13 @@ const output = frank.serialiseBinary();
 ### JSON
 
 ```json
-{ "name": "frank", "likesCarrots": true, "height": 12 }
+{ "placename": "Dublin", "cloudy": true, "temperature": 12 }
 ```
 
 ### Protocol Buffer
 
 ```
-< frank, 0, 12 >
+< Dublin,1,12 >
 ```
 
 ---
@@ -334,7 +311,7 @@ const output = frank.serialiseBinary();
 ```js
 {
   ...
-  "likesCarroots": false
+  "temprature": true
   ...
 }
 ```
@@ -343,7 +320,7 @@ const output = frank.serialiseBinary();
 
 ```js
 // Error!
-frank.setLikesCarroots(false);
+dublin.setTemprature(false);
 ```
 
 ---
@@ -363,9 +340,9 @@ frank.setLikesCarroots(false);
 ```
 
 ```
-string name = {1};
-bool likesCarrots = {2};
-float size = {3};
+string placename  = {1};
+bool   cloudy     = {2};
+float  temperature = {3};
 ```
 
 ---
@@ -406,16 +383,16 @@ float size = {3};
 ---
 
 ```
-message Horse {
+message Weather {
     ...
-    bytes avatar = 4;
+    bytes photo = 4;
 }
 ```
 
 # ↓
 
 ```js
-horse.setAvatar(await response.arrayBuffer());
+dublin.setPhoto(await response.arrayBuffer());
 ```
 
 ^ Binary data, saves on base64 encoding
@@ -443,7 +420,7 @@ protoc
 
 ---
 
-Received Wisdom
+What we do
 
 # [fit] 2.
 
@@ -569,14 +546,16 @@ POST CommentService/addComment
 # ❤️gRPC ❤️
 
 - Interface code is generated / mistake free
-- Type safety (`await getComment()`)
+- Type safety (`await getWeather()`)
 - Type safety **between** langages
 
 [.build-lists: true]
 
 ---
 
-# 🤫 gRPC – slight problem
+# Slight problem for Frontend developers…
+
+- It doesn't work
 
 - It's not supported by web-browsers (yet)
   - http2, frames, streaming
@@ -595,7 +574,7 @@ POST CommentService/addComment
 
 ---
 
-Received Wisdom
+What we do
 
 # [fit] 3.
 
@@ -605,11 +584,17 @@ Received Wisdom
 
 # [fit] 3.
 
-# [fit] Browsers get data
+# [fit] Make browsers read
 
-# [fit] from web servers
+# [fit] data from servers
 
 [.background-color: #f08]
+
+---
+
+# [fit] [browser --> server ]
+
+(weather)
 
 ---
 
@@ -624,6 +609,8 @@ Received Wisdom
 <!-- [ two browsers ] -->
 
 ![](sketch/network-0.png)
+
+^ Even when the content originated on another client, we still push it through a server
 
 ---
 
@@ -884,7 +871,7 @@ const calculate = () => {
 
 ---
 
-Received Wisdom
+What we do
 
 # [fit] 4.
 
@@ -950,7 +937,7 @@ Received Wisdom
 
 ---
 
-Received Wisdom
+What we do
 
 # [fit] 5.
 
@@ -1031,7 +1018,7 @@ Received Wisdom
 
 ---
 
-Received Wisdom
+What we do
 
 # [fit] 6.
 
@@ -1186,56 +1173,6 @@ Where the user is
 [.build-lists: true]
 
 [.background-color: #f08]
-
----
-
-# [fit] Before I go
-
----
-
-# [fit] More things
-
----
-
-# Tomorrow?
-
-## Milton Keynes
-
-## Geek Night
-
-- mkgeeknight.co.uk
-
-![110%](images/bboys-5.png)
-
-![right fit](images/next-mkgn.png)
-
----
-
-# lasers and stuff
-
-- mkgeeknight.co.uk
-
-![110%](images/bboys-17.png)
-
-![fit right](images/next-mkgn-ben.png)
-
----
-
-# Saturday?
-
-## Remote
-
-## Hack
-
-- remotehack.space
-
-# please join us!
-
-### it doesn't have to be tech hacks
-
-![110%](images/bboys-3.png)
-
-![fit right](images/next-remote-hack.png)
 
 ---
 
