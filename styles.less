@@ -427,3 +427,60 @@ input[type="number"]::-webkit-outer-spin-button {
     );
   }
 }
+
+.Puck {
+  padding: 2em;
+  margin: auto;
+  text-align: center;
+
+  .LEDS {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    button {
+      font-size: 2em;
+      margin: 0.5em;
+    }
+
+    div {
+      // padding: 1em;
+      border-radius: 5px;
+      margin: 0.5em;
+    }
+
+    .red {
+      background-color: rgba(255, 0, 0, 0.447);
+    }
+
+    .blue {
+      background-color: rgba(0, 72, 255, 0.502);
+    }
+
+    .green {
+      background-color: rgba(55, 255, 0, 0.495);
+    }
+  }
+
+  section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // flex-direction: column;
+    margin: 1;
+
+    button {
+      font-size: 1.5em;
+      margin: 0.5em;
+    }
+    output {
+      height: 1em;
+      padding: 1em;
+      display: block;
+      background: rgba(136, 136, 136, 0.166);
+    }
+  }
+
+  .connect {
+    font-size: 4em;
+  }
+}

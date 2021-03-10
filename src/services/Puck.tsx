@@ -28,7 +28,30 @@ const Client: FunctionComponent = () => {
 
   return (
     <div className="Puck">
-      <button>What's the Puck like?</button>
+      <div className="LEDs">
+        <div className="red">
+          <button>on</button>
+          <button>off</button>
+        </div>
+        <div className="green">
+          <button>on</button>
+          <button>off</button>
+        </div>
+        <div className="blue">
+          <button>on</button>
+          <button>off</button>
+        </div>
+      </div>
+
+      <section>
+        <button>is pressed?</button>
+        <output>-</output>
+      </section>
+
+      <section>
+        <button>weather?</button>
+        <output>-</output>
+      </section>
     </div>
   );
 };
@@ -51,7 +74,13 @@ const Server: FunctionComponent = () => {
 
   return (
     <div className="Puck">
-      <input type="range"></input>
+      <button className="connect">Connect</button>
+
+      <p>
+        <a href="https://www.puck-js.com/" target="_blank">
+          puck-js.com
+        </a>
+      </p>
     </div>
   );
 };
