@@ -31,11 +31,21 @@ type PuckServicegetWeather = {
   readonly responseType: typeof puck_pb.PuckWeather;
 };
 
+type PuckServicestreamWeather = {
+  readonly methodName: string;
+  readonly service: typeof PuckService;
+  readonly requestStream: false;
+  readonly responseStream: true;
+  readonly requestType: typeof puck_pb.PuckNoop;
+  readonly responseType: typeof puck_pb.PuckWeather;
+};
+
 export class PuckService {
   static readonly serviceName: string;
   static readonly setLED: PuckServicesetLED;
   static readonly isPressed: PuckServiceisPressed;
   static readonly getWeather: PuckServicegetWeather;
+  static readonly streamWeather: PuckServicestreamWeather;
 }
 
 export type ServiceError = { message: string, code: number; metadata: grpc.Metadata }
@@ -97,5 +107,6 @@ export class PuckServiceClient {
     requestMessage: puck_pb.PuckNoop,
     callback: (error: ServiceError|null, responseMessage: puck_pb.PuckWeather|null) => void
   ): UnaryResponse;
+  streamWeather(requestMessage: puck_pb.PuckNoop, metadata?: grpc.Metadata): ResponseStream<puck_pb.PuckWeather>;
 }
 

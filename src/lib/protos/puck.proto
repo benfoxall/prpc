@@ -31,4 +31,6 @@ service PuckService {
     rpc setLED(PuckLED) returns (PuckNoop);
     rpc isPressed(PuckNoop) returns (PuckButton);
     rpc getWeather(PuckNoop) returns (PuckWeather);
+
+    rpc streamWeather(PuckNoop) returns (stream PuckWeather);
 }

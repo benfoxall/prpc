@@ -37,6 +37,15 @@ PuckService.getWeather = {
   responseType: puck_pb.PuckWeather
 };
 
+PuckService.streamWeather = {
+  methodName: "streamWeather",
+  service: PuckService,
+  requestStream: false,
+  responseStream: true,
+  requestType: puck_pb.PuckNoop,
+  responseType: puck_pb.PuckWeather
+};
+
 exports.PuckService = PuckService;
 
 function PuckServiceClient(serviceHost, options) {
@@ -132,6 +141,45 @@ PuckServiceClient.prototype.getWeather = function getWeather(requestMessage, met
   return {
     cancel: function () {
       callback = null;
+      client.close();
+    }
+  };
+};
+
+PuckServiceClient.prototype.streamWeather = function streamWeather(requestMessage, metadata) {
+  var listeners = {
+    data: [],
+    end: [],
+    status: []
+  };
+  var client = grpc.invoke(PuckService.streamWeather, {
+    request: requestMessage,
+    host: this.serviceHost,
+    metadata: metadata,
+    transport: this.options.transport,
+    debug: this.options.debug,
+    onMessage: function (responseMessage) {
+      listeners.data.forEach(function (handler) {
+        handler(responseMessage);
+      });
+    },
+    onEnd: function (status, statusMessage, trailers) {
+      listeners.status.forEach(function (handler) {
+        handler({ code: status, details: statusMessage, metadata: trailers });
+      });
+      listeners.end.forEach(function (handler) {
+        handler({ code: status, details: statusMessage, metadata: trailers });
+      });
+      listeners = null;
+    }
+  });
+  return {
+    on: function (type, handler) {
+      listeners[type].push(handler);
+      return this;
+    },
+    cancel: function () {
+      listeners = null;
       client.close();
     }
   };

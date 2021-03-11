@@ -5,7 +5,7 @@ export interface State {
 }
 
 const initState: State = {
-  path: "/Weather",
+  path: "/",
 };
 
 export enum Actions {

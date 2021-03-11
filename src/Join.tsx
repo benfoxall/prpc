@@ -17,6 +17,7 @@ import { SpaceInvaders } from "./services/SpaceInvaders";
 import { Gps } from "./services/Gps";
 import { Puck } from "./services/Puck";
 import { Weather } from "./services/Weather";
+import { PuckStream } from "./services/PuckStream";
 
 let LOCAL =
   sessionStorage.getItem("LOCAL_ID") || Math.random().toString(36).slice(1);
@@ -82,6 +83,10 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
         <Route path="/Puck">
           <Puck.Client />
+        </Route>
+
+        <Route path="/PuckStream">
+          <PuckStream.Client />
         </Route>
 
         <Route path="/Weather">
