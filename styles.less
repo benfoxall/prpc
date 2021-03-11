@@ -465,7 +465,7 @@ input[type="number"]::-webkit-outer-spin-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    // flex-direction: column;
+    flex-direction: column;
     margin: 1;
 
     button {
@@ -482,5 +482,32 @@ input[type="number"]::-webkit-outer-spin-button {
 
   .connect {
     font-size: 4em;
+  }
+}
+
+.Weather.server {
+  display: flex;
+  flex-direction: column;
+  label {
+    margin: 0.5em;
+    display: flex;
+    align-items: center;
+  }
+  input {
+    margin: 1em;
+  }
+}
+
+.Weather.client {
+  display: flex;
+  flex-direction: column;
+  margin: 2em;
+
+  button {
+    font-size: 2em;
+  }
+
+  > * {
+    margin: 0.5em;
   }
 }
