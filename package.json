@@ -50,7 +50,7 @@
   "dependencies": {
     "@improbable-eng/grpc-web": "~0.13.0",
     "@types/react-redux": "^7.1.15",
-    "dexie": "^3.0.3",
+    "dexie": "^3.2.2",
     "google-protobuf": "^3.14.0",
     "mapbox-gl": "^2.0.1",
     "pirate-speak": "^1.0.1"
