@@ -19,7 +19,7 @@ export enum Events {
 
 export class PeerServer {
   private listeners: Set<Listener>;
-  private peers: Map<string, Peer.Instance>;
+  readonly peers: Map<string, Peer.Instance>;
 
   // hack, for streaming version
   onConnect?: (peer: [string, Peer.Instance]) => void;

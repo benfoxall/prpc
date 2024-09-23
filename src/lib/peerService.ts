@@ -15,14 +15,15 @@ type Service = {
 };
 
 type Implementation<S> = {
-  readonly [P in keyof S]?: S[P] extends Service ? (
-    request: InstanceType<S[P]["requestType"]>,
-    response: InstanceType<S[P]["responseType"]>,
-    meta: Meta,
-  ) =>
-    | void
-    | Promise<void>
-    | AsyncGenerator<InstanceType<S[P]["responseType"]>>
+  readonly [P in keyof S]?: S[P] extends Service
+    ? (
+        request: InstanceType<S[P]["requestType"]>,
+        response: InstanceType<S[P]["responseType"]>,
+        meta: Meta
+      ) =>
+        | void
+        | Promise<void>
+        | AsyncGenerator<InstanceType<S[P]["responseType"]>>
     : never;
 };
 
@@ -39,7 +40,7 @@ const AsyncGeneratorFunction = async function* () {}.constructor;
 type NamedService = { serviceName: string };
 
 export class PeerServiceServer {
-  private base: PeerRPCServer;
+  readonly base: PeerRPCServer;
   private services = new Map<string, NamedService>();
   private implementations = new WeakMap<NamedService, Implementation<any>>();
 
@@ -48,7 +49,7 @@ export class PeerServiceServer {
 
   public addService<T extends NamedService>(
     service: T,
-    impl: Implementation<T>,
+    impl: Implementation<T>
   ) {
     this.services.set(service.serviceName, service);
     this.implementations.set(service, impl);
@@ -68,7 +69,7 @@ export class PeerServiceServer {
   private async *handleStream(
     meta: Meta,
     payload: Uint8Array,
-    stop: () => void,
+    stop: () => void
   ): AsyncGenerator<Uint8Array> {
     const service = this.services.get(meta.serviceName);
     const impl = this.implementations.get(service);
@@ -102,7 +103,7 @@ export class PeerServiceServer {
   }
   private async handleUnary(
     meta: Meta,
-    payload: Uint8Array,
+    payload: Uint8Array
   ): Promise<Uint8Array> {
     const service = this.services.get(meta.serviceName);
     const impl = this.implementations.get(service);
@@ -135,7 +136,7 @@ export class PeerServiceServer {
         stream: this.handleStream.bind(this),
         unary: this.handleUnary.bind(this),
       },
-      dispatch,
+      dispatch
     );
   }
 }
@@ -150,7 +151,7 @@ export class PeerServiceClient extends PeerRPCClient {
 
     return async <T extends keyof Methods<S>>(
       name: T,
-      setter?: (p: Methods<S>[T]["request"]) => void | Promise<void>,
+      setter?: (p: Methods<S>[T]["request"]) => void | Promise<void>
     ): Promise<Methods<S>[T]["response"]> => {
       if (!setter) setter = () => {};
 
@@ -167,7 +168,7 @@ export class PeerServiceClient extends PeerRPCClient {
       const responseData = await call(
         service,
         method,
-        request.serializeBinary(),
+        request.serializeBinary()
       );
 
       // @ts-ignore
@@ -180,7 +181,7 @@ export class PeerServiceClient extends PeerRPCClient {
 
     return async function* <T extends keyof Methods<S>>(
       name: T,
-      setter?: (p: Methods<S>[T]["request"]) => void,
+      setter?: (p: Methods<S>[T]["request"]) => void
     ): AsyncGenerator<Methods<S>[T]["response"]> {
       if (!setter) setter = () => {};
 
@@ -195,11 +196,7 @@ export class PeerServiceClient extends PeerRPCClient {
       const service = srvc.serviceName;
       const method = name + "";
 
-      const u8Stream = callStream(
-        service,
-        method,
-        request.serializeBinary(),
-      );
+      const u8Stream = callStream(service, method, request.serializeBinary());
 
       // @ts-ignore
       const Resp = srvc[name].responseType;
@@ -225,7 +222,7 @@ export class PeerServiceClient extends PeerRPCClient {
   async issue<S extends NamedService, T extends keyof Methods<S>>(
     srvc: S,
     name: T,
-    setter: (p: Methods<S>[T]["request"]) => void | Promise<void>,
+    setter: (p: Methods<S>[T]["request"]) => void | Promise<void>
   ): Promise<Methods<S>[T]["response"]> {
     // @ts-ignore
     const Request = srvc[name].requestType;
@@ -240,7 +237,7 @@ export class PeerServiceClient extends PeerRPCClient {
     const responseData = await super.call(
       service,
       method,
-      request.serializeBinary(),
+      request.serializeBinary()
     );
 
     // @ts-ignore
