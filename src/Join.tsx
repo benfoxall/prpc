@@ -18,6 +18,7 @@ import { Gps } from "./services/Gps";
 import { Puck } from "./services/Puck";
 import { Weather } from "./services/Weather";
 import { PuckStream } from "./services/PuckStream";
+import { Opfs } from "./services/Opfs";
 
 let LOCAL =
   sessionStorage.getItem("LOCAL_ID") || Math.random().toString(36).slice(1);
@@ -91,6 +92,10 @@ export const Join: FunctionComponent<{ name: string }> = ({ name }) => {
 
         <Route path="/Weather">
           <Weather.Client />
+        </Route>
+
+        <Route path="/Opfs">
+          <Opfs.Client />
         </Route>
 
         {/* <Route path="/Position">

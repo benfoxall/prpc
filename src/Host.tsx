@@ -18,6 +18,7 @@ import { Gps } from "./services/Gps";
 import { Puck } from "./services/Puck";
 import { Weather } from "./services/Weather";
 import { PuckStream } from "./services/PuckStream";
+import { Opfs } from "./services/Opfs";
 
 export const ServerContext = createContext<PeerServiceServer>(null);
 
@@ -92,6 +93,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
               <LinkTo href="/Position">🙅‍♀️ WIP: Position</LinkTo>
             </li>
 
+            <li>
+              <LinkTo href="/Opfs">📦 File Servers (opfs)</LinkTo>
+            </li>
+
             {/* 
             <li>
               <LinkTo href="/Position">WIP: Position</LinkTo>
@@ -153,6 +158,10 @@ export const Host: FunctionComponent<{ name: string }> = ({ name }) => {
 
         <Route path="/Weather">
           <Weather.Server />
+        </Route>
+
+        <Route path="/Opfs">
+          <Opfs.Server />
         </Route>
 
         {/* <Route path="/Position">
