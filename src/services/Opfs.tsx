@@ -9,10 +9,7 @@ import React, {
 import { ServerContext } from "../Host";
 import { ClientContext } from "../Join";
 import { OpfsService } from "../lib/protos/generated/opfs_pb_service";
-import {
-  FileEntry,
-  FileList as FileListP,
-} from "../lib/protos/generated/opfs_pb";
+import { FileEntry } from "../lib/protos/generated/opfs_pb";
 
 const Client: FunctionComponent = () => {
   const client = useContext(ClientContext);
@@ -49,17 +46,22 @@ const Client: FunctionComponent = () => {
 
   return (
     <div className="Opfs">
-      <h1>Opfs</h1>
-      .. list remote files
-      <button onClick={ls}>ls</button>
-      <ul>
-        {filelist.map((entry) => (
-          <li>
-            {entry.getFilename()} ({entry.getSize()} bytes) ({entry.getType()})
-            <button onClick={() => download(entry)}>download</button>
-          </li>
-        ))}
-      </ul>
+      <h1>Remote Access</h1>
+      <button onClick={ls}> refresh </button>
+      <table>
+        <tbody>
+          {filelist.map((entry) => (
+            <tr key={entry.getFilename()}>
+              <td>{entry.getFilename()}</td>
+              <td>{entry.getType()}</td>
+              <td>{formatBytes(entry.getSize())}</td>
+              <td>
+                <button onClick={() => download(entry)}>download</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
@@ -140,15 +142,21 @@ const Server: FunctionComponent = () => {
     <div className="Opfs">
       <h1>File Server</h1>
       <input type="file" onChange={handleFileSelect} multiple />
-      <ul>
-        {files.map((f) => (
-          <li key={f.name}>
-            {f.name} ({f.size} bytes)
-            <button onClick={() => openFile(f.name)}>Open</button>
-            <button onClick={() => deleteFile(f.name)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <table>
+        <tbody>
+          {files.map((entry) => (
+            <tr key={entry.name}>
+              <td>{entry.name}</td>
+              <td>{entry.type}</td>
+              <td>{formatBytes(entry.size)}</td>
+              <td>
+                <button onClick={() => openFile(entry.name)}>Open</button>
+                <button onClick={() => deleteFile(entry.name)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
@@ -229,4 +237,12 @@ function* chunks(array: Uint8Array, chunkSize: number) {
   for (let i = 0; i < array.length; i += chunkSize) {
     yield array.slice(i, i + chunkSize);
   }
+}
+
+function formatBytes(bytes: number): string {
+  const units = ["b", "kb", "mb", "gb", "tb"];
+  if (bytes === 0) return "0 Bytes";
+  const i = Math.floor(Math.log(bytes) / Math.log(1024));
+  const value = parseFloat((bytes / Math.pow(1024, i)).toFixed(2));
+  return `${value} ${units[i]}`;
 }
