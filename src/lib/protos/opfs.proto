@@ -3,19 +3,13 @@ syntax = 'proto3';
 
 import "common.proto";
 
-message FileList {
-  repeated FileEntry entries = 1;
-}
-
 message FileEntry {
   string filename = 1;
   uint64 size = 2;
   uint64 modified = 3;
   string type = 4;
-  bool deleted = 5;
 }
 
-// a request from the host for some file contents
 message FileRequest { 
   string filename = 1;
 
@@ -23,34 +17,12 @@ message FileRequest {
   string transform = 2;
 }
 
-// 
 message FileTransfer {
   bytes content = 1;
 }
 
-message EscapeMessage {
-  string body = 1;
-}
-
 service OpfsService {
-
-  // This is sort of the reverse of what I'd like
-  // // let the server know there's a file available
-  // rpc Notify(FileEntry) returns (Noop);
-
-  // // transfer the file contents to the host
-  // rpc Transfer(FileTransfer) returns (Noop);
-
-  // // subscribe for any transfer requests
-  // rpc Requests(Noop) returns (stream FileRequest);
-
-
-  // The actual way round I want it
-
   rpc List(Noop) returns (stream FileEntry);
 
   rpc Fetch(FileRequest) returns (stream FileTransfer);
-
-  
-
 }
